@@ -1,0 +1,4 @@
+/* Tailwindの設定orよほどグローバルなスタイルにしか使わない */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
