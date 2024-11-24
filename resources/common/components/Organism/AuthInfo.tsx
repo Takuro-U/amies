@@ -3,28 +3,60 @@ import React from "react";
 // Custom-Hooks
 import { useAuthContext } from "../../../hooks/AuthProvider";
 
+// Components
+import MenuLink from "./MenuLink";
+
 //etc.
 import { Link } from "@inertiajs/react";
 
-const AuthInfo: React.FC = () => {
+const AuthInfoHeader: React.FC = () => {
     const { authStatus } = useAuthContext();
 
     return (
-        //あんまり作り込んでません
         <div>
             {authStatus.isAuthenticated ? (
                 //ユーザー表示
                 <>
-                    <span>{authStatus.username}</span>
+                    <Link href="/user">{authStatus.username}</Link>
                 </>
             ) : (
                 //ログインボタン
                 <>
-                    <Link href="/auth"></Link>
+                    <Link href="/auth">ログイン</Link>
                 </>
             )}
         </div>
     );
+};
+
+const AuthInfoMenu: React.FC = () => {
+    const { authStatus, logout } = useAuthContext();
+
+    return (
+        <div>
+            {authStatus.isAuthenticated ? (
+                //ユーザー表示
+                <MenuLink
+                    link={{
+                        label: authStatus.username,
+                        route: "/user",
+                    }}
+                />
+            ) : (
+                <MenuLink
+                    link={{
+                        label: "LOGIN",
+                        route: "/auth",
+                    }}
+                />
+            )}
+        </div>
+    );
+};
+
+const AuthInfo = {
+    AuthInfoHeader,
+    AuthInfoMenu,
 };
 
 export default AuthInfo;

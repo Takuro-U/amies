@@ -1,7 +1,11 @@
 import React from "react";
 
+//styles
+import styles from "./../../styles/ResponsiveMenu.module.scss";
+
 // Component
 import MenuLink from "../Organism/MenuLink";
+import AuthInfo from "../Organism/AuthInfo";
 
 // Types
 import { MenuLinkType } from "../../../types/types";
@@ -16,6 +20,8 @@ type PROPS = {
 };
 
 const ResponsiveMenu: React.FC<PROPS> = (props) => {
+    const { AuthInfoMenu } = AuthInfo;
+
     return (
         <Drawer
             open={props.isOpen}
@@ -28,6 +34,15 @@ const ResponsiveMenu: React.FC<PROPS> = (props) => {
                 },
             }}
         >
+            <div className={styles.authInfo}>
+                <h1 className="italic font-bold text-neutral-600 text-lg">
+                    #AuthInfo
+                </h1>
+                <hr />
+                <nav>
+                    <AuthInfoMenu />
+                </nav>
+            </div>
             <h1 className="italic font-bold text-neutral-600 text-lg">#Menu</h1>
             <hr />
             <nav>

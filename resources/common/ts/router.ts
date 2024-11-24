@@ -6,9 +6,10 @@ import GourmetMain from "../../apps/gourmet/pages/Main";
 //types
 import { Pages } from "../../types/types";
 import { MenuLinkType } from "../../types/types";
+import UserProfile from "../pages/UserProfile";
 
 export const pageRouter: Pages = {
-    common: { auth: Auth },
+    common: { auth: Auth, user: UserProfile },
     top: { main: TopMain },
     gourmet: { main: GourmetMain },
 };

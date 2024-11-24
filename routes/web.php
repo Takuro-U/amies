@@ -14,6 +14,10 @@ Route::middleware([AddViewData::class])->group(function () {
         return InertiaHelper::renderPage('common', 'auth');
     })->name('/auth');
 
+    Route::get('/user', function () {
+        return InertiaHelper::renderPage('common', 'user');
+    })->name('/user');
+
     Route::prefix('gourmet')->group(function () {
         require base_path('routes/web/gourmet.php');
     });

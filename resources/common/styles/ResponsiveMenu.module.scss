@@ -1,0 +1,11 @@
+/* Large Size */
+.authInfo {
+    display: none;
+}
+
+/* Small Size */
+@media screen and (max-width: 440px) {
+    .authInfo {
+        display: inline;
+    }
+}

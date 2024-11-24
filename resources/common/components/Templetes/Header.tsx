@@ -18,6 +18,8 @@ import classNames from "classnames";
 const Header: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
 
+    const { AuthInfoHeader } = AuthInfo;
+
     return (
         <>
             <header className="w-full h-16 bg-white px-1 py-2 text-black flex justify-between sticky top-0 shadow-sm shadow-slate-700 z-40">
@@ -31,9 +33,14 @@ const Header: React.FC = () => {
                     </span>
                 </Link>
                 <div className="flex">
-                    <nav className={styles.authInfo}>
-                        <AuthInfo />
-                    </nav>
+                    <div
+                        className={classNames(
+                            styles.authInfo,
+                            "mr-5 flex items-center"
+                        )}
+                    >
+                        <AuthInfoHeader />
+                    </div>
                     <button
                         onClick={() => {
                             setIsOpen(!isOpen);

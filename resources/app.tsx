@@ -20,6 +20,9 @@ createInertiaApp({
             console.log("Navigated to a new page:", event.detail.page.url);
         });
         const root = createRoot(el);
+
+        document.getElementById("initial-content")?.remove();
+
         root.render(
             <AuthProvider>
                 <AppShell>
