@@ -4,8 +4,8 @@ import TopMain from "../../apps/top/pages/Main";
 import GourmetMain from "../../apps/gourmet/pages/Main";
 
 //types
-import { Pages } from "../../types/types";
-import { MenuLinkType } from "../../types/types";
+import { Pages } from "../../types/common";
+import { MenuLinkType } from "../../types/common";
 import UserProfile from "../pages/UserProfile";
 
 export const pageRouter: Pages = {

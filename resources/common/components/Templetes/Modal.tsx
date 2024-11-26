@@ -11,15 +11,18 @@ const Modal: React.FC = () => {
     const { Component, componentProps } = modalStatus;
 
     return (
-        <div>
-            {Component ? (
-                <>
-                    <button onClick={closeModal}></button>
-                    <Component {...componentProps} />
-                </>
-            ) : (
-                <></>
-            )}
+        <div className={styles.veil}>
+            <div className={styles.modalCard}>
+                <div>これはモーダル</div>
+                {Component ? (
+                    <>
+                        <button onClick={closeModal}></button>
+                        <Component {...componentProps} />
+                    </>
+                ) : (
+                    <></>
+                )}
+            </div>
         </div>
     );
 };

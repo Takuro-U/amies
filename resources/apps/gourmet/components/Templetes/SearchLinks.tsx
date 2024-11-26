@@ -10,8 +10,9 @@ const SearchLinks: React.FC = () => {
     const { openModal } = useModalContext();
     return (
         <div>
-            {searchLinkList.map((link) => (
+            {searchLinkList.map((link, index) => (
                 <button
+                    key={index}
                     onClick={() =>
                         openModal({
                             text: "",

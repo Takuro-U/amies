@@ -1,0 +1,20 @@
+@mixin flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin box-size($width, $height) {
+    width: $width;
+    height: $height;
+}
+
+.veil {
+    position: fixed;
+    top: 0;
+    left: 0;
+    @include flex-center;
+    @include box-size(100vw, 100vh);
+    z-index: 9999;
+    background-color: $veil-color;
+}

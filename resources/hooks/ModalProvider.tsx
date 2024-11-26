@@ -53,10 +53,14 @@ const ModalProvider: React.FC<PROPS> = ({ children }) => {
             Component: p.Component,
             componentProps: p.componentProps,
         });
+
+        console.log("open modal");
     };
 
     const closeModal = () => {
         setModalStatus(defaultModalStatus);
+
+        console.log("close modal");
     };
 
     return (
