@@ -7,7 +7,7 @@ import ModalProvider from "./hooks/ModalProvider";
 import ConsoleAuthProvider from "./hooks/ConsoleAuthProvider";
 
 //types
-import { Pages } from "./types/types";
+import { Pages } from "./types/common";
 
 const pageRouter: Pages = {
     console: { home: Test },

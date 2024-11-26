@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { AuthStatus } from "../types/types";
+import { AuthStatus } from "../types/common";
 
 type PROPS = {
     children: React.ReactNode;

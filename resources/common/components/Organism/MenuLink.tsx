@@ -1,7 +1,7 @@
 import React from "react";
 
 // Type
-import { MenuLinkType } from "../../../types/types";
+import { MenuLinkType } from "../../../types/common";
 
 // etc.
 import { Link } from "@inertiajs/react";

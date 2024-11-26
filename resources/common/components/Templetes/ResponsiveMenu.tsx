@@ -8,7 +8,7 @@ import MenuLink from "../Organism/MenuLink";
 import AuthInfo from "../Organism/AuthInfo";
 
 // Types
-import { MenuLinkType } from "../../../types/types";
+import { MenuLinkType } from "../../../types/common";
 
 // etc.
 import { Drawer } from "flowbite-react";

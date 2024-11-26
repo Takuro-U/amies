@@ -5,11 +5,12 @@ import React, { useEffect, useState } from "react";
 import { useAuthContext } from "../../hooks/AuthProvider";
 
 // Components
-import ModalProvider from "../../hooks/ModalProvider";
+import ModalProvider, { useModalContext } from "../../hooks/ModalProvider";
 import Header from "../components/Templetes/Header";
 
 //etc.
 import { Inertia } from "@inertiajs/inertia";
+import { Modal } from "flowbite-react";
 
 type PROPS = {
     children: React.ReactNode;
@@ -19,6 +20,7 @@ const AppShell: React.FC<PROPS> = ({ children }) => {
     //ヘッダー等再描画用のフラグ
     const [reload, setReload] = useState(false);
 
+    const { modalStatus } = useModalContext();
     const { authStatus, login, logout } = useAuthContext();
 
     useEffect(() => {
@@ -43,6 +45,7 @@ const AppShell: React.FC<PROPS> = ({ children }) => {
         <div>
             <ModalProvider>
                 <Header />
+                {modalStatus.isOpen && <Modal />}
                 {children}
             </ModalProvider>
         </div>

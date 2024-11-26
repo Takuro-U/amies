@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, ReactNode, useContext, useState } from "react";
 
 type PROPS = {
     children: React.ReactNode;
@@ -8,17 +8,26 @@ interface ModalStatus {
     isOpen: boolean;
     text: string;
     coreFunction: (...args: any[]) => void;
+    Component: React.ComponentType<any> | null;
+    componentProps: any;
 }
 
 const defaultModalStatus: ModalStatus = {
     isOpen: false,
     text: "",
     coreFunction: () => {},
+    Component: null,
+    componentProps: null,
 };
 
 const defaultContext = {
     modalStatus: defaultModalStatus,
-    openModal: (text: string, coreFunction: (...args: any[]) => any) => {},
+    openModal: (p: {
+        text: string;
+        coreFunction: (...args: any[]) => any;
+        Component: React.ComponentType<any> | null;
+        componentProps: any;
+    }) => {},
     closeModal: () => {},
 };
 
@@ -31,11 +40,18 @@ export const useModalContext = () => {
 const ModalProvider: React.FC<PROPS> = ({ children }) => {
     const [modalStatus, setModalStatus] = useState(defaultModalStatus);
 
-    const openModal = (text: string, coreFunction: (...args: any[]) => any) => {
+    const openModal = (p: {
+        text: string;
+        coreFunction: (...args: any[]) => any;
+        Component: React.ComponentType<any> | null;
+        componentProps: any;
+    }) => {
         setModalStatus({
             isOpen: true,
-            text: text,
-            coreFunction: coreFunction,
+            text: p.text,
+            coreFunction: p.coreFunction,
+            Component: p.Component,
+            componentProps: p.componentProps,
         });
     };
 
