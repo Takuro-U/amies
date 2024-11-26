@@ -1,7 +1,9 @@
+@use "./../../util/styles/variables" as var;
+
 /* Large Size */
 
 /* Small Size */
-@media screen and (max-width: 440px) {
+@media screen and (max-width: map-get(var.$breakpoint, mobile)) {
     .authInfo {
         display: none;
     }

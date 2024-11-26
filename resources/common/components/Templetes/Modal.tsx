@@ -4,7 +4,7 @@ import React from "react";
 import { useModalContext } from "../../../hooks/ModalProvider";
 
 // Styles
-import styles from "../../styles/Header.module.scss";
+import styles from "../../styles/Modal.module.scss";
 
 const Modal: React.FC = () => {
     const { modalStatus, closeModal } = useModalContext();
@@ -13,10 +13,9 @@ const Modal: React.FC = () => {
     return (
         <div className={styles.veil}>
             <div className={styles.modalCard}>
-                <div>これはモーダル</div>
                 {Component ? (
                     <>
-                        <button onClick={closeModal}></button>
+                        <button onClick={closeModal}>close</button>
                         <Component {...componentProps} />
                     </>
                 ) : (

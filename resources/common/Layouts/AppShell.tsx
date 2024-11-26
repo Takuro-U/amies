@@ -10,7 +10,7 @@ import Header from "../components/Templetes/Header";
 
 //etc.
 import { Inertia } from "@inertiajs/inertia";
-import { Modal } from "flowbite-react";
+import Modal from "../components/Templetes/Modal";
 
 type PROPS = {
     children: React.ReactNode;
@@ -43,11 +43,9 @@ const AppShell: React.FC<PROPS> = ({ children }) => {
 
     return (
         <div>
-            <ModalProvider>
-                <Header />
-                {modalStatus.isOpen && <Modal />}
-                {children}
-            </ModalProvider>
+            <Header />
+            {modalStatus.isOpen && <Modal />}
+            {children}
         </div>
     );
 };

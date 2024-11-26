@@ -8,6 +8,7 @@ import { pageRouter } from "./common/ts/router";
 
 //components
 import AuthProvider from "./hooks/AuthProvider";
+import ModalProvider from "./hooks/ModalProvider";
 import AppShell from "./common/layouts/AppShell";
 
 createInertiaApp({
@@ -25,9 +26,11 @@ createInertiaApp({
 
         root.render(
             <AuthProvider>
-                <AppShell>
-                    <App {...props} />
-                </AppShell>
+                <ModalProvider>
+                    <AppShell>
+                        <App {...props} />
+                    </AppShell>
+                </ModalProvider>
             </AuthProvider>
         );
     },

@@ -19,7 +19,7 @@ const GenreList: React.FC = () => {
 
     useEffect(() => {
         getGenreList();
-    });
+    }, []);
 
     return (
         <div>
