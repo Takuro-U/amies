@@ -1,6 +1,4 @@
 import { FooterColumn } from '../Organisms/FooterColumn';
-// CSS For Responsive
-import '@css/footer.css';
 
 // SAMPLE DATA
 import { footerColumn } from '../../ts/samples';
