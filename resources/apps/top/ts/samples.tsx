@@ -3,20 +3,20 @@ import { ArticleType } from "../../../types/top";
 
 export const articles: ArticleType[] = [
     {
-        image_path: "../images/thumbs/thumbSample.png",
-        link: "home",
+        image_path: "../images/thumbnail_0.jpg",
+        link: "/",
     },
     {
-        image_path: "../images/thumbs/thumbSample.png",
-        link: "home",
+        image_path: "../images/thumbnail_1.png",
+        link: "/",
     },
     {
-        image_path: "../images/thumbs/thumbSample.png",
-        link: "home",
+        image_path: "../images/thumbnail_1.jpg",
+        link: "/",
     },
     {
-        image_path: "../images/thumbs/thumbSample.png",
-        link: "home",
+        image_path: "../images/thumbnail_2.png",
+        link: "/",
     },
 ];
 
@@ -27,22 +27,22 @@ export const informations: InformationType[] = [
     {
         title: "リニューアルしました。",
         date: [2024, 11, 4],
-        link: "",
+        link: "/",
     },
     {
         title: "研究室情報を更新しました。",
         date: [2024, 11, 5],
-        link: "",
+        link: "/",
     },
     {
         title: "グルメ情報を更新しました。",
         date: [2024, 11, 13],
-        link: "",
+        link: "/",
     },
     {
         title: "不具合を修正しました。",
         date: [2025, 2, 5],
-        link: "",
+        link: "/",
     },
 ];
 
