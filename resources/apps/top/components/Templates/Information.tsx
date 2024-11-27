@@ -4,6 +4,7 @@ import { Section } from "../Organisms/Section";
 import { InformationLink } from "../Organisms/InformationLink";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Scrollbar } from "swiper/modules";
+import { ScrollHopping } from "../Organisms/MotionContainer";
 
 // CSS
 import "swiper/css";
@@ -15,6 +16,7 @@ import { informations } from "../../ts/samples";
 
 export default function Information(){
     return (
+        <ScrollHopping>
         <Section className="h-40">
             <Heading label="Information"/>
             <Swiper 
@@ -29,5 +31,6 @@ export default function Information(){
                 { informations.map((i, key)=><SwiperSlide key={ key }><InformationLink {...i} /></SwiperSlide>)}
             </Swiper>
         </Section>
+        </ScrollHopping>
     )
 }

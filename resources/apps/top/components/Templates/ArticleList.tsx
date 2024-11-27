@@ -4,6 +4,7 @@ import { ArticleLink } from "../Organisms/ArticleLink";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Scrollbar } from "swiper/modules";
 import { route } from "ziggy-js";
+import { ScrollHopping } from "../Organisms/MotionContainer";
 
 // CSS
 import 'swiper/css';
@@ -19,16 +20,18 @@ import { articles } from "../../ts/samples";
 
 export default function ArticleList( props: Props ){
     return (
+        <ScrollHopping>
         <Section className="h-46">
             <Heading label={ props.label }/>
             <Swiper
                 modules={[Scrollbar]}
-                slidesPerView={3}
+                slidesPerView={2.3}
                 scrollbar={{draggable: true}}
             >
-            { articles.map((i,key)=><SwiperSlide key={ key } className="bg-gray-600 my-4 mx-2 w-[30vw] h-[30vw]"><ArticleLink {...i}/></SwiperSlide>) }
+            { articles.map((i,key)=><SwiperSlide key={ key } className="bg-gray-600 my-4 mx-2"><ArticleLink {...i}/></SwiperSlide>) }
             </Swiper>
-            <a href={ route(props.link) }><div className="border border-neutral-600 w-28 m-auto my-2 rounded-md text-center">▷記事一覧</div></a>
+            <a href={ route("/") }><div className="border border-neutral-600 w-28 m-auto my-2 rounded-md text-center">▷記事一覧</div></a>
         </Section>
+        </ScrollHopping>
     )
 }
