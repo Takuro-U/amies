@@ -7,7 +7,7 @@ type Props = {
 
 export const Section: FC<Props> = ({ children, className }) =>{
     return (
-        <section className={"m-auto w-11/12 mb-6 overflow-hidden bg-neutral-200 " + className}>
+        <section className={"m-auto w-11/12 mb-6 overflow-hidden bg-gray-100 bg-opacity-90 " + className}>
             { children }
         </section>
     )

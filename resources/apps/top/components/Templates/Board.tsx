@@ -14,8 +14,8 @@ export default function Board(){
                 y: "0px",
             }}
             transition={{
-                duration: 0.3,
-                delay: 1,
+                duration: 0.5,
+                delay: 2.7,
                 ease: "easeOut",
             }}>
             <Section>
