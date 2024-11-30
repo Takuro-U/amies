@@ -70,3 +70,13 @@ export const footerColumn: FooterColumnType[] = [
         )
     }
 ]
+
+// Background Snapshots SAMPLE
+export const image_assets: string[] = [
+    "../images/top/background/sample_1.jpg", 
+    "../images/top/background/sample_2.jpg",
+    "../images/top/background/sample_3.jpg",
+    "../images/top/background/sample_4.jpg",
+    "../images/top/background/sample_5.jpg",
+    "../images/top/background/sample_6.jpg",
+]
