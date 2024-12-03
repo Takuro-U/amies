@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import { FC, ReactNode } from "react";
 
 type Props = {
@@ -7,7 +8,13 @@ type Props = {
 
 export const Section: FC<Props> = ({ children, className }) =>{
     return (
-        <section className={"m-auto w-11/12 mb-6 overflow-hidden bg-gray-100 bg-opacity-90 " + className}>
+        <section
+            className={classNames(
+                "m-auto w-11/12 mb-6 overflow-hidden bg-gray-100 bg-opacity-90 ",
+                "rounded-t-lg",
+                className
+            )}
+        >
             { children }
         </section>
     )
