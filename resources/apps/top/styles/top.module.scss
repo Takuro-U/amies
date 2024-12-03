@@ -1,0 +1,10 @@
+@use "../../../util/styles/variables";
+
+// Top-page layouts
+
+// Large Size
+
+.wrapper{
+    max-width: #{map-get(variables.$breakpoint, "mobile")};
+    margin: auto;
+}
