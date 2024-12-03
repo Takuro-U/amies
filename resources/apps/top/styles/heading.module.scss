@@ -1,9 +1,12 @@
 @use "../../../util/styles/variables";
 
-// Heading-styles
+// CSS for Heading component
+
 .heading{
     clip-path: polygon(0% 0%, 100% 0%, 30% 100%, 0% 100%);
 }
+
+// Accent colors.
 .Information{
     background-color: map-get(variables.$accent_color, "red");
 }

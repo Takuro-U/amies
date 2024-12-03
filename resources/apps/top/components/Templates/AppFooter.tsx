@@ -1,5 +1,7 @@
 import { FooterColumn } from '../Organisms/FooterColumn';
 
+import styles from "../../styles/footer.module.scss";
+
 // SAMPLE DATA
 import { footerColumn } from '../../ts/samples';
 export default function AppFooter(){
