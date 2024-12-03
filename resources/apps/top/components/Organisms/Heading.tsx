@@ -1,4 +1,7 @@
+import classNames from "classnames";
 import { FC } from "react";
+
+import styles from "../../styles/top.module.scss";
 
 type Props = {
     label: string,
@@ -6,6 +9,15 @@ type Props = {
 
 export const Heading: FC<Props> = ( props ) =>{
     return (
-        <h2 className="text-xl italic text-slate-600 pl-2 before:content-['#'] border-b border-slate-600 sticky top-0 bg-white bg-opacity-90">{ props.label }</h2>
+        <h2 
+            className={ classNames(
+                "before:content-['#'] text-xl italic text-neutral-800",
+                "sticky top-0",
+                "pl-2",
+                " bg-white bg-opacity-90",
+                styles[props.label],
+                styles.heading,
+            ) }
+        >{ props.label }</h2>
     )
 }

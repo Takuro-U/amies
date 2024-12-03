@@ -1,0 +1,15 @@
+@use "../../../util/styles/variables";
+
+// Heading-styles
+.heading{
+    clip-path: polygon(0% 0%, 100% 0%, 30% 100%, 0% 100%);
+}
+.Information{
+    background-color: map-get(variables.$accent_color, "red");
+}
+.Topics{
+    background-color: map-get(variables.$accent_color, "yellow");
+}
+.Gourmet{
+    background-color: map-get(variables.$accent_color, "green");
+}
