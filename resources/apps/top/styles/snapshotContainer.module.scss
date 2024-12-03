@@ -1,0 +1,12 @@
+.container{
+    display: flex;
+    z-index: 0;
+    position: absolute;
+
+    width: 60vw;
+    height: 80vw;
+    max-width: 300px;
+    max-height: 400px;
+
+    clip-path: polygon(0% 15%, 100% 0%, 100% 85%, 0% 100%);
+}

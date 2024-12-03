@@ -1,6 +1,8 @@
 import { FC } from "react";
 import { motion } from "framer-motion";
 
+import style from "../../styles/snapshotContainer.module.scss";
+
 type Props = {
     path: string,
     delta: number,
@@ -29,7 +31,7 @@ export const SnapshotContainer: FC<Props> = ( props )=>{
                 delay: 2.6/4 * props.delta * 0.8,
                 ease: "easeOut",
             }}>
-            <div className="absolute w-[60vw] h-[80vw] flex z-0" style={{clipPath: "polygon(0% 15%, 100% 0%, 100% 85%, 0% 100%)"}}>
+            <div className={ style.container }>
                 <img src={ props.path } className="object-cover"/>
             </div>
         </motion.div>
