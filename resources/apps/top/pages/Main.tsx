@@ -15,7 +15,7 @@ const Main: React.FC = () => {
     return (
         <>
         {/* 背景より下にめり込まないようにするためにz-10を設定（背景はz-0） */}
-        <div className={classNames("relative z-10", styles.wrapper )}>
+        <div className={classNames("relative z-10", styles.wrapper)}>
             <Board/>
             <Information/>
             <ArticleList label="Topics" link={ route("/") }/>
