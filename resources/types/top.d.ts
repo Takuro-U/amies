@@ -1,3 +1,8 @@
+export type StringWithLink = {
+    string: string,
+    link?: string,
+}
+
 export type InformationType = {
     title: string,
     link: string,
@@ -9,8 +14,13 @@ export type ArticleType = {
     link: string,
 }
 
-import { ReactNode } from "react"
+// import { ReactNode } from "react"
 export type FooterColumnType = {
     heading: string,
-    node?: ReactNode,
+    node: FooterColumnNodeType[],
+}
+
+type FooterColumnNodeType = {
+    label?: string,
+    children: StringWithLink[],
 }
