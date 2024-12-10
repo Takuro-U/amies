@@ -6,6 +6,7 @@ import Information from "../components/Templates/Information";
 import ArticleList from "../components/Templates/ArticleList";
 import AppFooter from "../components/Templates/AppFooter";
 import BackGround from "../components/Templates/Background";
+import { BackToPageTopButton } from "../../../common/components/Organism/BackToPageTopButton";
 
 import styles from "../styles/top.module.scss"
 import classNames from "classnames";
@@ -22,6 +23,7 @@ const Main: React.FC = () => {
             <ArticleList label="Gourmet" link={ route("/") }/>
         </div>
         <AppFooter/>
+        <BackToPageTopButton/>
         <BackGround/>
         </>        
     );
