@@ -16,7 +16,7 @@ import { informations } from "../../ts/samples";
 
 export default function Information(){
     return (
-        <ScrollHopping>
+        <ScrollHopping instantFire={true}>
         <Section className="h-40">
             <Heading label="Information"/>
             <Swiper 

@@ -9,7 +9,12 @@ type Props = {
 }
 
 // スクロールしたときに下からぴょんてするやつ
-export const ScrollHopping: FC<Props> =( props )=>{
+type SHProps = {
+    children: ReactNode,
+    className?: string,
+    instantFire?: boolean,
+}
+export const ScrollHopping: FC<SHProps> =( props )=>{
     return (
         <motion.div
         initial={{
@@ -20,10 +25,17 @@ export const ScrollHopping: FC<Props> =( props )=>{
             y: "0px",
             opacity: 1,
         }}
-        viewport={{
-            once: true,
-            amount: 0.8,
-        }}
+        viewport={props.instantFire ? {} :
+            {
+                once: true,
+                amount: 0.8,
+            }
+        }
+        transition={props.instantFire ?
+            {
+                delay: 1.5, //wait for Board-setup.
+            } : {}
+        }
         className={ props.className }
         >
         { props.children }
