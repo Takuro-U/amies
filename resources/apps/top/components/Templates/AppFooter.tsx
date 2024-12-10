@@ -1,10 +1,11 @@
 import { FooterColumn } from '../Organisms/FooterColumn';
+import classNames from 'classnames';
 
 import styles from "../../styles/footer.module.scss";
 
 // SAMPLE DATA
 import { footerColumn } from '../../ts/samples';
-import classNames from 'classnames';
+
 export default function AppFooter(){
     return (
         <footer className={classNames("w-full bg-neutral-200 p-2", "relative z-10")}>

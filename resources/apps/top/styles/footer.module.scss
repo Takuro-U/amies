@@ -2,6 +2,15 @@
 
 // CSS for footer components
 
+.heading ::before{
+    content: "C";
+}
+
+.child{
+    padding-left: 4px;
+    border-left: 2px #999 solid;
+}
+
 /* Large Size */
 .container{
     display: flex;

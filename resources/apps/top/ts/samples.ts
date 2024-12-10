@@ -48,28 +48,32 @@ export const informations: InformationType[] = [
 
 // FooterContent SAMPLE
 import { FooterColumnType } from "../../../types/top";
-
 // MEMO: 拡張子を.tsにするとReactNodeがなんやかやでnodeパラメータがバグり散らかすのでいったん.tsxにしてる
 export const footerColumn: FooterColumnType[] = [
     {
         heading: "Links",
-        node: (
-            <nav className="italic">
-                <ul>
-                    <li><u>-Articles</u></li>
-                </ul>
-            </nav>
-        )
+        node: [
+            {
+            label: "AMie's",
+            children: [
+                {string: "TOP", link: "/"},
+                {string: "Gourmet.", link: "/"},
+            ]
+            }
+        ]
     },
     {
         heading: "Contacts",
-        node: (
-            <address>
-                <p>-hoge: hoge fuga 123-456</p>
-            </address>
-        )
+        node: [
+            {
+            label: "株式会社プロジェクトM",
+            children: [
+                {string: "住所：三重県津市hogefuga"},
+            ]
+            }
+        ]
     }
-]
+];
 
 // Background Snapshots SAMPLE
 export const image_assets: string[] = [
