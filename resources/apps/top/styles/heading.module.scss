@@ -1,18 +1,22 @@
 @use "../../../util/styles/variables";
 
+$red: map-get(variables.$accent_color, "red");
+$yellow: map-get(variables.$accent_color, "yellow");
+$green:  map-get(variables.$accent_color, "green");
+
 // CSS for Heading component
 
 .heading{
-    clip-path: polygon(0% 0%, 100% 0%, 30% 100%, 0% 100%);
+    clip-path: polygon(0% 0%, 100% 0%, 40% 100%, 0% 100%);
 }
 
 // Accent colors.
 .Information{
-    background-color: map-get(variables.$accent_color, "red");
+    background-color: rgb($red, 0.7);
 }
 .Topics{
-    background-color: map-get(variables.$accent_color, "yellow");
+    background-color: rgb($yellow, 0.8);
 }
 .Gourmet{
-    background-color: map-get(variables.$accent_color, "green");
+    background-color: rgb($green, 0.7);
 }

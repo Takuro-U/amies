@@ -5,7 +5,7 @@ $blue : map-get(v.$accent_color,"blue");
 
 .area{
     background: #4e54c8;  
-    background: linear-gradient(to bottom right, rgb($blue, 0.5), $blue);  
+    background: linear-gradient(to bottom right, rgb($blue, 0.1), rgb($blue, 0.4));  
 }
 
 .circles{
