@@ -12,6 +12,7 @@ import { MenuLinkType } from "../../../types/common";
 
 // etc.
 import { Drawer } from "flowbite-react";
+import classNames from "classnames";
 
 type PROPS = {
     menuLinks: MenuLinkType[];
@@ -27,7 +28,7 @@ const ResponsiveMenu: React.FC<PROPS> = (props) => {
             open={props.isOpen}
             onClose={props.onClose}
             position="right"
-            className="w-1/2 top-16 bg-opacity-95"
+            className={classNames("w-1/2 top-16 bg-opacity-95", styles.drawer)}
             theme={{
                 root: {
                     backdrop: "fixed inset-0 z-30 bg-white bg-opacity-50",
