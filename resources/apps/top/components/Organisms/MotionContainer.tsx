@@ -33,7 +33,7 @@ export const ScrollHopping: FC<Props> =( props )=>{
 
 // ランダムな間隔で大きくなる
 export const RandomZoom: FC<Props> =( props )=>{
-    let random = Math.round(Math.random());
+    let random = Math.random()*10%5;
 
     return (
         <motion.div
