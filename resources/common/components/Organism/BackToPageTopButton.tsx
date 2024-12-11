@@ -6,8 +6,8 @@ export const BackToPageTopButton: FC =()=>{
     const buttonRef = useRef(null);
     onscroll = ()=>{
         if(buttonRef.current){
-            // なぜかエラーが出るけど挙動に問題はなし。なにゆえ
-            buttonRef.current.style.bottom = document.getElementsByTagName("html")[0].scrollTop?"0.5rem":"-3.5rem";            
+            let button: HTMLDivElement = buttonRef.current;
+            button.style.bottom = document.getElementsByTagName("html")[0].scrollTop?"0.5rem":"-3.5rem";
         }
     }
 
