@@ -7,10 +7,16 @@ $small: map-get(variables.$breakpoint, mobile);
 // Large Size
 
 .cover{
-    background: linear-gradient(to top, rgb(white, 0),white 10px);
-    padding-top: 20px;
-    padding-bottom: 20px;
-    margin-bottom: 20px;
+    width: 100%;
+    height: 540px;
+    position: absolute;
+}
+
+.snapshots{
+    height: 540px;
+    position: fixed;
+    top: 0px;
+    margin: auto;
 }
 
 .wrapper{

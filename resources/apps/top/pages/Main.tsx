@@ -4,7 +4,6 @@ import { useAuthContext } from "../../../hooks/AuthProvider";
 import classNames from "classnames";
 import { motion } from "framer-motion";
 
-import Cover from "../components/Templates/Cover";
 import Board from "../components/Templates/Board";
 import Information from "../components/Templates/Information";
 import ArticleList from "../components/Templates/ArticleList";
@@ -17,7 +16,7 @@ const Main: React.FC = () => {
 
     return (
         <>
-        <Cover/>
+        <BackGround/>
         <div className={classNames("relative z-10 ", layout.wrapper)}>
             <Board/>
             <motion.div // Boardよりも先に表示されないように隠す
@@ -39,7 +38,6 @@ const Main: React.FC = () => {
                 </div>
             </motion.div>
         </div>
-        <BackGround/>
         </>        
     );
 };
