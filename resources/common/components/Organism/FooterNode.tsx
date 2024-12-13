@@ -1,8 +1,8 @@
 import { FC, ReactNode } from "react";
-import { FooterColumnNodeType } from "../../../../types/top";
+import { FooterColumnNodeType } from "../../../types/top";
 import { route } from "ziggy-js";
 
-import style from "../../styles/footer.module.scss";
+import style from "../../styles/Footer.module.scss";
 import classNames from "classnames";
 
 export const FooterNode: FC<FooterColumnNodeType> = ({label, children})=>{

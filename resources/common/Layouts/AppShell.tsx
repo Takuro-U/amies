@@ -7,6 +7,7 @@ import { useAuthContext } from "../../hooks/AuthProvider";
 // Components
 import ModalProvider, { useModalContext } from "../../hooks/ModalProvider";
 import Header from "../components/Templetes/Header";
+import Footer from "../components/Templetes/Footer";
 
 //etc.
 import { Inertia } from "@inertiajs/inertia";
@@ -46,6 +47,7 @@ const AppShell: React.FC<PROPS> = ({ children }) => {
             <Header />
             {modalStatus.isOpen && <Modal />}
             {children}
+            <Footer />
         </div>
     );
 };
