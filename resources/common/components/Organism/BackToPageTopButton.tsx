@@ -7,7 +7,7 @@ export const BackToPageTopButton: FC =()=>{
     onscroll = ()=>{
         if(buttonRef.current){
             let button: HTMLDivElement = buttonRef.current;
-            button.style.bottom = document.getElementsByTagName("html")[0].scrollTop?"0.5rem":"-3.5rem";
+            button.style.bottom = document.getElementsByTagName("html")[0].scrollTop?"1.5rem":"-3.5rem";
         }
     }
 
@@ -15,15 +15,16 @@ export const BackToPageTopButton: FC =()=>{
         <a href="#"><div
         ref={ buttonRef }
         style={{
-            transition: "bottom 0.4s ease-out 0s",
+            transition: "bottom 0.6s ease-out 0s",
         }}
         className={classNames(
-            "fixed bottom-[-3.5rem] right-2",
-            "w-10 h-10 rounded-full",
-            "bg-gray-400 opacity-60",
+            "fixed bottom-[-3.5rem] right-6",
+            "w-12 h-12 rounded-full",
+            "bg-slate-500 opacity-60",
             "z-20",
-            "text-center leading-9",
-            "text-white text-sm",
+            "text-center leading-10",
+            "text-white text-lg",
+            "cursor-pointer",
         )}
         >▲</div></a>
     )
