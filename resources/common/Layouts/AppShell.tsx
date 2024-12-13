@@ -8,6 +8,7 @@ import { useAuthContext } from "../../hooks/AuthProvider";
 import ModalProvider, { useModalContext } from "../../hooks/ModalProvider";
 import Header from "../components/Templetes/Header";
 import Footer from "../components/Templetes/Footer";
+import { BackToPageTopButton } from "../components/Organism/BackToPageTopButton";
 
 //etc.
 import { Inertia } from "@inertiajs/inertia";
@@ -48,6 +49,7 @@ const AppShell: React.FC<PROPS> = ({ children }) => {
             {modalStatus.isOpen && <Modal />}
             {children}
             <Footer />
+            <BackToPageTopButton/>
         </div>
     );
 };

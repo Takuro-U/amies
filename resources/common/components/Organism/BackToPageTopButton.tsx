@@ -21,7 +21,7 @@ export const BackToPageTopButton: FC =()=>{
             "fixed bottom-[-3.5rem] right-2",
             "w-10 h-10 rounded-full",
             "bg-gray-400 opacity-60",
-            "z-10",
+            "z-20",
             "text-center leading-9",
             "text-white text-sm",
         )}
