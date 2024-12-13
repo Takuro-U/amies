@@ -9,7 +9,6 @@ import Board from "../components/Templates/Board";
 import Information from "../components/Templates/Information";
 import ArticleList from "../components/Templates/ArticleList";
 import BackGround from "../components/Templates/Background";
-import { BackToPageTopButton } from "../../../common/components/Organism/BackToPageTopButton";
 
 import layout from "../styles/layout.module.scss";
 
@@ -40,7 +39,6 @@ const Main: React.FC = () => {
                 </div>
             </motion.div>
         </div>
-        <BackToPageTopButton/>
         <BackGround/>
         </>        
     );
