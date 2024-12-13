@@ -1,8 +1,8 @@
 import { FC } from "react";
-import { FooterColumnType } from "../../../../types/top";
+import { FooterColumnType } from "../../../types/top";
 import { FooterNode } from "./FooterNode";
 
-import styles from "../../styles/footer.module.scss";
+import styles from "../../styles/Footer.module.scss";
 
 export const FooterColumn: FC<FooterColumnType> = ({heading, node})=>{
     return (

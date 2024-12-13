@@ -12,6 +12,7 @@ export const Section: FC<Props> = ({ children, className }) =>{
             className={classNames(
                 "m-auto w-11/12 mb-6 overflow-hidden bg-white bg-opacity-80 ",
                 "rounded-lg",
+                "h-full",
                 className
             )}
         >

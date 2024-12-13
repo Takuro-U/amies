@@ -12,7 +12,7 @@ type Props = {
 type SHProps = {
     children: ReactNode,
     className?: string,
-    instantFire?: boolean,
+    instantFire?: boolean, // true でスクロールに依存せずに時間差で動く。現状InformationがBoardの後に出てくるようにする用
 }
 export const ScrollHopping: FC<SHProps> =( props )=>{
     return (
@@ -21,15 +21,25 @@ export const ScrollHopping: FC<SHProps> =( props )=>{
             y: "60px",
             opacity: 0,
         }}
-        whileInView={{
-            y: "0px",
-            opacity: 1,
-        }}
+        // instantFire False.
+        whileInView={props.instantFire ? {} :
+            {
+                y: "0px",
+                opacity: 1,
+            }
+        }
         viewport={props.instantFire ? {} :
             {
                 once: true,
                 amount: 0.8,
             }
+        }
+        // instantFire True.
+        animate={props.instantFire ? 
+            {
+                y: "0px",
+                opacity: 1,
+            } : {}
         }
         transition={props.instantFire ?
             {

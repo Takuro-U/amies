@@ -21,7 +21,7 @@ import { articles } from "../../ts/samples";
 export default function ArticleList( props: Props ){
     return (
         <ScrollHopping>
-        <Section className="h-46">
+        <Section>
             <Heading label={ props.label }/>
             <Swiper
                 modules={[Scrollbar]}

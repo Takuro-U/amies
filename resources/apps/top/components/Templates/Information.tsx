@@ -9,15 +9,15 @@ import { ScrollHopping } from "../Organisms/MotionContainer";
 // CSS
 import "swiper/css";
 import "swiper/css/scrollbar";
-
+import layout from "../../styles/layout.module.scss";
 
 // SAMPLE DATA
 import { informations } from "../../ts/samples";
 
 export default function Information(){
     return (
-        <ScrollHopping instantFire={true}>
-        <Section className="h-40">
+        <ScrollHopping instantFire={true}  className={ layout.information }>
+        <Section>
             <Heading label="Information"/>
             <Swiper 
                 modules={[Scrollbar]} 
@@ -26,7 +26,7 @@ export default function Information(){
                 }}  
                 slidesPerView={3}
                 direction={"vertical"} 
-                className="h-32"
+                className="h-28"
                 >
                 { informations.map((i, key)=><SwiperSlide key={ key }><InformationLink {...i} /></SwiperSlide>)}
             </Swiper>
