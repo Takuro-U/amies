@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { motion, useTime, useTransform } from "framer-motion";
 
-import style from "../../styles/snapshotContainer.module.scss";
+import style from "../../styles/SnapshotContainer.module.scss";
 
 type Props = {
     path: string,

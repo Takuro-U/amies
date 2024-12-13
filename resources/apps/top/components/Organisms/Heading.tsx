@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import { FC } from "react";
 
-import styles from "../../styles/heading.module.scss";
+import styles from "../../styles/Heading.module.scss";
 
 type Props = {
     label: string,
