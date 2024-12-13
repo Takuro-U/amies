@@ -2,7 +2,7 @@ import { SnapshotContainer } from "../Organisms/SnapshotContainer";
 import classNames from "classnames";
 
 import style from "../../styles/background.module.scss";
-import wrapper from "../../styles/top.module.scss";
+import layout from "../../styles/layout.module.scss";
 
 import { image_assets } from "../../ts/samples";
 
@@ -26,7 +26,7 @@ export default function BackGround (){
     return (
         <div className={classNames("fixed top-16 w-full h-full z-0", style.area)}>
             {/* Snapshots */}
-            <div className={ wrapper.wrapper }>
+            <div className={ layout.wrapper }>
             { snapshots.map((i, index)=> <SnapshotContainer path={ i } delta={ index } key={ index } />)}
             </div>
             {/* Background Circles */}

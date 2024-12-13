@@ -1,0 +1,67 @@
+@use "../../../util/styles/variables";
+
+$small: map-get(variables.$breakpoint, mobile);
+
+// Top-page layouts
+
+// Large Size
+
+.cover{
+    background: linear-gradient(to top, rgb(white, 0),white 10px);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+.wrapper{
+    max-width: calc(#{$small} * 2);
+    margin: auto;
+    display: flex;
+}
+
+.board{
+    width: 51%;
+    height: 100%;
+    display: flex;
+}
+
+.aside{
+    width: 49%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+// .information{
+//     height: 40%;
+// }
+
+// .articleLists{
+//     height: 60%;
+// }
+
+// Medium Size
+@media screen and (max-width: calc(#{$small} * 2)) {
+    .cover{
+        display: none;
+    }
+    .wrapper{
+        max-width: #{$small};
+        margin: auto;
+        display: block;
+        height: auto;
+    }
+    .board{
+        width: 100%;
+    }
+    .aside{
+        width: 100%;
+        display: block;
+    }
+    .information{
+        height: 20vh;
+    }
+    .articleLists{
+        height: auto;
+    }
+}
