@@ -17,7 +17,7 @@ import { image_assets } from "../../ts/samples";
 
 // image_asset から dencity 個だけランダムに抽出
 const snapshots: string[] = [];
-const density: number = 3; // 抽出する枚数
+const density: number = 4; // 抽出する枚数 4以上推奨（3以下だと自動スクロールが機能しない）
 
 // 抽出処理
 for(let i = 0;i < density;i++){
