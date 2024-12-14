@@ -1,9 +1,10 @@
 import classNames from "classnames";
+import { FC } from "react";
 
 import styles from "../../styles/Cover.module.scss";
 import layout from "../../styles/layout.module.scss";
 
-export default function Cover(){
+export const Cover: FC = ()=>{
     return (
         <div className={classNames(layout.cover, "relative z-10")}>
             <div className={classNames(styles.card)}>
