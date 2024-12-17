@@ -10,6 +10,7 @@ import 'swiper/css';
 import 'swiper/css/effect-coverflow';
 import '../../styles/snapshotsAnimation.css';
 import animation from "../../styles/BackgroundAnimation.module.scss";
+import style from "../../styles/Background.module.scss";
 import layout from "../../styles/layout.module.scss";
 
 
@@ -34,10 +35,12 @@ for(let i = 0;i < density;i++){
 export default function BackGround (){
     const [slidesPerView, setSlidesPerView] = useState(2);
     
+    // 初期設定。レンダリング直後に画面サイズに合わせて表示枚数を変更
     useEffect(()=>{
         setSlidesPerView((window.innerWidth > 960) ? 3 : 1.2);
     },[]);
 
+    // リサイズ時に表示枚数を変更するイベントを登録
     onresize=()=>{
         setSlidesPerView((window.innerWidth > 960) ? 3 : 1.2); 
     }
@@ -46,9 +49,11 @@ export default function BackGround (){
         <>
         <Cover/>
         {/* Snapshots */}
+        {/* ↓スナップショットが画面端でチラつくのを隠すやつ */}
         <div className={ layout.snapshotsMobile }>
+        <div className={classNames(layout.snapshots, style.sideFade, "z-10")}></div> 
         <Swiper 
-            className={layout.snapshots}
+            className={classNames(layout.snapshots, style.wrapper)}
             modules={[Autoplay, EffectCoverflow]
             }
             effect="coverflow"

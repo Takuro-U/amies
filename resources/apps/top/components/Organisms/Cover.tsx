@@ -11,7 +11,7 @@ export const Cover: FC = ()=>{
                 <img src="../images/logo_720p.png"/>
                 <h1 
                     className={classNames(
-                        "text-center text-6xl font-bold", 
+                        "text-center text-5xl font-bold", 
                         "text-red-300",
                     )}
                     style={{

@@ -11,7 +11,7 @@ type Props = {
 export const SnapshotContainer: FC<Props> = ( props )=>{
     return (
         <div className={ style.container }>
-            <img src={ props.path } className={classNames("h-[90%] w-full object-cover", style.img)}/>
+            <img src={ props.path } className={ style.img }/>
         </div>
     )
 }
