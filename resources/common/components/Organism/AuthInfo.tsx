@@ -22,7 +22,7 @@ const AuthInfoHeader: React.FC = () => {
             ) : (
                 //ログインボタン
                 <>
-                    <Link href="/auth">ログイン</Link>
+                    <Link href="/auth">Login</Link>
                 </>
             )}
         </div>

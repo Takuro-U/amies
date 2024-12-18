@@ -11,7 +11,7 @@ export const Heading: FC<Props> = ( props ) =>{
     return (
         <h2 
             className={ classNames(
-                "text-xl italic text-neutral-800 font-bold",
+                "text-2xl text-neutral-800",
                 "sticky top-0",
                 "pl-2",
                 " bg-white bg-opacity-90",

@@ -14,6 +14,9 @@ import { BackToPageTopButton } from "../components/Organism/BackToPageTopButton"
 import { Inertia } from "@inertiajs/inertia";
 import Modal from "../components/Templetes/Modal";
 
+// styles
+import "../../util/styles/_fonts.scss";
+
 type PROPS = {
     children: React.ReactNode;
 };
