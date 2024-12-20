@@ -34,7 +34,7 @@ const footerColumn: FooterColumnType[] = [
 export default function Footer(){
     return (
         <footer className={classNames("w-full bg-white bg-opacity-40 p-2", "relative bottom-0 z-10")}>
-            <h1 className="text-xl">AMie's</h1>
+            <h1 className="text-2xl">AMie's</h1>
             <div className={styles.container}>
             { footerColumn.map((col, key)=> <FooterColumn key={ key } heading={ col.heading } node={ col.node }/>)}
             </div>
