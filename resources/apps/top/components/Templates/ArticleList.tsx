@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import { Heading } from "../Organisms/Heading";
 import { Section } from "../Organisms/Section";
 import { ArticleLink } from "../Organisms/ArticleLink";
@@ -13,6 +14,7 @@ import 'swiper/css/scrollbar';
 type Props = {
     label: string,
     link: string,
+    icon: ReactNode,
 }
 
 // SAMPLE DATA
@@ -22,7 +24,7 @@ export default function ArticleList( props: Props ){
     return (
         <ScrollHopping>
         <Section>
-            <Heading label={ props.label }/>
+            <Heading label={ props.label } icon={ props.icon }/>
             <Swiper
                 modules={[Scrollbar]}
                 slidesPerView={2.3}

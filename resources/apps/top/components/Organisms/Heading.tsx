@@ -1,10 +1,11 @@
 import classNames from "classnames";
-import { FC } from "react";
+import { FC, ReactNode } from "react";
 
 import styles from "../../styles/Heading.module.scss";
 
 type Props = {
     label: string,
+    icon: ReactNode,
 }
 
 export const Heading: FC<Props> = ( props ) =>{
@@ -18,6 +19,6 @@ export const Heading: FC<Props> = ( props ) =>{
                 styles[props.label],
                 styles.heading,
             ) }
-        >{ props.label }</h2>
+        >{ props.icon }{ props.label }</h2>
     )
 }

@@ -3,6 +3,7 @@ import { route } from "ziggy-js";
 import { useAuthContext } from "../../../hooks/AuthProvider";
 import classNames from "classnames";
 import { motion } from "framer-motion";
+import { TopicsIcon, GourmetIcon } from "../components/Organisms/SvgIcons";
 
 import Board from "../components/Templates/Board";
 import Information from "../components/Templates/Information";
@@ -33,8 +34,8 @@ const Main: React.FC = () => {
                 }}>
                 <Information/>
                 <div className={ layout.articleLists }>
-                    <ArticleList label="Topics" link={ route("/") }/>
-                    <ArticleList label="Gourmet" link={ route("/") }/>
+                    <ArticleList label="Topics" link={ route("/") } icon={<TopicsIcon/>}/>
+                    <ArticleList label="Gourmet" link={ route("/") } icon={<GourmetIcon/>}/>
                 </div>
             </motion.div>
         </div>

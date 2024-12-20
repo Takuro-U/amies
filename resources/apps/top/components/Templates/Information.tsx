@@ -5,6 +5,7 @@ import { InformationLink } from "../Organisms/InformationLink";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Scrollbar } from "swiper/modules";
 import { ScrollHopping } from "../Organisms/MotionContainer";
+import { InformationIcon } from "../Organisms/SvgIcons";
 
 // CSS
 import "swiper/css";
@@ -18,7 +19,7 @@ export default function Information(){
     return (
         <ScrollHopping instantFire={true}  className={ layout.information }>
         <Section>
-            <Heading label="Information"/>
+            <Heading label="Information" icon={<InformationIcon/>}/>
             <Swiper 
                 modules={[Scrollbar]} 
                 scrollbar={{
