@@ -24,7 +24,7 @@ const density: number = 4; // 抽出する枚数 4以上推奨（3以下だと�
 for(let i = 0;i < density;i++){
     let index = 0;
     while(true) {
-        index = Math.round(Math.random()*Math.pow(10, density));
+        index = Math.round(Math.random()*Math.pow(10, String(image_assets.length).length));
         if(index < image_assets.length && snapshots.indexOf(image_assets[index])===-1){
             snapshots.push(image_assets[index]);
             break;
@@ -34,10 +34,12 @@ for(let i = 0;i < density;i++){
 
 export default function BackGround (){
     const [slidesPerView, setSlidesPerView] = useState(2);
-    
+    const [delay, setDelay] = useState(1000);
+
     // 初期設定。レンダリング直後に画面サイズに合わせて表示枚数を変更
     useEffect(()=>{
         setSlidesPerView((window.innerWidth > 960) ? 3 : 1.2);
+        setDelay(0);
     },[]);
 
     // リサイズ時に表示枚数を変更するイベントを登録
@@ -59,7 +61,7 @@ export default function BackGround (){
             effect="coverflow"
             slidesPerView={ slidesPerView }
             autoplay={{
-                delay: 0,
+                delay: delay,
             }}
             coverflowEffect={{
                 rotate: 15,
