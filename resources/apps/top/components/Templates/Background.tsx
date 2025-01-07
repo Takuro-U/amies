@@ -24,7 +24,7 @@ const density: number = 4; // 抽出する枚数 4以上推奨（3以下だと�
 for(let i = 0;i < density;i++){
     let index = 0;
     while(true) {
-        index = Math.round(Math.random()*Math.pow(10, String(image_assets.length).length));
+        index = Math.round(Math.random()*Math.pow(10, String(image_assets.length).length));//image_assetの個数の桁と同じ範囲で乱数を生成
         if(index < image_assets.length && snapshots.indexOf(image_assets[index])===-1){
             snapshots.push(image_assets[index]);
             break;
