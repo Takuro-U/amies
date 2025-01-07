@@ -1,11 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+
+// Styles
+import styles from "./../styles/Gourmet.module.scss";
+
+// Components
+import Map from "../components/Templetes/Map";
 import SearchLinks from "../components/Templetes/SearchLinks";
+import SearchOptions from "../components/Templetes/SearchOptions";
+
+// Types
+import { Category } from "../../../types/common";
+
+// Utilities
+import { apiOfGourmet } from "../../../util/ts/api";
+
+// Modules
+import classNames from "classnames";
 
 const Main: React.FC = () => {
     return (
-        <div>
-            <h1>飲食店ページやで</h1>
-            <SearchLinks />
+        <div className={styles.page}>
+            <div>
+                <Map />
+            </div>
+            <aside>
+                <SearchOptions />
+                <SearchLinks />
+            </aside>
         </div>
     );
 };

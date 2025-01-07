@@ -7,10 +7,13 @@ import { useAuthContext } from "../../hooks/AuthProvider";
 // Components
 import ModalProvider, { useModalContext } from "../../hooks/ModalProvider";
 import Header from "../components/Templetes/Header";
+import Footer from "../components/Templetes/Footer";
 
 //etc.
 import { Inertia } from "@inertiajs/inertia";
 import Modal from "../components/Templetes/Modal";
+
+import "../../util/styles/_fonts.scss";
 
 type PROPS = {
     children: React.ReactNode;
@@ -20,10 +23,12 @@ const AppShell: React.FC<PROPS> = ({ children }) => {
     //ヘッダー等再描画用のフラグ
     const [reload, setReload] = useState(false);
 
-    const { modalStatus } = useModalContext();
-    const { authStatus, login, logout } = useAuthContext();
+    const { modalStatus, closeModal } = useModalContext();
+    const { login } = useAuthContext();
 
     useEffect(() => {
+        let isMounted = true;
+
         //ローカルストレージからユーザー情報を再取得してログイン
         const storedStatus = localStorage.getItem("authStatus");
         if (storedStatus) {
@@ -34,11 +39,18 @@ const AppShell: React.FC<PROPS> = ({ children }) => {
         //Inertiaの再描画完了時にreloadのトグルを走らせる
         //AppShellはInertiaでは再レンダリングされないので必須
         const handleFinish = () => {
-            console.log("描画完了");
-            setReload((prev) => !prev);
+            if (isMounted) {
+                setReload((prev) => !prev);
+                //ついでにModalを閉じる
+                closeModal();
+            }
         };
 
         Inertia.on("finish", handleFinish);
+
+        return () => {
+            isMounted = false;
+        };
     }, []);
 
     return (
@@ -46,6 +58,7 @@ const AppShell: React.FC<PROPS> = ({ children }) => {
             <Header />
             {modalStatus.isOpen && <Modal />}
             {children}
+            <Footer />
         </div>
     );
 };

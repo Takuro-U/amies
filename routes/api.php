@@ -8,6 +8,10 @@ Route::get('/test', function() {
     return response('executed');
 });
 
+Route::group(['prefix' => 'gourmet'], function () {
+    require base_path('routes/api/gourmet.php');
+});
+
 Route::group(['prefix' => 'console'], function () {
     require base_path('routes/api/adminConsole.php');
 });

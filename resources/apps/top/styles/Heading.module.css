@@ -1,0 +1,16 @@
+.heading {
+  -webkit-clip-path: polygon(0% 0%, 100% 0%, 40% 100%, 0% 100%);
+          clip-path: polygon(0% 0%, 100% 0%, 40% 100%, 0% 100%);
+}
+
+.Information {
+  background-color: rgba(255, 111, 111, 0.7);
+}
+
+.Topics {
+  background-color: rgba(255, 230, 103, 0.8);
+}
+
+.Gourmet {
+  background-color: rgba(156, 255, 188, 0.7);
+}/*# sourceMappingURL=Heading.module.css.map */

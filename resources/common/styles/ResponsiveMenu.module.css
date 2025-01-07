@@ -1,0 +1,15 @@
+/* Large Size */
+.authInfo {
+  display: none;
+}
+
+.drawer {
+  max-width: 275px;
+}
+
+/* Small Size */
+@media screen and (max-width: 440px) {
+  .authInfo {
+    display: inline;
+  }
+}/*# sourceMappingURL=ResponsiveMenu.module.css.map */

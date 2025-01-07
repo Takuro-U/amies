@@ -1,0 +1,41 @@
+@use "sass:map";
+@use "../../util/styles/variables";
+
+// CSS for footer components
+
+.heading {
+    font-size: 1.25rem;
+}
+.child {
+    padding-left: 8px;
+}
+
+/* Large Size */
+.container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.column {
+    width: 100%;
+}
+
+/* Mobile Size */
+@media screen and (max-width: #{ map.get(variables.$breakpoint, "mobile")}) {
+    .container {
+        display: block;
+    }
+    .column {
+        display: flex;
+        flex-direction: column;
+        hr {
+            order: 0;
+        }
+        h2 {
+            order: 1;
+        }
+        div {
+            order: 2;
+        }
+    }
+}

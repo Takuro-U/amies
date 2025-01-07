@@ -1,0 +1,36 @@
+.mapContainer {
+    display: flex;
+    justify-content: center;
+    //
+    width: 100%;
+    height: 30vh;
+    //
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+}
+
+.searchOptions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2vh;
+}
+
+.searchLinks {
+    display: flex;
+    justify-content: center;
+}
+
+.pageNumberBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    //
+    width: 35px;
+    height: 35px;
+    //
+    margin-left: 1px;
+    margin-right: 1px;
+    //
+    font-size: 18px;
+}

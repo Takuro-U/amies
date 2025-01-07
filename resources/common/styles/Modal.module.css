@@ -1,0 +1,26 @@
+.veil {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  background-color: rgba(50, 50, 50, 0.7);
+}
+.veil .modalCard {
+  width: 80vw;
+  height: 30vh;
+  max-width: 500px;
+  background-color: white;
+  border: solid 1px rgb(200, 200, 200);
+  border-radius: 10px;
+}
+.veil .modalCard .component {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}/*# sourceMappingURL=Modal.module.css.map */

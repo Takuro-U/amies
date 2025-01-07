@@ -12,14 +12,19 @@ type PROPS = {
 };
 
 const MenuLink: React.FC<PROPS> = (props) => {
+    const currentRoute = route().current();
+    const isActive =
+        currentRoute &&
+        (props.link.route === "/"
+            ? currentRoute === "/"
+            : currentRoute.startsWith(props.link.route));
+
     return (
         <Link href={route(props.link.route)}>
             <div
                 className={
                     "border-b border-neutral-400 px-3 py-1 mx-1 " +
-                    (route().current() === props.link.route
-                        ? "bg-gray-200"
-                        : "")
+                    (isActive ? "bg-gray-200" : "")
                 }
             >
                 {props.link.label}

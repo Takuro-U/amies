@@ -23,14 +23,22 @@ const Header: React.FC = () => {
     return (
         <>
             <header className="w-full h-16 bg-white px-1 py-2 text-black flex justify-between sticky top-0 shadow-sm shadow-slate-700 z-40">
-                <Link href="/">
-                    <span className="text-2xl italic font-semibold text-neutral-600">
-                        AMie's
-                    </span>
-                    <br />
-                    <span className="text-sm text-slate-800 leading-3">
-                        ~Find your Amusement~
-                    </span>
+                <Link href="/" className="flex">
+                    <div className="inline-flex h-full">
+                        <img
+                            src="../images/logo_480p.png"
+                            className="object-contain"
+                        />
+                    </div>
+                    <p>
+                        <span className="leading-6 text-3xl font-bold text-neutral-600">
+                            AMie's
+                        </span>
+                        <br />
+                        <span className="text-lg text-slate-800">
+                            ~Find your Amusement~
+                        </span>
+                    </p>
                 </Link>
                 <div className="flex">
                     <div

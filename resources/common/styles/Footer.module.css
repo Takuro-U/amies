@@ -1,0 +1,37 @@
+.heading {
+  font-size: 1.25rem;
+}
+
+.child {
+  padding-left: 8px;
+}
+
+/* Large Size */
+.container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.column {
+  width: 100%;
+}
+
+/* Mobile Size */
+@media screen and (max-width: 480px) {
+  .container {
+    display: block;
+  }
+  .column {
+    display: flex;
+    flex-direction: column;
+  }
+  .column hr {
+    order: 0;
+  }
+  .column h2 {
+    order: 1;
+  }
+  .column div {
+    order: 2;
+  }
+}/*# sourceMappingURL=Footer.module.css.map */

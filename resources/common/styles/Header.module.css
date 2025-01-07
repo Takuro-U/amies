@@ -1,0 +1,7 @@
+/* Large Size */
+/* Small Size */
+@media screen and (max-width: 480px) {
+  .authInfo {
+    display: none;
+  }
+}/*# sourceMappingURL=Header.module.css.map */

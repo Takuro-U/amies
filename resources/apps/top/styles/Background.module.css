@@ -1,0 +1,16 @@
+.sideFade {
+  background: linear-gradient(to right, white 25px, rgba(255, 255, 255, 0) 75px, rgba(255, 255, 255, 0) calc(100% - 25px - 50px), white calc(100% - 25px));
+}
+
+.wrapper {
+  background-color: white;
+}
+
+@media screen and (max-width: 480px) {
+  .sideFade {
+    background: linear-gradient(to right, white 5px, rgba(255, 255, 255, 0) 15px, rgba(255, 255, 255, 0) calc(100% - 5px - 10px), white calc(100% - 5px));
+  }
+  .wrapper {
+    background-color: none;
+  }
+}/*# sourceMappingURL=Background.module.css.map */

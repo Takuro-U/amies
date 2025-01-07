@@ -1,9 +1,10 @@
+@use "sass:map";
 @use "./../../util/styles/variables" as var;
 
 /* Large Size */
 
 /* Small Size */
-@media screen and (max-width: map-get(var.$breakpoint, mobile)) {
+@media screen and (max-width: map.get(var.$breakpoint, "mobile")) {
     .authInfo {
         display: none;
     }
