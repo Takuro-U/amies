@@ -69,7 +69,7 @@ const FilterBox: React.FC = () => {
     }, []);
 
     return (
-        <div className="w-[90%] border pl-[5px]">
+        <div className="w-full border pl-[5px]">
             <div className="flex items-center h-[45px]">
                 <p
                     ref={setRef(0)}

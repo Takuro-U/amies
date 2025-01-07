@@ -19,7 +19,7 @@ const SearchLinks: React.FC = () => {
             <div
                 className={classNames(
                     "flex flex-col items-center",
-                    "w-[90%]",
+                    "w-full",
                     "bg-slate-100"
                 )}
             >
@@ -27,7 +27,7 @@ const SearchLinks: React.FC = () => {
                     // 簡易検索子要素 TODO:背景にイメージを挿入
                     <button
                         className={classNames(
-                            "w-[60%] h-[50px]",
+                            "w-[70%] h-[60px]",
                             "border bg-slate-300",
                             "mb-[25px]",
                             { "mt-[25px]": index === 0 }

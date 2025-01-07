@@ -20,12 +20,13 @@ import classNames from "classnames";
 const Main: React.FC = () => {
     return (
         <div className={styles.page}>
-            <div>
-                <Map />
-            </div>
-            <aside>
-                <SearchOptions />
-                <SearchLinks />
+            <Map />
+            <SearchOptions />
+            <SearchLinks />
+            <aside className={classNames(styles.aside, "h-64")} >
+                {/* 追加要素のダミーボックス 
+                    実装時に直書きheightを削除し、scssで調整する*/}
+                ランキングとか追加要素
             </aside>
         </div>
     );

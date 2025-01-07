@@ -14,18 +14,19 @@ import classNames from "classnames";
 
 const SearchOptions: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
+
     return (
         <div className={styles.searchOptions}>
             <div
                 onClick={() => setIsOpen((prev) => !prev)}
                 className={classNames(
                     "flex items-center justify-center",
-                    "w-[90%]",
+                    "w-full",
                     "bg-slate-200",
                     "border"
                 )}
             >
-                {isOpen ? <p>▲詳細検索</p> : <p>▼詳細検索</p>}
+                <p>{ isOpen ? "△" : "▼" } 詳細検索</p>
             </div>
             {isOpen && <FilterBox />}
         </div>
