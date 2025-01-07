@@ -7,7 +7,7 @@ import CheckContent from "../Molecules/CheckContent";
 import { Category } from "../../../../types/common";
 
 // JSON
-import data from "./../../../../../storage/app/data.json";
+import data from "../../../../../storage/app/data.json";
 
 // Modules
 import { Link } from "@inertiajs/react";

@@ -24,6 +24,7 @@ const SearchLinks: React.FC = () => {
                 )}
             >
                 {searchLinkList.map((link, index) => (
+                    // 簡易検索子要素 TODO:背景にイメージを挿入
                     <button
                         className={classNames(
                             "w-[60%] h-[50px]",

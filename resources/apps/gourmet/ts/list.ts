@@ -41,6 +41,7 @@ const propsForCustomersSelector = {
     ...propsTemplate,
 };
 
+// TODO: サンプル背景imgPathに入れてどうにかする
 export const searchLinkList = [
     {
         title: "場所で探す",
