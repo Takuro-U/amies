@@ -1,3 +1,6 @@
 .swiper-scrollbar-drag {
-    background-color: rgba(59, 29, 150, 0.449);
+    background-color: #e6c8b2;
+}
+.swiper-scrollbar {
+    background-color: #ececec;
 }
