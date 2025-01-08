@@ -14,7 +14,7 @@ import classNames from "classnames";
 
 const Modal: React.FC = () => {
     const { modalStatus, closeModal } = useModalContext();
-    const { Component, componentProps } = modalStatus;
+    const { Component, componentProps, text } = modalStatus;
 
     const blockClickEvent = (e: React.MouseEvent) => {
         e.stopPropagation();
@@ -28,12 +28,16 @@ const Modal: React.FC = () => {
             >
                 {Component ? (
                     <>
-                        <button
-                            className="absolute top-2 right-2"
-                            onClick={closeModal}
-                        >
-                            <ClearIcon />
-                        </button>
+                        <div className="flex items-center justify-between h-9">
+                            <h1 className="pl-2 text-xl before:content-['○']">{ text }</h1>
+                            <button
+                                onClick={closeModal}
+                                className="pr-2"
+                            >
+                                <ClearIcon/>
+                            </button>
+                        </div>
+                        <hr className="border-slate-700 w-[96%] m-auto"/>
                         <Component {...componentProps} />
                     </>
                 ) : (

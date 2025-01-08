@@ -17,13 +17,14 @@ type PROPS = {
 
 const ListInModal: React.FC<PROPS> = (props) => {
     return (
+        // TODO:Swiperによるスライド化
         <div
             className={classNames(
-                styles.component,
+                // styles.component,
                 "flex flex-col items-center",
-                "w-[90%] h-[70%]",
+                "w-[90%] h-[75%] m-auto mt-2",
                 "border-[2px]",
-                "overflow-y-auto"
+                "overflow-y-auto",                
             )}
         >
             {props.listData.map((category, index) => {
