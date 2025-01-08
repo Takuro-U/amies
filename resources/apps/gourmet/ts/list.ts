@@ -37,33 +37,32 @@ const propsForPriceRangeSelector = {
 const propsForCustomersSelector = {
     unit: "人",
     isRange: false,
-    keyName: "costumers",
+    keyName: "costumers", // customersのスペルミス。要修正
     ...propsTemplate,
 };
 
-// TODO: サンプル背景imgPathに入れてどうにかする
 export const searchLinkList = [
     {
         title: "場所で探す",
-        imgPath: "",
+        imgPath: "../images/gourmet/SearchLink/area.png",
         Component: ListInModal,
         componentProps: propsForAreaList,
     },
     {
         title: "ジャンルで探す",
-        imgPath: "",
+        imgPath: "../images/gourmet/SearchLink/genre.png",
         Component: ListInModal,
         componentProps: propsForGenreList,
     },
     {
         title: "価格で探す",
-        imgPath: "",
+        imgPath: "../images/gourmet/SearchLink/price.png",
         Component: NumberSelectorInModal,
         componentProps: propsForPriceRangeSelector,
     },
     {
         title: "人数で探す",
-        imgPath: "",
+        imgPath: "../images/gourmet/SearchLink/customers.png",
         Component: NumberSelectorInModal,
         componentProps: propsForCustomersSelector,
     },
