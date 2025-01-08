@@ -24,27 +24,28 @@ const SearchLinks: React.FC = () => {
                 )}
             >
                 {searchLinkList.map((link, index) => (
-                    // 簡易検索子要素 TODO:背景にイメージを挿入
-                    <button
+                    <div
                         className={classNames(
                             "w-[70%] h-[60px]",
-                            "border bg-slate-300",
+                            "border bg-slate-200 rounded-sm",
                             "mb-[25px]",
-                            { "mt-[25px]": index === 0 }
+                            { "mt-[25px]": index === 0 },
+                            "flex justify-center items-center overflow-hidden",
+                            "hover:scale-105 transition-transform"
                         )}
                         key={index}
                         onClick={() =>
                             openModal({
-                                text: "",
+                                text: link.title,
                                 coreFunction: () => {},
                                 Component: link.Component,
                                 componentProps: link.componentProps,
                             })
                         }
-                        style={{ backgroundImage: link.imgPath }}
                     >
-                        {link.title}
-                    </button>
+                        <img src={ link.imgPath } className={classNames("object-cover w-full", "opacity-90")} />
+                        <label className={classNames("absolute" ,"text-slate-600 font-bold", styles.searchLink )}>{link.title}</label>
+                    </div>
                 ))}
             </div>
         </div>

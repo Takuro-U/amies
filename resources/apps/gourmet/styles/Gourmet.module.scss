@@ -1,6 +1,8 @@
 @use "../../../util/styles/variables" as v;
 
 $sm: map-get(v.$breakpoint, mobile);
+$alpha: #ffffff00;
+$white: #ffffff;
 
 .page {
     display: flex;
@@ -39,6 +41,12 @@ $sm: map-get(v.$breakpoint, mobile);
     order: 1;
 }
 
+.searchLink {
+    background: linear-gradient(to right, $alpha 0%, $white 10%, $white 90%, $alpha 100%);
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
 .aside {
     border: 1px black solid;
     width: 100%;
@@ -58,9 +66,6 @@ $sm: map-get(v.$breakpoint, mobile);
     margin-right: 1px;
     //
     font-size: 18px;
-}
-.scrollber {
-    background-color: red;
 }
 
 @media screen and (max-width:#{calc(2 * $sm)}){
