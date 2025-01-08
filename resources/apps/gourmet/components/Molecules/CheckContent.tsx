@@ -16,16 +16,19 @@ type PROPS = CheckContentProps;
 const CheckContent: React.FC<PROPS> = (props) => {
     return (
         <div
-            className={classNames("flex items-center", "mr-[10px]", {
+            className={classNames("flex items-center", "mr-[15px]", {
                 "ml-[10px]": props.id === 11111,
             })}
         >
-            <input
-                type="checkbox"
-                checked={props.isChecked}
-                onChange={props.toggleCheck}
-            />
-            <p className="whitespace-nowrap">{props.name}</p>
+            <label className="whitespace-nowrap cursor-pointer select-none">
+                <input
+                    type="checkbox"
+                    checked={props.isChecked}
+                    onChange={props.toggleCheck}
+                    className="relative bottom-[2px] mr-1 rounded-sm cursor-pointer"
+                />
+                {props.name}
+            </label>
         </div>
     );
 };

@@ -1,7 +1,9 @@
-import React, { useLayoutEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 // Component
 import CheckContent from "../Molecules/CheckContent";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Scrollbar, FreeMode } from "swiper/modules";
 
 // Types
 import { Category } from "../../../../types/common";
@@ -14,11 +16,30 @@ import { Link } from "@inertiajs/react";
 import { route } from "ziggy-js";
 import classNames from "classnames";
 
+// Styles
+import "swiper/css";
+import "swiper/css/scrollbar";
+import "swiper/css/free-mode";
+import "../../styles/scrollbar.css"; //スクロールバーのスタイルを上書き
+
+// Animation
+import animation from "../../styles/animation.module.scss";
+
+type Props = {
+    isOpen: boolean,
+}
+
 interface CheckContentProps extends Category {
     isChecked: boolean;
 }
 
-const FilterBox: React.FC = () => {
+const FilterBox: React.FC<Props> = (prop) => {
+    const [height, setHeight] = useState<string>("0px");
+
+    useEffect(()=>{
+        setHeight(prop.isOpen ? "240px" : "0px");
+    }, [prop.isOpen]);
+
     const [maxWidth, setMaxWidth] = useState(0);
     const [checkLists, setCheckLists] = useState<{
         [key: string]: CheckContentProps[];
@@ -69,7 +90,7 @@ const FilterBox: React.FC = () => {
     }, []);
 
     return (
-        <div className="w-full border pl-[5px]">
+        <div className={classNames(animation.drawer, "w-full border pl-[5px]", "overflow-hidden")} style={{height: height}}>
             <div className="flex items-center h-[45px]">
                 <p
                     ref={setRef(0)}
@@ -81,22 +102,29 @@ const FilterBox: React.FC = () => {
                 >
                     エリア：
                 </p>
-                <div className="flex items-center overflow-x-auto scrollbar-hide">
+                <Swiper
+                    className="flex items-center overflow-x-auto h-8 relative top-1"
+                    slidesPerView={ "auto" } 
+                    modules={[ Scrollbar, FreeMode ]}
+                    freeMode={ true }
+                    scrollbar={{draggable: false}}
+                >
                     {checkLists.area?.map((element) => (
-                        <CheckContent
-                            key={element.id}
-                            id={element.id}
-                            name={element.name}
-                            isChecked={element.isChecked}
-                            toggleCheck={() =>
-                                toggleCheck({
-                                    key: "area",
-                                    id: element.id,
-                                })
-                            }
-                        />
+                        <SwiperSlide key={element.id} style={{width: "auto"}}>
+                            <CheckContent
+                                id={element.id}
+                                name={element.name}
+                                isChecked={element.isChecked}
+                                toggleCheck={() =>
+                                    toggleCheck({
+                                        key: "area",
+                                        id: element.id,
+                                    })
+                                }
+                            />
+                        </SwiperSlide>
                     ))}
-                </div>
+                </Swiper>
             </div>
             <div className="flex items-center h-[45px]">
                 <p
@@ -109,22 +137,29 @@ const FilterBox: React.FC = () => {
                 >
                     ジャンル：
                 </p>
-                <div className="flex items-center overflow-x-auto scrollbar-hide">
+                <Swiper
+                    className="flex items-center overflow-x-auto h-8 relative top-1"
+                    slidesPerView={ "auto" }
+                    modules={[ Scrollbar, FreeMode ]}
+                    freeMode={ true }
+                    scrollbar={{draggable: false}}
+                >
                     {checkLists.genre?.map((element) => (
-                        <CheckContent
-                            key={element.id}
-                            id={element.id}
-                            name={element.name}
-                            isChecked={element.isChecked}
-                            toggleCheck={() =>
-                                toggleCheck({
-                                    key: "genre",
-                                    id: element.id,
-                                })
-                            }
-                        />
+                        <SwiperSlide key={element.id} style={{width: "auto"}}>
+                            <CheckContent
+                                id={element.id}
+                                name={element.name}
+                                isChecked={element.isChecked}
+                                toggleCheck={() =>
+                                    toggleCheck({
+                                        key: "genre",
+                                        id: element.id,
+                                    })
+                                }
+                            />
+                        </SwiperSlide>
                     ))}
-                </div>
+                </Swiper>
             </div>
             <div className="flex items-center h-[45px]">
                 <p
@@ -140,11 +175,13 @@ const FilterBox: React.FC = () => {
                 <input
                     className="w-[20%] h-[50%] rounded-[3px]"
                     type="number"
+                    min={0}
                 />
                 <p>円～</p>
                 <input
                     className="w-[20%] h-[50%] rounded-[3px]"
                     type="number"
+                    min={0}
                 />
                 <p>円</p>
             </div>
@@ -162,6 +199,7 @@ const FilterBox: React.FC = () => {
                 <input
                     className="w-[20%] h-[50%] rounded-[3px]"
                     type="number"
+                    min={0}
                 />
                 <p>人</p>
             </div>

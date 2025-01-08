@@ -23,12 +23,13 @@ const SearchOptions: React.FC = () => {
                     "flex items-center justify-center",
                     "w-full",
                     "bg-slate-200",
-                    "border"
+                    "border",
+                    "cursor-pointer"
                 )}
             >
                 <p>{ isOpen ? "△" : "▼" } 詳細検索</p>
             </div>
-            {isOpen && <FilterBox />}
+            <FilterBox isOpen={isOpen}/>
         </div>
     );
 };

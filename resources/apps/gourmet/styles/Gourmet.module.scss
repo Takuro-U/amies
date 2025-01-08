@@ -59,6 +59,9 @@ $sm: map-get(v.$breakpoint, mobile);
     //
     font-size: 18px;
 }
+.scrollber {
+    background-color: red;
+}
 
 @media screen and (max-width:#{calc(2 * $sm)}){
     .page{
