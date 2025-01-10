@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 // Styles
 import styles from "./../../styles/Gourmet.module.scss";
+
+// Animation
+import animation from "../../styles/animation.module.scss";
 
 // Components
 import FilterBox from "../Organisms/FilterBox";
@@ -14,22 +17,38 @@ import classNames from "classnames";
 
 const SearchOptions: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const boxRef = useRef(null);
+
+    useEffect(()=>{
+        if(boxRef.current){
+            let box:HTMLDivElement = boxRef.current;
+            box.style.height = isOpen ? "260px" : "28px";
+        }
+    },[isOpen])
 
     return (
-        <div className={styles.searchOptions}>
+        <div
+            ref={ boxRef }
+            className={
+                classNames(
+                    "rounded-lg overflow-hidden",
+                    styles.searchOptions,
+                    animation.drawer,
+                )
+            }
+        >
             <div
                 onClick={() => setIsOpen((prev) => !prev)}
                 className={classNames(
                     "flex items-center justify-center",
-                    "w-full",
-                    "bg-slate-200",
-                    "border",
-                    "cursor-pointer"
+                    "w-full h-7",
+                    "cursor-pointer",
+                    styles.searchOptionsToggleBtn,
                 )}
             >
-                <p>{ isOpen ? "△" : "▼" } 詳細検索</p>
+                <p className="text-white">{ isOpen ? "△" : "▼" } 詳細検索</p>
             </div>
-            <FilterBox isOpen={isOpen}/>
+            <FilterBox />
         </div>
     );
 };
