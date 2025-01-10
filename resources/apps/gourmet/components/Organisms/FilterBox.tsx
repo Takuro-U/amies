@@ -20,26 +20,14 @@ import classNames from "classnames";
 import "swiper/css";
 import "swiper/css/scrollbar";
 import "swiper/css/free-mode";
-import "../../styles/scrollbar.css"; //スクロールバーのスタイルを上書き
-
-// Animation
-import animation from "../../styles/animation.module.scss";
-
-type Props = {
-    isOpen: boolean,
-}
+import scrollbarStyle from "../../styles/scrollbar.module.scss"; //スクロールバーのスタイル
+import styles from "../../styles/Gourmet.module.scss";
 
 interface CheckContentProps extends Category {
     isChecked: boolean;
 }
 
-const FilterBox: React.FC<Props> = (prop) => {
-    const [height, setHeight] = useState<string>("0px");
-
-    useEffect(()=>{
-        setHeight(prop.isOpen ? "240px" : "0px");
-    }, [prop.isOpen]);
-
+const FilterBox: React.FC = () => {
     const [maxWidth, setMaxWidth] = useState(0);
     const [checkLists, setCheckLists] = useState<{
         [key: string]: CheckContentProps[];
@@ -90,7 +78,14 @@ const FilterBox: React.FC<Props> = (prop) => {
     }, []);
 
     return (
-        <div className={classNames(animation.drawer, "w-full border pl-[5px]", "overflow-hidden")} style={{height: height}}>
+        <div
+            className={
+                classNames(
+                    styles.searchOptionsDrawer,
+                    "w-full rounded-b-[4px] pl-[5px]",
+                    "overflow-hidden"
+                )}
+        >
             <div className="flex items-center h-[45px]">
                 <p
                     ref={setRef(0)}
@@ -103,11 +98,23 @@ const FilterBox: React.FC<Props> = (prop) => {
                     エリア：
                 </p>
                 <Swiper
-                    className="flex items-center overflow-x-auto h-8 relative top-1"
+                    className={
+                        classNames(
+                            "h-8 relative top-1",
+                            scrollbarStyle.filterBox,
+                        )
+                    }
                     slidesPerView={ "auto" } 
                     modules={[ Scrollbar, FreeMode ]}
                     freeMode={ true }
-                    scrollbar={{draggable: false}}
+                    scrollbar={{
+                        draggable: true,
+                        horizontalClass: scrollbarStyle.bar,
+                        dragClass: classNames(
+                            scrollbarStyle.drag,
+                            "swiper-scrollbar-drag",
+                        )
+                    }}
                 >
                     {checkLists.area?.map((element) => (
                         <SwiperSlide key={element.id} style={{width: "auto"}}>
@@ -138,11 +145,23 @@ const FilterBox: React.FC<Props> = (prop) => {
                     ジャンル：
                 </p>
                 <Swiper
-                    className="flex items-center overflow-x-auto h-8 relative top-1"
+                    className={
+                        classNames(
+                            "h-8 relative top-1",
+                            scrollbarStyle.filterBox
+                        )
+                    }
                     slidesPerView={ "auto" }
                     modules={[ Scrollbar, FreeMode ]}
                     freeMode={ true }
-                    scrollbar={{draggable: false}}
+                    scrollbar={{
+                        draggable: true,
+                        horizontalClass: scrollbarStyle.bar,
+                        dragClass: classNames(
+                            scrollbarStyle.drag,
+                            "swiper-scrollbar-drag",
+                        )
+                    }}
                 >
                     {checkLists.genre?.map((element) => (
                         <SwiperSlide key={element.id} style={{width: "auto"}}>

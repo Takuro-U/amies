@@ -1,0 +1,18 @@
+@use "../../../util/styles/variables" as v;
+
+$c: v.$gourmet_color;
+$bg: map-get($c, "bg");
+$main: map-get($c, "main");
+$sub: map-get($c, "sub");
+$accent: map-get($c, "accent");
+
+.filterBox{
+
+    .bar {
+        background-color: $bg;
+
+        .drag {
+            background-color: $accent;
+        }
+    }
+}
