@@ -1,6 +1,14 @@
 @use "../../../util/styles/variables" as v;
 
-$sm: map-get(v.$breakpoint, mobile);
+$sm: map-get(v.$breakpoint, "mobile");
+
+$c: v.$gourmet_color;
+
+$bg: map-get($c, "bg");
+$main: map-get($c, "main");
+$sub: map-get($c, "sub");
+// $accent: map-get($c, "accent");
+
 $alpha: #ffffff00;
 $white: #ffffff;
 
@@ -20,6 +28,10 @@ $white: #ffffff;
     margin-bottom: 2vh;
 }
 
+.searchOptionsToggleBtn {
+    background-color: $sub;
+}
+
 .searchOptions {
     display: flex;
     width: 100%;
@@ -29,6 +41,8 @@ $white: #ffffff;
     margin-bottom: 2vh;
     margin-top: 2vh;
     order: 2;
+
+    border: 1px $sub solid;
 }
 
 .searchLinks {
@@ -39,6 +53,8 @@ $white: #ffffff;
     margin-top: 2vh;
     margin-bottom: 2vh;
     order: 1;
+
+    background-color: $main;
 }
 
 .searchLink {

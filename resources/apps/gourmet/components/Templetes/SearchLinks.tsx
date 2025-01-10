@@ -20,7 +20,6 @@ const SearchLinks: React.FC = () => {
                 className={classNames(
                     "flex flex-col items-center",
                     "w-full",
-                    "bg-slate-100"
                 )}
             >
                 {searchLinkList.map((link, index) => (
