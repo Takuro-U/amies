@@ -2,11 +2,16 @@ import React from "react";
 
 // Styles
 import styles from "./../../../common/styles/Modal.module.scss";
+import "swiper/css";
+import "swiper/css/scrollbar";
+import "swiper/css/free-mode";
 
 // etc.
 import { Link } from "@inertiajs/react";
 import { route } from "ziggy-js";
 import classNames from "classnames";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Scrollbar, FreeMode } from "swiper/modules";
 
 type PROPS = {
     listData: { id: number; name: string }[];
@@ -18,7 +23,7 @@ type PROPS = {
 const ListInModal: React.FC<PROPS> = (props) => {
     return (
         // TODO:Swiperによるスライド化
-        <div
+        <Swiper
             className={classNames(
                 // styles.component,
                 "flex flex-col items-center",
@@ -26,6 +31,11 @@ const ListInModal: React.FC<PROPS> = (props) => {
                 "border-[2px]",
                 "overflow-y-auto",                
             )}
+            slidesPerView={ "auto" }
+            modules={[Scrollbar, FreeMode ]}
+            freeMode={ true }
+            scrollbar={{draggable: true}}
+            direction={ "vertical" }
         >
             {props.listData.map((category, index) => {
                 const data = {
@@ -34,21 +44,23 @@ const ListInModal: React.FC<PROPS> = (props) => {
                 };
 
                 return (
-                    <Link
-                        key={index}
-                        className={classNames(
-                            "flex items-center justify-center flex-shrink-0",
-                            "w-[100%] h-[40px]",
-                            { "border-t": index !== 0 }
-                        )}
-                        href={route(props.route)}
-                        data={data}
-                    >
-                        {category.name}
-                    </Link>
+                    <SwiperSlide style={{height: "auto"}}>
+                        <Link
+                            key={index}
+                            className={classNames(
+                                "flex items-center justify-center flex-shrink-0",
+                                "w-[100%] h-[40px]",
+                                { "border-t": index !== 0 }
+                            )}
+                            href={route(props.route)}
+                            data={data}
+                        >
+                            {category.name}
+                        </Link>
+                    </SwiperSlide>
                 );
             })}
-        </div>
+        </Swiper>
     );
 };
 
