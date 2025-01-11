@@ -71,8 +71,9 @@ const NumberSelectorInModal: React.FC<PROPS> = (props) => {
         <div
             className={classNames(
                 styles.component,
-                "flex items-center justify-center",
-                "w-[90%] h-[70%]"
+                "flex flex-col items-center justify-center",
+                "h-[80%]",
+                "gap-7"
             )}
         >
             {!props.isRange ? (
@@ -83,7 +84,7 @@ const NumberSelectorInModal: React.FC<PROPS> = (props) => {
                     unit={props.unit}
                 />
             ) : (
-                <>
+                <div className="flex items-center justify-center w-full">
                     <InputComponent
                         className={classNames("w-[30%]")}
                         function={handleUpdateState}
@@ -97,12 +98,10 @@ const NumberSelectorInModal: React.FC<PROPS> = (props) => {
                         status="min"
                         unit={props.unit}
                     />
-                </>
+                </div>
             )}
             <Link
                 className={classNames(
-                    "absolute top-[95%] left-[50%]",
-                    "-translate-x-[50%] -translate-y-[50%]",
                     "flex items-center justify-center",
                     "bg-black text-white",
                     "w-[90px] h-[40px]",
