@@ -27,7 +27,7 @@ const Header: React.FC = () => {
                     <div className="inline-flex h-full">
                         <img
                             src="../images/logo_480p.png"
-                            className="object-contain"
+                            className="object-contain h-full"
                         />
                     </div>
                     <p>
