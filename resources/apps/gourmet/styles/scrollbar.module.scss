@@ -1,10 +1,13 @@
+@use "sass:map";
 @use "../../../util/styles/variables" as v;
 
+$alpha: rgba(#ffffff, 0);
+
 $c: v.$gourmet_color;
-$bg: map-get($c, "bg");
-$main: map-get($c, "main");
-$sub: map-get($c, "sub");
-$accent: map-get($c, "accent");
+$bg: map.get($c, "bg");
+$main: map.get($c, "main");
+$sub: map.get($c, "sub");
+$accent: map.get($c, "accent");
 
 .filterBox{
 
@@ -13,6 +16,17 @@ $accent: map-get($c, "accent");
 
         .drag {
             background-color: $accent;
+        }
+    }
+}
+
+.searchLinkList {
+            
+    .bar{
+        background-color: $alpha;
+
+        .drag{
+            background-color: $sub;
         }
     }
 }

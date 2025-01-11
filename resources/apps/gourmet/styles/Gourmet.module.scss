@@ -1,13 +1,14 @@
+@use "sass:map";
 @use "../../../util/styles/variables" as v;
 
-$sm: map-get(v.$breakpoint, "mobile");
+$sm: map.get(v.$breakpoint, "mobile");
 
 $c: v.$gourmet_color;
 
-$bg: map-get($c, "bg");
-$main: map-get($c, "main");
-$sub: map-get($c, "sub");
-// $accent: map-get($c, "accent");
+$bg: map.get($c, "bg");
+$main: map.get($c, "main");
+$sub: map.get($c, "sub");
+$accent: map.get($c, "accent");
 
 $alpha: #ffffff00;
 $white: #ffffff;
@@ -82,6 +83,29 @@ $white: #ffffff;
     margin-right: 1px;
     //
     font-size: 18px;
+}
+
+//Gourmetのモーダルの共通スタイル
+.modal{
+    border-width: 0px !important; //なんか!importantしないとデフォの共通スタイルに負けるっぽい
+    .header{
+        background-color: $bg;
+        
+        .title{
+            color: $accent;
+            font-size: x-large;
+            font-weight: bold;
+        }
+        .title::before{
+            content: "・",
+        }
+        .closeButton{
+            color: white;
+        }
+    }
+    .hr{
+        border-width: 0px !important;
+    }
 }
 
 @media screen and (max-width:#{calc(2 * $sm)}){
