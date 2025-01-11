@@ -7,7 +7,7 @@ import styles from "./../../../gourmet/styles/Gourmet.module.scss";
 import { useModalContext } from "../../../../hooks/ModalProvider";
 
 // Modules
-import classNames from "classnames";
+import classNamesJoin from "classnames"; //競合によりJoinを追加
 
 // Utilities.
 import { searchLinkList } from "../../ts/list";
@@ -17,14 +17,14 @@ const SearchLinks: React.FC = () => {
     return (
         <div className={styles.searchLinks}>
             <div
-                className={classNames(
+                className={classNamesJoin(
                     "flex flex-col items-center",
                     "w-full",
                 )}
             >
                 {searchLinkList.map((link, index) => (
                     <div
-                        className={classNames(
+                        className={classNamesJoin(
                             "w-[70%] h-[60px]",
                             "border bg-slate-200 rounded-sm",
                             "mb-[25px]",
@@ -36,14 +36,15 @@ const SearchLinks: React.FC = () => {
                         onClick={() =>
                             openModal({
                                 text: link.title,
+                                classNames: link.classNames,
                                 coreFunction: () => {},
                                 Component: link.Component,
                                 componentProps: link.componentProps,
                             })
                         }
                     >
-                        <img src={ link.imgPath } className={classNames("object-cover w-full", "opacity-90")} />
-                        <label className={classNames("absolute" ,"text-slate-600 font-bold", styles.searchLink )}>{link.title}</label>
+                        <img src={ link.imgPath } className={classNamesJoin("object-cover w-full", "opacity-90")} />
+                        <label className={classNamesJoin("absolute" ,"text-slate-600 font-bold", styles.searchLink )}>{link.title}</label>
                     </div>
                 ))}
             </div>

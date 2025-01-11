@@ -1,7 +1,6 @@
 import React from "react";
 
 // Styles
-import styles from "./../../../common/styles/Modal.module.scss";
 import "swiper/css";
 import "swiper/css/scrollbar";
 import "swiper/css/free-mode";
@@ -18,14 +17,18 @@ type PROPS = {
     route: string;
     dataTemplate: { [key: string]: number[] | null };
     keyName: string;
+    style: { //swiperのスクロールバーのスタイルを個別に変更できる引数を追加
+        tag?: string | "",
+        bar: string,
+        drag: string,
+    };
 };
 
 const ListInModal: React.FC<PROPS> = (props) => {
     return (
-        // TODO:Swiperによるスライド化
         <Swiper
             className={classNames(
-                // styles.component,
+                props.style.tag,
                 "flex flex-col items-center",
                 "w-[90%] h-[75%] m-auto mt-2",
                 "border-[2px]",
@@ -34,7 +37,11 @@ const ListInModal: React.FC<PROPS> = (props) => {
             slidesPerView={ "auto" }
             modules={[Scrollbar, FreeMode ]}
             freeMode={ true }
-            scrollbar={{draggable: true}}
+            scrollbar={{
+                draggable: false,
+                verticalClass: props.style.bar,
+                dragClass: classNames("swiper-scrollbar-drag", props.style.drag)
+            }}
             direction={ "vertical" }
         >
             {props.listData.map((category, index) => {
@@ -44,9 +51,8 @@ const ListInModal: React.FC<PROPS> = (props) => {
                 };
 
                 return (
-                    <SwiperSlide style={{height: "auto"}}>
+                    <SwiperSlide style={{height: "auto"}} key={index}>
                         <Link
-                            key={index}
                             className={classNames(
                                 "flex items-center justify-center flex-shrink-0",
                                 "w-[100%] h-[40px]",

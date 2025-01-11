@@ -10,12 +10,13 @@ import styles from "../../styles/Modal.module.scss";
 import ClearIcon from "@mui/icons-material/Clear";
 
 // etc.
-import classNames from "classnames";
+import classNamesJoin from "classnames"; // 競合を避けるためにJoinを追加
 
 const Modal: React.FC = () => {
     const { modalStatus, closeModal } = useModalContext();
-    const { Component, componentProps, text } = modalStatus;
-
+    // textでモーダルのタイトル、classNamesでモーダルの個別スタイルを取得
+    const { Component, componentProps, text, classNames } = modalStatus;
+    
     const blockClickEvent = (e: React.MouseEvent) => {
         e.stopPropagation();
     };
@@ -23,22 +24,25 @@ const Modal: React.FC = () => {
     return (
         <div className={styles.veil} onClick={closeModal}>
             <div
-                className={classNames(styles.modalCard, "relative")}
+                className={classNamesJoin(styles.modalCard, "overflow-hidden", classNames?.modal)}
                 onClick={blockClickEvent}
             >
                 {Component ? (
                     <>
-                        <div className="flex items-center justify-between h-9">
-                            <h1 className="pl-2 text-xl before:content-['○']">{ text }</h1>
+                        <div
+                            className={classNamesJoin("flex items-center justify-between h-9", classNames?.header)}>
+                            <h1 className={classNamesJoin("pl-2 text-xl before:content-['○']", classNames?.title)}>{ text }</h1>
                             <button
                                 onClick={closeModal}
-                                className="pr-2"
+                                className={classNamesJoin("pr-2", classNames?.closeButton)}
                             >
                                 <ClearIcon/>
                             </button>
                         </div>
-                        <hr className="border-slate-700 w-[96%] m-auto"/>
-                        <Component {...componentProps} />
+                        <hr className={classNamesJoin("border-slate-700 w-[96%] m-auto", classNames?.hr)}/>
+                        <div className={classNamesJoin("h-full", classNames?.body)}>
+                            <Component {...componentProps} />
+                        </div>
                     </>
                 ) : (
                     <></>
