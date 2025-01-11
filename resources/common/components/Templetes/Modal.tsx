@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 // Custom-Hooks
 import { useModalContext } from "../../../hooks/ModalProvider";
@@ -13,7 +13,10 @@ import ClearIcon from "@mui/icons-material/Clear";
 import classNamesJoin from "classnames"; // 競合を避けるためにJoinを追加
 
 const Modal: React.FC = () => {
+    const [isMouseDownOnVeil, setIsMouseDownOnVeil] = useState<boolean>(false);
+
     const { modalStatus, closeModal } = useModalContext();
+    
     // textでモーダルのタイトル、classNamesでモーダルの個別スタイルを取得
     const { Component, componentProps, text, classNames } = modalStatus;
     
@@ -21,8 +24,30 @@ const Modal: React.FC = () => {
         e.stopPropagation();
     };
 
+    // モーダル外でクリック→クリック解除したときのみモーダルを閉じるよう修正
+    // // カーソルの位置がveilかどうか判定
+    const isOnVeil = (target: EventTarget)=>{
+        return target.className.includes(styles.veil); //なんか怒られてるけど動いているのでヨシ！ TODO: リファクタリング
+    }
+    onmousedown = (e)=>{
+        if(e.target){
+            if(isOnVeil(e.target)){//クリック位置がモーダル外
+                setIsMouseDownOnVeil(true);
+            }
+        }
+    }
+    onmouseup = (e)=>{
+        if(e.target){
+            if(isMouseDownOnVeil && isOnVeil(e.target)){//モーダル外でクリックされている∧解除位置がモーダル外
+                closeModal();
+            }
+            setIsMouseDownOnVeil(false);
+        }
+    }
+
+
     return (
-        <div className={styles.veil} onClick={closeModal}>
+        <div className={styles.veil}>
             <div
                 className={classNamesJoin(styles.modalCard, "overflow-hidden", classNames?.modal)}
                 onClick={blockClickEvent}
