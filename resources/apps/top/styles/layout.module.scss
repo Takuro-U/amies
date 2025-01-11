@@ -1,6 +1,7 @@
+@use "sass:map";
 @use "../../../util/styles/variables";
 
-$small: map-get(variables.$breakpoint, mobile);
+$small: map.get(variables.$breakpoint, mobile);
 
 // Top-page layouts
 

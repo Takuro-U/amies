@@ -1,6 +1,7 @@
+@use "sass:map";
 @use "../../../util/styles/variables" as v;
 
-$small: map-get(v.$breakpoint, mobile);
+$small: map.get(v.$breakpoint, mobile);
 $alpha: rgb(white, 0);
 
 .sideFade {

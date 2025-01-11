@@ -1,5 +1,6 @@
+@use "sass:map";
 @use "../../../util/styles/variables" as v;
-$blue : map-get(v.$accent_color,"blue");
+$blue : map.get(v.$accent_color,"blue");
 
 // Background circle animation
 
