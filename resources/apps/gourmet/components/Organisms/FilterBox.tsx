@@ -108,7 +108,7 @@ const FilterBox: React.FC = () => {
                     modules={[ Scrollbar, FreeMode ]}
                     freeMode={ true }
                     scrollbar={{
-                        draggable: true,
+                        draggable: false,
                         horizontalClass: scrollbarStyle.bar,
                         dragClass: classNames(
                             scrollbarStyle.drag,
@@ -155,7 +155,7 @@ const FilterBox: React.FC = () => {
                     modules={[ Scrollbar, FreeMode ]}
                     freeMode={ true }
                     scrollbar={{
-                        draggable: true,
+                        draggable: false,
                         horizontalClass: scrollbarStyle.bar,
                         dragClass: classNames(
                             scrollbarStyle.drag,
