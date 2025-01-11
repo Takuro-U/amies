@@ -9,6 +9,7 @@ import { route } from "ziggy-js";
 
 type PROPS = {
     link: MenuLinkType;
+    onClick: ()=>void; //Linkを押したときに発火する関数
 };
 
 const MenuLink: React.FC<PROPS> = (props) => {
@@ -20,7 +21,7 @@ const MenuLink: React.FC<PROPS> = (props) => {
             : currentRoute.startsWith(props.link.route));
 
     return (
-        <Link href={route(props.link.route)}>
+        <Link href={route(props.link.route)} onClick={ props.onClick }>
             <div
                 className={
                     "border-b border-neutral-400 px-3 py-1 mx-1 " +
