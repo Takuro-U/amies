@@ -2,6 +2,7 @@
 
 import { FC, ReactNode } from "react";
 import { motion } from "framer-motion";
+import { duration } from "@mui/material";
 
 type Props = {
     children: ReactNode,
@@ -71,6 +72,33 @@ export const RandomZoom: FC<Props> =( props )=>{
         className={ props.className }
         >
         { props.children }
+        </motion.div>
+    )
+}
+
+// フェードイン
+type FIProps = {
+    delay?: number | 0,
+    duration?: number | 1,
+    children: ReactNode,
+    className?: string | "",
+}
+export const FadeIn: FC<FIProps> = (props)=>{
+    return (
+        <motion.div
+            className={ props.className }
+            initial={{
+                opacity: 0,
+            }}
+            animate={{
+                opacity: 1,
+            }}
+            transition={{
+                delay: props.delay,
+                duration: props.duration,
+            }}
+        >
+            { props.children }
         </motion.div>
     )
 }

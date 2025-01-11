@@ -2,9 +2,8 @@ import React from "react";
 import { route } from "ziggy-js";
 import { useAuthContext } from "../../../hooks/AuthProvider";
 import classNames from "classnames";
-import { motion } from "framer-motion";
 import { TopicsIcon, GourmetIcon } from "../components/Organisms/SvgIcons";
-
+import { FadeIn } from "../components/Organisms/MotionContainer";
 import Board from "../components/Templates/Board";
 import Information from "../components/Templates/Information";
 import ArticleList from "../components/Templates/ArticleList";
@@ -20,18 +19,9 @@ const Main: React.FC = () => {
             <BackGround />
             <div className={classNames("relative z-10 ", layout.wrapper)}>
                 <Board />
-                <motion.div // Boardよりも先に表示されないように隠す
+                <FadeIn // Boardよりも先に表示されないように隠す
                     className={layout.aside}
-                    initial={{
-                        opacity: 0,
-                    }}
-                    animate={{
-                        opacity: 1,
-                    }}
-                    transition={{
-                        delay: 2,
-                        duration: 1,
-                    }}
+                    delay={2}
                 >
                     <Information />
                     <div className={layout.articleLists}>
@@ -46,7 +36,7 @@ const Main: React.FC = () => {
                             icon={<GourmetIcon />}
                         />
                     </div>
-                </motion.div>
+                </FadeIn>
             </div>
         </>
     );
