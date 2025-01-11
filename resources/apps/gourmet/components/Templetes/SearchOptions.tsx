@@ -22,7 +22,7 @@ const SearchOptions: React.FC = () => {
     useEffect(()=>{
         if(boxRef.current){
             let box:HTMLDivElement = boxRef.current;
-            box.style.height = isOpen ? "260px" : "28px";
+            box.style.height = isOpen ? "260px" : "35px";
         }
     },[isOpen])
 
@@ -41,7 +41,7 @@ const SearchOptions: React.FC = () => {
                 onClick={() => setIsOpen((prev) => !prev)}
                 className={classNames(
                     "flex items-center justify-center",
-                    "w-full h-7",
+                    "w-full h-[35px]",
                     "cursor-pointer",
                     styles.searchOptionsToggleBtn,
                 )}
