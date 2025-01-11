@@ -23,7 +23,7 @@ export default function Board() {
             className={layout.board}
         >
             <Section className="mb-0">
-                <img src="../images/top/boardBG.png" className="object-fill" />
+                <img src="../images/top/boardBG.png" className="object-fill w-full" />
             </Section>
         </motion.div>
     );
