@@ -26,11 +26,11 @@ const SearchLinks: React.FC = () => {
                     <div
                         className={classNamesJoin(
                             "w-[70%] h-[60px]",
-                            "border bg-slate-200 rounded-sm",
+                            "bg-white rounded-sm",
                             "mb-[25px]",
                             { "mt-[25px]": index === 0 },
                             "flex justify-center items-center overflow-hidden",
-                            "hover:scale-105 transition-transform"
+                            "hover:scale-105 transition-transform",
                         )}
                         key={index}
                         onClick={() =>
@@ -43,8 +43,8 @@ const SearchLinks: React.FC = () => {
                             })
                         }
                     >
-                        <img src={ link.imgPath } className={classNamesJoin("object-cover w-full", "opacity-90")} />
-                        <label className={classNamesJoin("absolute" ,"text-slate-600 font-bold", styles.searchLink )}>{link.title}</label>
+                        <img src={ link.imgPath } className={classNamesJoin("object-cover w-full", "opacity-50")} />
+                        <label className={classNamesJoin("absolute", "text-slate-600 font-bold", styles.searchLink )}>{link.title}</label>
                     </div>
                 ))}
             </div>

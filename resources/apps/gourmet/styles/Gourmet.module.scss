@@ -1,6 +1,9 @@
 @use "sass:map";
 @use "../../../util/styles/variables" as v;
 
+// fonts
+@import url('https://fonts.googleapis.com/css2?family=Shippori+Antique+B1&display=swap');
+
 $sm: map.get(v.$breakpoint, "mobile");
 
 $c: v.$gourmet_color;
@@ -12,6 +15,11 @@ $accent: map.get($c, "accent");
 
 $alpha: #ffffff00;
 $white: #ffffff;
+
+// ユーザーがアクセス可能な要素に用いるフォント
+.accessable {
+    font-family: "Shippori Antique B1";
+}
 
 .page {
     display: flex;
@@ -45,6 +53,10 @@ $white: #ffffff;
     border: 1px $sub solid;
 }
 
+.searchOptionsBtn {
+    background-color: $accent;
+}
+
 .searchLinks {
     display: flex;
     width: 40%;
@@ -55,12 +67,6 @@ $white: #ffffff;
     order: 1;
 
     background-color: $main;
-}
-
-.searchLink {
-    background: linear-gradient(to right, $alpha 0%, $white 10%, $white 90%, $alpha 100%);
-    padding-right: 10px;
-    padding-left: 10px;
 }
 
 .aside {
