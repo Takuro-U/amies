@@ -3,7 +3,8 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 // Component
 import CheckContent from "../Molecules/CheckContent";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Scrollbar, FreeMode } from "swiper/modules";
+import { Scrollbar, FreeMode, Grid } from "swiper/modules";
+import SearchIcon from '@mui/icons-material/Search';
 
 // Types
 import { Category } from "../../../../types/common";
@@ -20,6 +21,7 @@ import classNames from "classnames";
 import "swiper/css";
 import "swiper/css/scrollbar";
 import "swiper/css/free-mode";
+import "swiper/css/grid";
 import scrollbarStyle from "../../styles/scrollbar.module.scss"; //スクロールバーのスタイル
 import styles from "../../styles/Gourmet.module.scss";
 
@@ -41,6 +43,27 @@ const FilterBox: React.FC = () => {
             isChecked: false,
         })),
     });
+    const [isAnyQueries, setIsAnyQueries] = useState<boolean>(false);
+    const queryListRef = useRef<HTMLDivElement>(null);
+
+    //指定条件を表示
+    const queryListCtrl =()=>{
+        let temp:string[] = [];
+        Object.keys(checkLists).map((key)=>{
+            checkLists[key].map((query)=>{
+                if(query.isChecked){
+                    temp.push(query.name);
+                }
+            });
+        });
+        setIsAnyQueries(Boolean(temp.length));
+        if(queryListRef.current){
+            queryListRef.current.innerText = temp.join("、")
+        }
+    }
+
+    useEffect(queryListCtrl, [checkLists])
+
     const [priceRange, setPriceRange] = useState<{
         max: number | null;
         min: number | null;
@@ -86,7 +109,7 @@ const FilterBox: React.FC = () => {
                     "overflow-hidden"
                 )}
         >
-            <div className="flex items-center h-[45px]">
+            <div className="flex items-center h-[90px]">
                 <p
                     ref={setRef(0)}
                     className="whitespace-nowrap text-right"
@@ -100,12 +123,12 @@ const FilterBox: React.FC = () => {
                 <Swiper
                     className={
                         classNames(
-                            "h-8 relative top-1",
+                            "h-16 relative top-1",
                             scrollbarStyle.filterBox,
                         )
                     }
-                    slidesPerView={ "auto" } 
-                    modules={[ Scrollbar, FreeMode ]}
+                    slidesPerView={ 2 } 
+                    modules={[ Scrollbar, FreeMode, Grid ]}
                     freeMode={ true }
                     scrollbar={{
                         draggable: false,
@@ -114,6 +137,9 @@ const FilterBox: React.FC = () => {
                             scrollbarStyle.drag,
                             "swiper-scrollbar-drag",
                         )
+                    }}
+                    grid={{
+                        rows: 2,
                     }}
                 >
                     {checkLists.area?.map((element) => (
@@ -133,7 +159,7 @@ const FilterBox: React.FC = () => {
                     ))}
                 </Swiper>
             </div>
-            <div className="flex items-center h-[45px]">
+            <div className="flex items-center h-[90px]">
                 <p
                     ref={setRef(1)}
                     className="whitespace-nowrap text-right"
@@ -147,12 +173,12 @@ const FilterBox: React.FC = () => {
                 <Swiper
                     className={
                         classNames(
-                            "h-8 relative top-1",
+                            "h-16 relative top-1",
                             scrollbarStyle.filterBox
                         )
                     }
-                    slidesPerView={ "auto" }
-                    modules={[ Scrollbar, FreeMode ]}
+                    slidesPerView={ 3 }
+                    modules={[ Scrollbar, FreeMode, Grid ]}
                     freeMode={ true }
                     scrollbar={{
                         draggable: false,
@@ -162,6 +188,10 @@ const FilterBox: React.FC = () => {
                             "swiper-scrollbar-drag",
                         )
                     }}
+                    grid={{
+                        rows: 2,
+                    }}
+                    
                 >
                     {checkLists.genre?.map((element) => (
                         <SwiperSlide key={element.id} style={{width: "auto"}}>
@@ -222,13 +252,25 @@ const FilterBox: React.FC = () => {
                 />
                 <p>人</p>
             </div>
-            <div className="flex items-center justify-center h-[60px]">
+            <div>
+                { isAnyQueries && 
+                <p className="text-sm text-slate-600">
+                    条件は...
+                </p>
+                }
+                <p ref={ queryListRef } className="text-sm">
+                </p>
+            </div>
+            <div className="w-full">
                 <Link
                     className={classNames(
+                        "m-auto",
                         "flex items-center justify-center",
-                        "w-[70px] h-[55%]",
+                        "w-[90px] h-[55%]",
                         "rounded-[5px] mb-[10px]",
-                        "bg-slate-950 text-white"
+                        "text-white",
+                        styles.searchOptionsBtn,
+                        styles.accessable,
                     )}
                     href={route("/gourmet/search")}
                     data={{
@@ -242,7 +284,7 @@ const FilterBox: React.FC = () => {
                         customers: customers,
                     }}
                 >
-                    検索
+                    <SearchIcon fontSize="small" className="relative top-[1px]"/>検索
                 </Link>
             </div>
         </div>
