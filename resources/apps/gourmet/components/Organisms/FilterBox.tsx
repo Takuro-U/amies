@@ -109,7 +109,7 @@ const FilterBox: React.FC = () => {
                     "overflow-hidden"
                 )}
         >
-            <div className="flex items-center h-[90px]">
+            <div className="flex items-center h-[60px]">
                 <p
                     ref={setRef(0)}
                     className="whitespace-nowrap text-right"
@@ -120,32 +120,11 @@ const FilterBox: React.FC = () => {
                 >
                     エリア：
                 </p>
-                <Swiper
-                    className={
-                        classNames(
-                            "h-16 relative top-1",
-                            scrollbarStyle.filterBox,
-                        )
-                    }
-                    slidesPerView={ 2 } 
-                    modules={[ Scrollbar, FreeMode, Grid ]}
-                    freeMode={ true }
-                    scrollbar={{
-                        draggable: false,
-                        horizontalClass: scrollbarStyle.bar,
-                        dragClass: classNames(
-                            scrollbarStyle.drag,
-                            "swiper-scrollbar-drag",
-                        )
-                    }}
-                    grid={{
-                        rows: 2,
-                    }}
-                >
+                <div className={classNames("h-full flex flex-wrap flex-col overflow-x-scroll", scrollbarStyle.none)}>
                     {checkLists.area?.map((element) => (
-                        <SwiperSlide key={element.id} style={{width: "auto"}}>
                             <CheckContent
                                 id={element.id}
+                                key={element.id}
                                 name={element.name}
                                 isChecked={element.isChecked}
                                 toggleCheck={() =>
@@ -155,11 +134,10 @@ const FilterBox: React.FC = () => {
                                     })
                                 }
                             />
-                        </SwiperSlide>
                     ))}
-                </Swiper>
+                </div>
             </div>
-            <div className="flex items-center h-[90px]">
+            <div className="flex items-center h-[60px]">
                 <p
                     ref={setRef(1)}
                     className="whitespace-nowrap text-right"
@@ -170,32 +148,10 @@ const FilterBox: React.FC = () => {
                 >
                     ジャンル：
                 </p>
-                <Swiper
-                    className={
-                        classNames(
-                            "h-16 relative top-1",
-                            scrollbarStyle.filterBox
-                        )
-                    }
-                    slidesPerView={ 3 }
-                    modules={[ Scrollbar, FreeMode, Grid ]}
-                    freeMode={ true }
-                    scrollbar={{
-                        draggable: false,
-                        horizontalClass: scrollbarStyle.bar,
-                        dragClass: classNames(
-                            scrollbarStyle.drag,
-                            "swiper-scrollbar-drag",
-                        )
-                    }}
-                    grid={{
-                        rows: 2,
-                    }}
-                    
-                >
+                <div className={classNames("flex h-full flex-wrap flex-col overflow-x-scroll", scrollbarStyle.none)}>
                     {checkLists.genre?.map((element) => (
-                        <SwiperSlide key={element.id} style={{width: "auto"}}>
                             <CheckContent
+                                key={element.id}
                                 id={element.id}
                                 name={element.name}
                                 isChecked={element.isChecked}
@@ -206,9 +162,8 @@ const FilterBox: React.FC = () => {
                                     })
                                 }
                             />
-                        </SwiperSlide>
                     ))}
-                </Swiper>
+                </div>
             </div>
             <div className="flex items-center h-[45px]">
                 <p

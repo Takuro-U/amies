@@ -9,6 +9,14 @@ $main: map.get($c, "main");
 $sub: map.get($c, "sub");
 $accent: map.get($c, "accent");
 
+.none{
+    -ms-overflow-style: none; //For IE, Edge
+    scrollbar-width: none; //For FireFox
+}
+.none::-webkit-scrollbar{
+    display: none; //For Chrome, Safari
+}
+
 .filterBox{
 
     .bar {
