@@ -17,14 +17,47 @@ import classNames from "classnames";
 
 const SearchOptions: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const boxRef = useRef(null);
+    const contentRef = useRef<HTMLDivElement>(null);
+    const boxRef = useRef<HTMLDivElement>(null);
 
-    useEffect(()=>{
-        if(boxRef.current){
-            let box:HTMLDivElement = boxRef.current;
-            box.style.height = isOpen ? "260px" : "35px";
+    // 開閉ロジック
+    const drawerCtrl = (mode: string)=>{
+        if(boxRef.current && contentRef.current){
+            const height = 35 + (mode === "open" ? contentRef.current.clientHeight : 0);
+            boxRef.current.style.height = height + "px";
         }
-    },[isOpen])
+    }
+    
+    // 条件列挙でサイズが変わっても枠が追従するように
+    const heightObserver = new ResizeObserver((e)=>{
+        if(contentRef.current && boxRef.current){
+            boxRef.current.style.transitionDuration = "0ms";
+            drawerCtrl("open");
+            boxRef.current.style.transitionDuration = "600ms";
+        }
+    });
+    
+    // 開閉の制御
+    const drawerLogic =()=>{
+        if(boxRef.current && contentRef.current){
+            if(isOpen){
+                drawerCtrl("open");
+                boxRef.current.addEventListener("transitionend", ()=>{
+                    // トランジション終了時に追従ロジックを適用
+                    if(boxRef.current && contentRef.current){
+                        heightObserver.observe(contentRef.current);
+                    }
+                }, {once: true});
+            }else{
+                if(contentRef.current){
+                    // 追従ロジックを解除
+                    heightObserver.unobserve(contentRef.current);
+                }
+                drawerCtrl("close");
+            }
+        }
+        setIsOpen((prev)=> !prev);
+    }
 
     return (
         <div
@@ -38,7 +71,7 @@ const SearchOptions: React.FC = () => {
             }
         >
             <div
-                onClick={() => setIsOpen((prev) => !prev)}
+                onClick={ drawerLogic }
                 className={classNames(
                     "flex items-center justify-center",
                     "w-full h-[35px]",
@@ -48,7 +81,9 @@ const SearchOptions: React.FC = () => {
             >
                 <p className="text-white">{ isOpen ? "△" : "▼" } 詳細検索</p>
             </div>
-            <FilterBox />
+            <div ref={ contentRef } className="h-auto">
+                <FilterBox />
+            </div>
         </div>
     );
 };
