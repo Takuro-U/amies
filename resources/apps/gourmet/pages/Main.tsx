@@ -7,6 +7,7 @@ import styles from "./../styles/Gourmet.module.scss";
 import Map from "../components/Templetes/Map";
 import SearchLinks from "../components/Templetes/SearchLinks";
 import SearchOptions from "../components/Templetes/SearchOptions";
+import Background from "../components/Templetes/Background";
 
 // Types
 import { Category } from "../../../types/common";
@@ -19,7 +20,9 @@ import classNames from "classnames";
 
 const Main: React.FC = () => {
     return (
-        <div className={styles.page}>
+        <>
+        <Background />
+        <div className={classNames("relative z-10", styles.page)}>
             <Map />
             <SearchOptions />
             <SearchLinks />
@@ -29,6 +32,7 @@ const Main: React.FC = () => {
                 ランキングとか追加要素
             </aside>
         </div>
+        </>
     );
 };
 
