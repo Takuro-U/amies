@@ -29,11 +29,9 @@ const SearchOptions: React.FC = () => {
     }
     
     // 条件列挙でサイズが変わっても枠が追従するように
-    const heightObserver = new ResizeObserver((e)=>{
-        if(contentRef.current && boxRef.current){
-            boxRef.current.style.transitionDuration = "0ms";
+    const heightObserver = new ResizeObserver(()=>{
+        if(contentRef.current){
             drawerCtrl("open");
-            boxRef.current.style.transitionDuration = "600ms";
         }
     });
     
@@ -45,6 +43,7 @@ const SearchOptions: React.FC = () => {
                 boxRef.current.addEventListener("transitionend", ()=>{
                     // トランジション終了時に追従ロジックを適用
                     if(boxRef.current && contentRef.current){
+                        boxRef.current.classList.remove(animation.drawer); //アニメーションを削除
                         heightObserver.observe(contentRef.current);
                     }
                 }, {once: true});
@@ -53,11 +52,16 @@ const SearchOptions: React.FC = () => {
                     // 追従ロジックを解除
                     heightObserver.unobserve(contentRef.current);
                 }
+                boxRef.current.classList.add(animation.drawer); //アニメーションを再び適用
                 drawerCtrl("close");
             }
         }
         setIsOpen((prev)=> !prev);
     }
+
+    useEffect(()=>{
+        drawerLogic();    
+    },[])
 
     return (
         <div
@@ -71,7 +75,7 @@ const SearchOptions: React.FC = () => {
             }
         >
             <div
-                onClick={ drawerLogic }
+                onClick={drawerLogic}
                 className={classNames(
                     "flex items-center justify-center",
                     "w-full h-[35px]",
@@ -79,7 +83,7 @@ const SearchOptions: React.FC = () => {
                     styles.searchOptionsToggleBtn,
                 )}
             >
-                <p className="text-white">{ isOpen ? "△" : "▼" } 詳細検索</p>
+                <p className="text-white">{ isOpen ? "▼" : "△" } 詳細検索</p>
             </div>
             <div ref={ contentRef } className="h-auto">
                 <FilterBox />
