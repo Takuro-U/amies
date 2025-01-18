@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 
 // Custom-Hooks
 import { useModalContext } from "../../../hooks/ModalProvider";
@@ -26,32 +26,40 @@ const Modal: React.FC = () => {
 
     // モーダル外でクリック→クリック解除したときのみモーダルを閉じるよう修正
     // // カーソルの位置がveilかどうか判定
+    const veilRef = useRef<HTMLDivElement>(null);
     const isOnVeil = (target: EventTarget)=>{
         if(target instanceof Element){ //target: EventTargetが Element型にキャストできるか検証。検証せずにtargetをElementとして扱うと警告が出る
-            return target.className.includes(styles.veil);
+            return target.classList.contains(styles.veil);
         }
         return false;
     }
-    onmousedown = (e)=>{
+
+    const downHandler = (e: MouseEvent)=>{
         if(e.target){
-            if(isOnVeil(e.target)){//クリック位置がモーダル外
-                setIsMouseDownOnVeil(true);
-            }
+            setIsMouseDownOnVeil(isOnVeil(e.target))//クリック位置がモーダル外かを保存
         }
     }
-    onmouseup = (e)=>{
-        console.log(e)
+
+    const upHandler = (e: MouseEvent)=>{
         if(e.target){
-            if(isMouseDownOnVeil && isOnVeil(e.target)){//モーダル外でクリックされている∧解除位置がモーダル外
+            const onVeil = isOnVeil(e.target);
+            if(isMouseDownOnVeil && onVeil){//モーダル外でクリックされている∧解除位置がモーダル外
                 closeModal();
             }
-            setIsMouseDownOnVeil(false);
         }
     }
+
+    useEffect(()=>{
+        if(veilRef.current){
+            const veil = veilRef.current;
+            veil.onmousedown = downHandler;
+            veil.onmouseup = upHandler;
+        }
+    },[isMouseDownOnVeil])
 
 
     return (
-        <div className={styles.veil}>
+        <div ref={ veilRef } className={styles.veil}>
             <div
                 className={classNamesJoin(styles.modalCard, "overflow-hidden", classNames?.modal)}
                 onClick={blockClickEvent}
