@@ -69,6 +69,7 @@ const SearchOptions: React.FC = () => {
             className={
                 classNames(
                     "rounded-lg overflow-hidden",
+                    "bg-white bg-opacity-30",
                     styles.searchOptions,
                     animation.drawer,
                 )

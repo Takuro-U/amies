@@ -25,7 +25,16 @@ const CheckContent: React.FC<PROPS> = (props) => {
                     type="checkbox"
                     checked={props.isChecked}
                     onChange={props.toggleCheck}
-                    className="relative bottom-[2px] mr-1 rounded-sm cursor-pointer"
+                    className={classNames(
+                        "relative bottom-[2px]",
+                        "mr-1 rounded-sm",
+                        "cursor-pointer",
+                        "checked:bg-orange-400",
+                        "checked:focus:bg-orange-400",
+                        "focus:bg-white",
+                        "focus:ring-orange-400",
+                        "checked:hover:bg-orange-400"
+                    )}
                 />
                 {props.name}
             </label>
