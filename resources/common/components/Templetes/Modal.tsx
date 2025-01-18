@@ -27,7 +27,10 @@ const Modal: React.FC = () => {
     // モーダル外でクリック→クリック解除したときのみモーダルを閉じるよう修正
     // // カーソルの位置がveilかどうか判定
     const isOnVeil = (target: EventTarget)=>{
-        return target.className.includes(styles.veil); //なんか怒られてるけど動いているのでヨシ！ TODO: リファクタリング
+        if(target instanceof Element){ //target: EventTargetが Element型にキャストできるか検証。検証せずにtargetをElementとして扱うと警告が出る
+            return target.className.includes(styles.veil);
+        }
+        return false;
     }
     onmousedown = (e)=>{
         if(e.target){
@@ -37,6 +40,7 @@ const Modal: React.FC = () => {
         }
     }
     onmouseup = (e)=>{
+        console.log(e)
         if(e.target){
             if(isMouseDownOnVeil && isOnVeil(e.target)){//モーダル外でクリックされている∧解除位置がモーダル外
                 closeModal();
