@@ -3,13 +3,14 @@ import { Heading } from "../Organisms/Heading";
 import { Section } from "../Organisms/Section";
 import { InformationLink } from "../Organisms/InformationLink";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Scrollbar } from "swiper/modules";
+import { Scrollbar, FreeMode } from "swiper/modules";
 import { ScrollHopping } from "../Organisms/MotionContainer";
 import { InformationIcon } from "../Organisms/SvgIcons";
 
 // CSS
 import "swiper/css";
 import "swiper/css/scrollbar";
+import "swiper/css/free-mode";
 import layout from "../../styles/layout.module.scss";
 
 // SAMPLE DATA
@@ -21,10 +22,11 @@ export default function Information() {
             <Section>
                 <Heading label="Information" icon={<InformationIcon />} />
                 <Swiper
-                    modules={[Scrollbar]}
+                    modules={[Scrollbar, FreeMode]}
                     scrollbar={{
                         draggable: true,
                     }}
+                    freeMode={true}
                     slidesPerView={3}
                     direction={"vertical"}
                     className="h-28"

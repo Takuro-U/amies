@@ -3,13 +3,14 @@ import { Heading } from "../Organisms/Heading";
 import { Section } from "../Organisms/Section";
 import { ArticleLink } from "../Organisms/ArticleLink";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Scrollbar } from "swiper/modules";
+import { Scrollbar, FreeMode } from "swiper/modules";
 import { route } from "ziggy-js";
 import { ScrollHopping } from "../Organisms/MotionContainer";
 
 // CSS
 import "swiper/css";
 import "swiper/css/scrollbar";
+import "swiper/css/free-mode";
 
 type Props = {
     label: string;
@@ -26,9 +27,10 @@ export default function ArticleList(props: Props) {
             <Section>
                 <Heading label={props.label} icon={props.icon} />
                 <Swiper
-                    modules={[Scrollbar]}
+                    modules={[Scrollbar, FreeMode]}
                     slidesPerView={2.3}
                     scrollbar={{ draggable: true }}
+                    freeMode={true}
                 >
                     {articles.map((i, key) => (
                         <SwiperSlide
