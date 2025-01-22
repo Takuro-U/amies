@@ -1,13 +1,4 @@
-@use "sass:map";
-@use "../../../util/styles/variables" as v;
-$blue : map.get(v.$accent_color,"blue");
-
 // Background circle animation
-
-.area{
-    background: #4e54c8;  
-    background: linear-gradient(to bottom right, rgb($blue, 0.1), rgb($blue, 0.4));  
-}
 
 .circles{
     position: absolute;

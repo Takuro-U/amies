@@ -5,12 +5,12 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectCoverflow } from "swiper/modules";
 import { Cover } from "../Organisms/Cover";
 import { FadeIn } from "../Organisms/MotionContainer";
+import { BackgroundBase } from "../../../../util/components/BackgroundBase";
 
 // CSS
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "../../styles/snapshotsAnimation.css";
-import animation from "../../styles/BackgroundAnimation.module.scss";
 import style from "../../styles/Background.module.scss";
 import layout from "../../styles/layout.module.scss";
 
@@ -95,25 +95,7 @@ export default function BackGround() {
                 </div>
             </FadeIn>
             {/* Background Circles */}
-            <div
-                className={classNames(
-                    "fixed top-16 w-full h-full z-0",
-                    animation.area
-                )}
-            >
-                <ul className={animation.circles}>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                </ul>
-            </div>
+            <BackgroundBase className={style.bgBase}/>
         </>
     );
 }
