@@ -3,9 +3,6 @@ import React, { useEffect, useRef, useState } from "react";
 // Styles
 import styles from "./../../styles/Gourmet.module.scss";
 
-// Animation
-import animation from "../../styles/animation.module.scss";
-
 // Components
 import FilterBox from "../Organisms/FilterBox";
 
@@ -43,7 +40,7 @@ const SearchOptions: React.FC = () => {
                 boxRef.current.addEventListener("transitionend", ()=>{
                     // トランジション終了時に追従ロジックを適用
                     if(boxRef.current && contentRef.current){
-                        boxRef.current.classList.remove(animation.drawer); //アニメーションを削除
+                        boxRef.current.classList.remove(styles.drawer); //アニメーションを削除
                         heightObserver.observe(contentRef.current);
                     }
                 }, {once: true});
@@ -52,7 +49,7 @@ const SearchOptions: React.FC = () => {
                     // 追従ロジックを解除
                     heightObserver.unobserve(contentRef.current);
                 }
-                boxRef.current.classList.add(animation.drawer); //アニメーションを再び適用
+                boxRef.current.classList.add(styles.drawer); //アニメーションを再び適用
                 drawerCtrl("close");
             }
         }
@@ -71,7 +68,7 @@ const SearchOptions: React.FC = () => {
                     "rounded-lg overflow-hidden",
                     "bg-white bg-opacity-30",
                     styles.searchOptions,
-                    animation.drawer,
+                    styles.drawer,
                 )
             }
         >

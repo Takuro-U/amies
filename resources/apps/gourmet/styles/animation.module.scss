@@ -1,7 +1,0 @@
-@use "sass:map";
-@use "../../../util/styles/variables" as v;
-$bg : map.get(v.$gourmet_color,"bg");
-$main: map.get(v.$gourmet_color, "main");
-.drawer{
-    transition: height 600ms ease;
-}

@@ -24,6 +24,7 @@ $white: #ffffff;
 .bgBase {
     background: linear-gradient(to bottom right, rgba($main, 0.3), rgba($main, 0.4));
 }
+
 .page {
     display: flex;
     max-width: calc($sm * 2);
@@ -42,6 +43,10 @@ $white: #ffffff;
 
 .searchOptionsToggleBtn {
     background-color: $sub;
+}
+
+.drawer{
+    transition: height 600ms ease;
 }
 
 .searchOptions {
