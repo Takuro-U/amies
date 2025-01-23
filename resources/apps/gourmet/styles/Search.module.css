@@ -1,0 +1,40 @@
+.page, .pagenations::after {
+  background-image: url("/images/gourmet/background.jpg");
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-color: rgba(255, 255, 255, 0.25);
+  background-blend-mode: overlay;
+}
+
+.pagenations {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 50px;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.pagenations::after {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: -1;
+}
+
+.pageNumberBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+  margin-left: 1px;
+  margin-right: 1px;
+  font-size: 18px;
+  font-weight: 500;
+}/*# sourceMappingURL=Search.module.css.map */

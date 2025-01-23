@@ -5,13 +5,13 @@ import style from "../../styles/SnapshotContainer.module.scss";
 import classNames from "classnames";
 
 type Props = {
-    path: string,
+    path: string;
 };
 
-export const SnapshotContainer: FC<Props> = ( props )=>{
+export const SnapshotContainer: FC<Props> = (props) => {
     return (
-        <div className={ style.container }>
-            <img src={ props.path } className={ style.img }/>
+        <div className={style.container}>
+            <img src={props.path} className={style.img} />
         </div>
-    )
-}
+    );
+};

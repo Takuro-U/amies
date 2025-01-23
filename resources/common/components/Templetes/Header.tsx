@@ -22,12 +22,17 @@ const Header: React.FC = () => {
 
     return (
         <>
-            <header className="w-full h-16 bg-white px-1 py-2 text-black flex justify-between sticky top-0 shadow-sm shadow-slate-700 z-40">
+            <header
+                className={classNames(
+                    "font-main",
+                    "w-full h-16 bg-white px-1 py-2 text-black flex justify-between sticky top-0 shadow-sm shadow-slate-700 z-40"
+                )}
+            >
                 <Link href="/" className="flex">
                     <div className="inline-flex h-full">
                         <img
                             src="../images/logo_480p.png"
-                            className="object-contain"
+                            className="object-contain h-full"
                         />
                     </div>
                     <p>

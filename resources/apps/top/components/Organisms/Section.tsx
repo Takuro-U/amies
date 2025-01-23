@@ -2,11 +2,11 @@ import classNames from "classnames";
 import { FC, ReactNode } from "react";
 
 type Props = {
-    children?: ReactNode,
-    className?: string,
-}
+    children?: ReactNode;
+    className?: string;
+};
 
-export const Section: FC<Props> = ({ children, className }) =>{
+export const Section: FC<Props> = ({ children, className }) => {
     return (
         <section
             className={classNames(
@@ -16,7 +16,7 @@ export const Section: FC<Props> = ({ children, className }) =>{
                 className
             )}
         >
-            { children }
+            {children}
         </section>
-    )
-}
+    );
+};

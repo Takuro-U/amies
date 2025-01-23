@@ -9,10 +9,18 @@ $modal: (
 );
 
 // AMie's Accent Color Set.
-$accent_color: (
+$theme_color: (
     "green": #9cffbc,
     "yellow": #ffe667,
     "red": #ff6f6f,
     "blue": #afe1ff,
     "purple": #dccaff,
+);
+
+// AMe's Gourmet のテーマカラー
+$gourmet_color: (
+    "bg": #f8daab,
+    "main": #f3a14f,
+    "sub": #eb713d,
+    "accent": #ae4a29,
 );

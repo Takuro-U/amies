@@ -1,0 +1,120 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Carbon\Carbon;
+use App\Helpers\UtilHelper;
+use App\Models\Gourmet\Restaurant;
+use App\Models\Gourmet\RestaurantGenres;
+use App\Models\Gourmet\OpeningHours;
+use App\Models\Gourmet\ExceptionalHours;
+
+class GourmetController extends Controller {
+
+    public function weeklyData() {
+        $today = Carbon::today();
+        $result = [];
+
+        for ($i = 0; $i < 7; $i++) {
+            $date = $today->copy()->addDays($i);
+            $result[] = [
+                'date' => $date->toDateString(),
+                'day' => $date->dayOfWeek, 
+            ];
+        }
+
+        return $result;
+    }
+
+    public function getWeeklyHours() {
+        $weeklyData = $this->weeklyData();
+        
+        //基本的な営業時間を取得
+        $regulars = OpeningHours::all()->groupBy('restaurant_id')->map(function ($group) use ($weeklyData) {
+            $result = collect($weeklyData)->pluck('day')->mapWithKeys(function ($dayId) {
+                return [$dayId => null];
+            });
+        
+            $group->each(function ($day) use ($result) {
+                $result[$day['day_id']] = $day;
+            });
+        
+            return $result->values();
+        });
+
+        //例外の営業時間を取得
+        $dateValues = array_column($weeklyData, 'date');
+        $exceptions = ExceptionalHours::whereIn('date', $dateValues)->get()->groupBy('restaurant_id');
+
+        $result = $regulars->map(function ($regular, $restaurantId) use ($exceptions, $weeklyData) {
+            $restaurantExceptions = $exceptions->get($restaurantId, collect());
+
+            return $regular->map(function ($record, $index) use ($restaurantExceptions, $weeklyData) {
+                // 該当する例外のデータを取得
+                $exception = $restaurantExceptions->firstWhere('date', $weeklyData[$index]['date']);
+        
+                $record['date'] = $weeklyData[$index]['date'];
+
+                if ($exception) {
+                    // open と close を上書き
+                    $record['open'] = $exception->open;
+                    $record['close'] = $exception->close;
+                    $record['is_open'] = $exception->is_open;
+                }
+        
+                return $record;
+            });
+        });
+
+        return $result->toArray();;
+    }
+
+    public function searchRestaurant(Request $request) {
+        $status = (object) [
+            'areas' => $request->input('areas'),
+            'genres' => $request->input('genres'),
+            'price' => $request->input('price'),
+            'customers' => $request->input('customers'),
+        ];
+
+        $query = Restaurant::query();
+
+        if (!is_null($status->areas)) {
+            $query->whereIn('area_id', $status->areas);
+        }
+        if (!is_null($status->genres)) {
+            $idList = RestaurantGenres::whereIn('genre_id', $status->genres)
+                                    ->pluck('restaurant_id')
+                                    ->unique()
+                                    ->toArray();
+            $query->whereIn('id', $idList);
+        }
+        if (!is_null($status->price)) {
+            if (!is_null($status->price['min'])) {
+                $query->where('price_max', '>', $status->price['min']);
+            }
+            if (!is_null($status->price['max'])) {
+                $query->where('price_min', '<', $status->price['max']);
+            }
+        }
+        if (!is_null($status->customers)) {
+            $query->where('capacity', '>', $status->customers);
+        }
+
+        $result = $query->get();
+
+        $chunkedResult = collect([[]])->merge(
+            UtilHelper::splitIntoChunks($result, 5)
+        );
+
+        $relation = RestaurantGenres::all();
+
+        return Inertia::render('gourmet/search', [
+            'result' => $chunkedResult,
+            'relation' => $relation,
+            'hours' => $this->getWeeklyHours()
+        ]);
+    }
+}

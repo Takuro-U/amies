@@ -5,14 +5,28 @@ export interface StatusForSearch {
     customers: number | null;
 }
 
-export interface RestaurantData {
+export interface BasicRestaurantData {
     id: number;
     name: string;
-    location: string;
-    area_id: string;
-    tell: string;
+    area_id: number;
     price_max: number;
     price_min: number;
     capacity: number;
-    description: string;
+}
+
+export interface WeeklyHours {
+    day_id: number;
+    date: string;
+    open: string;
+    close: string;
+    is_open: number;
+}
+
+export interface DetailRestaurantData {
+    id: number;
+    name: string;
+    area_id: number;
+    price_max: number;
+    price_min: number;
+    capacity: number;
 }

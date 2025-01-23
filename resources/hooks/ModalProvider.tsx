@@ -7,6 +7,15 @@ type PROPS = {
 interface ModalStatus {
     isOpen: boolean;
     text: string;
+    classNames?: {
+        //Modalのスタイルを個別に変更できるように引数を追加
+        modal?: string; //モーダル本体
+        header?: string; //ヘッダ
+        title?: string; //タイトルテキスト
+        hr?: string; //境界線
+        closeButton?: string; //閉じるボタン
+        body?: string; //コンテンツエリア
+    };
     coreFunction: (...args: any[]) => void;
     Component: React.ComponentType<any> | null;
     componentProps: any;
@@ -27,6 +36,15 @@ const defaultContext = {
         coreFunction: (...args: any[]) => any;
         Component: React.ComponentType<any> | null;
         componentProps: any;
+        classNames?: {
+            //Modalのスタイルを個別に変更できるように引数を追加
+            modal?: string;
+            header?: string;
+            title?: string;
+            hr?: string;
+            closeButton?: string;
+            body?: string;
+        };
     }) => {},
     closeModal: () => {},
 };
@@ -45,10 +63,20 @@ const ModalProvider: React.FC<PROPS> = ({ children }) => {
         coreFunction: (...args: any[]) => any;
         Component: React.ComponentType<any> | null;
         componentProps: any;
+        classNames?: {
+            //Modalのスタイルを個別に変更できるように引数を追加
+            modal?: string;
+            header?: string;
+            title?: string;
+            hr?: string;
+            closeButton?: string;
+            body?: string;
+        };
     }) => {
         setModalStatus({
             isOpen: true,
             text: p.text,
+            classNames: p.classNames,
             coreFunction: p.coreFunction,
             Component: p.Component,
             componentProps: p.componentProps,

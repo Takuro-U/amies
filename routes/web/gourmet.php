@@ -12,3 +12,7 @@ Route::get('/', function () {
 Route::get('/search', 
     [GourmetController::class, 'searchRestaurant']
 )->name('/gourmet/search');
+
+Route::get('/restaurant', 
+    [GourmetController::class, 'getRestaurantData']
+)->name('/gourmet/restaurant');

@@ -1,9 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=Agdasima:wght@400;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Agdasima:wght@400;700&family=Zen+Maru+Gothic&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Agdasima:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Agdasima:wght@400;700&family=Zen+Maru+Gothic&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Sawarabi+Gothic&family=Zen+Kaku+Gothic+New&display=swap");
 
 * {
-    font-family: "Agdasima", "Zen Maru Gothic", sans-serif;
     font-weight: 400;
-    font-size:18px;
+    font-size: 18px;
     font-style: normal;
-  }
+}
+
+.font-main {
+    font-family: "Agdasima", "Zen Maru Gothic", sans-serif;
+}
+
+.font-gourmet {
+    font-family: "Sawarabi Gothic", sans-serif;
+}

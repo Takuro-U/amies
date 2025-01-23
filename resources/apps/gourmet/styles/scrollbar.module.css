@@ -1,0 +1,22 @@
+.none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.none::-webkit-scrollbar {
+  display: none;
+}
+
+.filterBox .bar {
+  background-color: #f8daab;
+}
+.filterBox .bar .drag {
+  background-color: #ae4a29;
+}
+
+.searchLinkList .bar {
+  background-color: rgba(255, 255, 255, 0);
+}
+.searchLinkList .bar .drag {
+  background-color: #eb713d;
+}/*# sourceMappingURL=scrollbar.module.css.map */

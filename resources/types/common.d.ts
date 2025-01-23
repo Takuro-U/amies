@@ -1,6 +1,6 @@
 export interface Pages {
     [app: string]: {
-        [pages: string]: React.FC;
+        [pages: string]: React.FC<any>;
     };
 }
 

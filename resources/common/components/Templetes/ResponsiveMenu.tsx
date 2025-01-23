@@ -35,22 +35,31 @@ const ResponsiveMenu: React.FC<PROPS> = (props) => {
                 },
             }}
         >
-            <div className={styles.authInfo}>
+            <div className="font-main">
+                {" "}
+                <div className={styles.authInfo}>
+                    <h1 className="italic font-bold text-neutral-600 text-lg">
+                        #AuthInfo
+                    </h1>
+                    <hr />
+                    <nav>
+                        <AuthInfoMenu />
+                    </nav>
+                </div>
                 <h1 className="italic font-bold text-neutral-600 text-lg">
-                    #AuthInfo
+                    #Menu
                 </h1>
                 <hr />
                 <nav>
-                    <AuthInfoMenu />
+                    {props.menuLinks.map((link, index) => (
+                        <MenuLink
+                            key={index}
+                            link={link}
+                            onClick={props.onClose}
+                        /> //ドロワーのクローズ関数を渡してクリック時にドロワーをクローズ
+                    ))}
                 </nav>
             </div>
-            <h1 className="italic font-bold text-neutral-600 text-lg">#Menu</h1>
-            <hr />
-            <nav>
-                {props.menuLinks.map((link, index) => (
-                    <MenuLink key={index} link={link} />
-                ))}
-            </nav>
         </Drawer>
     );
 };

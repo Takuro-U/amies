@@ -6,6 +6,7 @@ import { useAuthContext } from "../../hooks/AuthProvider";
 
 // Components
 import ModalProvider, { useModalContext } from "../../hooks/ModalProvider";
+import { BackToPageTopButton } from "../components/Organism/BackToPageTopButton";
 import Header from "../components/Templetes/Header";
 import Footer from "../components/Templetes/Footer";
 
@@ -56,6 +57,7 @@ const AppShell: React.FC<PROPS> = ({ children }) => {
     return (
         <div>
             <Header />
+            <BackToPageTopButton />
             {modalStatus.isOpen && <Modal />}
             {children}
             <Footer />

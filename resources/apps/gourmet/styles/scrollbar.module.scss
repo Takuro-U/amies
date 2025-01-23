@@ -1,0 +1,38 @@
+@use "sass:map";
+@use "../../../util/styles/variables" as v;
+
+$alpha: rgba(#ffffff, 0);
+
+$c: v.$gourmet_color;
+$bg: map.get($c, "bg");
+$main: map.get($c, "main");
+$sub: map.get($c, "sub");
+$accent: map.get($c, "accent");
+
+.none {
+    -ms-overflow-style: none; //For IE, Edge
+    scrollbar-width: none; //For FireFox
+}
+.none::-webkit-scrollbar {
+    display: none; //For Chrome, Safari
+}
+
+.filterBox {
+    .bar {
+        background-color: $bg;
+
+        .drag {
+            background-color: $accent;
+        }
+    }
+}
+
+.searchLinkList {
+    .bar {
+        background-color: $alpha;
+
+        .drag {
+            background-color: $sub;
+        }
+    }
+}

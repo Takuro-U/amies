@@ -3,7 +3,8 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "build": "vite build"
+        "build": "vite build",
+        "build-css": "node-sass input.scss output.css --no-source-map"
     },
     "devDependencies": {
         "@tailwindcss/forms": "^0.5.9",
@@ -26,6 +27,7 @@
         "@mui/icons-material": "^6.1.8",
         "@mui/material": "^6.1.8",
         "@tailwindcss/aspect-ratio": "^0.4.2",
+        "@tailwindcss/line-clamp": "^0.4.4",
         "@vitejs/plugin-react": "^4.3.3",
         "classnames": "^2.5.1",
         "flowbite": "^2.5.2",

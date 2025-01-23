@@ -1,7 +1,15 @@
+@use "sass:map";
 @use "../../../util/styles/variables" as v;
 
-$small: map-get(v.$breakpoint, mobile);
+$small: map.get(v.$breakpoint, mobile);
+$blue: map.get(v.$theme_color, "blue");
 $alpha: rgb(white, 0);
+
+
+.bgBase{
+    background: #4e54c8;  
+    background: linear-gradient(to bottom right, rgb($blue, 0.1), rgb($blue, 0.4));  
+}
 
 .sideFade {
     $edge: white;
