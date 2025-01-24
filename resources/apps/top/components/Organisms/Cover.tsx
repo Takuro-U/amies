@@ -21,10 +21,12 @@ export const Cover: FC = () => {
                     className={classNames(
                         "leading-10",
                         "text-center text-2xl font-bold",
-                        "text-gray-500"
+                        "text-gray-500",
+                        "before:content-['~']",
+                        "after:content-['~']"
                     )}
                 >
-                    ~ Find Your Amusement ~
+                    Find Your Amusement
                 </p>
             </div>
         </div>
