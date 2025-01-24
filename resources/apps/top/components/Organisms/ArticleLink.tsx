@@ -8,10 +8,10 @@ export const ArticleLink: FC<ArticleType> = (article: ArticleType) => {
     return (
         <RandomZoom>
             <Link href={route(article.link)}>
-                <article>
+                <article className="flex h-24 justify-center items-center">
                     <img
                         src={article.image_path}
-                        className="object-cover w-full"
+                        className="object-cover h-full"
                     />
                 </article>
             </Link>

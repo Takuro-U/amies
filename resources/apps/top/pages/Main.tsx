@@ -33,12 +33,12 @@ const Main: React.FC = () => {
                     <div className={layout.articleLists}>
                         <ArticleList
                             label="Topics"
-                            link={route("/")}
+                            link={"/"}
                             icon={<TopicsIcon />}
                         />
                         <ArticleList
                             label="Gourmet"
-                            link={route("/")}
+                            link={"/"}
                             icon={<GourmetIcon />}
                         />
                     </div>
