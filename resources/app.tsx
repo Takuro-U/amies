@@ -9,7 +9,7 @@ import { pageRouter } from "./common/ts/router";
 //components
 import AuthProvider from "./hooks/AuthProvider";
 import ModalProvider from "./hooks/ModalProvider";
-import AppShell from "./common/layouts/AppShell";
+import AppShell from "./common/Layouts/AppShell";
 
 createInertiaApp({
     resolve: (key) => {
