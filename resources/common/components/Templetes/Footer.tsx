@@ -13,7 +13,7 @@ const footerColumn: FooterColumnType[] = [
                 label: "AMie's",
                 children: [
                     { string: "TOP", link: "/" },
-                    { string: "Gourmet.", link: "/" },
+                    { string: "Gourmet.", link: "/gourmet" },
                 ],
             },
         ],
