@@ -7,7 +7,7 @@ import styles from "./../styles/Gourmet.module.scss";
 import Map from "../components/Main/Map";
 import SearchLinks from "../components/Main/SearchLinks";
 import SearchOptions from "../components/Main/SearchOptions/SearchOptions";
-import Background from "../components/Templetes/Background";
+import Background from "../components/Templates/Background";
 
 // Types
 import { Category } from "../../../types/common";
