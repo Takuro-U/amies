@@ -1,9 +1,9 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { createRef, RefObject, useEffect, useLayoutEffect, useRef, useState } from "react";
 
 // Component
 import CheckContent from "./CheckContent/CheckContent";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Scrollbar, FreeMode, Grid } from "swiper/modules";
+import { Swiper, SwiperRef, SwiperSlide } from "swiper/react";
+import { Scrollbar, FreeMode, Controller } from "swiper/modules";
 import SearchIcon from "@mui/icons-material/Search";
 
 // Types
@@ -21,7 +21,7 @@ import classNames from "classnames";
 import "swiper/css";
 import "swiper/css/scrollbar";
 import "swiper/css/free-mode";
-import "swiper/css/grid";
+import "swiper/css/controller";
 import scrollbarStyle from "../../../../styles/scrollbar.module.scss"; //スクロールバーのスタイル
 import styles from "../../../../styles/Gourmet.module.scss";
 
@@ -64,6 +64,28 @@ const FilterBox: React.FC = () => {
 
     useEffect(queryListCtrl, [checkLists]);
 
+    // SwiperController参照用のref
+    const swiperRefs = useRef<{[key: string]: RefObject<SwiperRef>[]}>({area: [], genre: []});
+    const setSwiperRef = (type: "area" | "genre")=>{
+        const ref = createRef<SwiperRef>();
+        swiperRefs.current[type].push(ref);
+        return ref;
+    }
+
+    // 各Swiperに同グループの自身を除いたSwiper[]をControllerとして登録
+    useEffect(()=>{
+        if(swiperRefs.current){
+            Object.keys(swiperRefs.current).map((key)=>{
+                // グループ内のrefからswiperインスタンスを取り出し配列化
+                const instances = swiperRefs.current[key].map((ref)=>ref.current?.swiper).filter((ins)=> ins !== undefined);
+                instances.map((ins)=>{
+                    // 自身を除いたインスタンス配列をControllerに登録
+                    ins.controller.control = instances.filter((i)=>i !== ins);
+                })
+            })
+        }
+    },[])
+
     const [priceRange, setPriceRange] = useState<{
         max: number | null;
         min: number | null;
@@ -104,11 +126,11 @@ const FilterBox: React.FC = () => {
         <div
             className={classNames(
                 styles.searchOptionsDrawer,
-                "w-full rounded-b-[4px] pl-[5px]",
+                "w-full max-w-xl rounded-b-[4px] pl-[5px] m-auto",
                 "overflow-hidden"
             )}
         >
-            <div className="flex items-center h-[60px]">
+            <div className="relative flex items-center h-[60px] my-2">
                 <p
                     ref={setRef(0)}
                     className="whitespace-nowrap text-right"
@@ -119,29 +141,73 @@ const FilterBox: React.FC = () => {
                 >
                     エリア：
                 </p>
-                <div
-                    className={classNames(
-                        "h-full flex flex-wrap flex-col overflow-x-scroll",
-                        scrollbarStyle.none
-                    )}
-                >
-                    {checkLists.area?.map((element) => (
-                        <CheckContent
-                            id={element.id}
-                            key={element.id}
-                            name={element.name}
-                            isChecked={element.isChecked}
-                            toggleCheck={() =>
-                                toggleCheck({
-                                    key: "area",
-                                    id: element.id,
-                                })
-                            }
-                        />
-                    ))}
+                <div className={classNames("h-[60px]")} style={{width: "calc(100% - "+ (maxWidth != 0 ? maxWidth : 0) +"px)"}}>
+                    <Swiper
+                        className={classNames("h-1/2")}
+                        modules={[FreeMode, Controller]}
+                        slidesPerView={"auto"}
+                        freeMode={true}
+                        ref={setSwiperRef("area")}
+                        controller={{
+                            by: "container",
+                        }}
+                    >
+                        {checkLists.area?.map((element, i) => {
+                            if(!(i % 2)) return (
+                            <SwiperSlide style={{width: "auto"}} key={element.id}>
+                                <CheckContent
+                                    id={element.id}
+                                    name={element.name}
+                                    isChecked={element.isChecked}
+                                    toggleCheck={() =>
+                                        toggleCheck({
+                                            key: "area",
+                                            id: element.id,
+                                        })
+                                    }
+                                />
+                            </SwiperSlide>
+                            )
+                        })}
+                    </Swiper>
+                    <Swiper
+                        className={classNames("h-3/5 relative", scrollbarStyle.filterBox)}
+                        modules={[Scrollbar, FreeMode, Controller]}
+                        slidesPerView={"auto"}
+                        scrollbar={{
+                            draggable: false,
+                            horizontalClass: scrollbarStyle.bar,
+                            dragClass: classNames(
+                                scrollbarStyle.drag,
+                                "swiper-scrollbar-drag",
+                            ),
+                        }}
+                        freeMode={true}
+                        ref={setSwiperRef("area")}
+                        controller={{
+                        }}
+                    >
+                        {checkLists.area?.map((element, i) => (
+                            i % 2 ?
+                            <SwiperSlide style={{width: "auto"}} key={element.id}>
+                                <CheckContent
+                                    id={element.id}
+                                    name={element.name}
+                                    isChecked={element.isChecked}
+                                    toggleCheck={() =>
+                                        toggleCheck({
+                                            key: "area",
+                                            id: element.id,
+                                        })
+                                    }
+                                />
+                            </SwiperSlide>
+                            : null
+                        ))}
+                    </Swiper>
                 </div>
             </div>
-            <div className="flex items-center h-[60px]">
+            <div className="flex items-center h-[60px] my-2">
                 <p
                     ref={setRef(1)}
                     className="whitespace-nowrap text-right"
@@ -152,26 +218,71 @@ const FilterBox: React.FC = () => {
                 >
                     ジャンル：
                 </p>
-                <div
-                    className={classNames(
-                        "flex h-full flex-wrap flex-col overflow-x-scroll",
-                        scrollbarStyle.none
-                    )}
-                >
-                    {checkLists.genre?.map((element) => (
-                        <CheckContent
-                            key={element.id}
-                            id={element.id}
-                            name={element.name}
-                            isChecked={element.isChecked}
-                            toggleCheck={() =>
-                                toggleCheck({
-                                    key: "genre",
-                                    id: element.id,
-                                })
-                            }
-                        />
-                    ))}
+                <div className={classNames("h-[60px]")} style={{width: "calc(100% - "+ (maxWidth != 0 ? maxWidth : 0) +"px)"}}>
+                    <Swiper
+                        className={classNames("h-1/2")}
+                        modules={[FreeMode, Scrollbar, Controller]}
+                        slidesPerView={"auto"}
+                        freeMode={true}
+                        ref={setSwiperRef("genre")}
+                        controller={{
+                            by: "container"
+                        }}
+                    >
+                        {checkLists.genre?.map((element, i) => (
+                            !(i % 2)? 
+                            <SwiperSlide style={{width: "auto"}} key={element.id}>
+                                <CheckContent
+                                    id={element.id}
+                                    name={element.name}
+                                    isChecked={element.isChecked}
+                                    toggleCheck={() =>
+                                        toggleCheck({
+                                            key: "genre",
+                                            id: element.id,
+                                        })
+                                    }
+                                />
+                            </SwiperSlide>
+                            : null
+                        ))}
+                    </Swiper>
+                    <Swiper
+                        className={classNames("h-3/5", scrollbarStyle.filterBox)}
+                        modules={[FreeMode, Scrollbar, Controller]}
+                        slidesPerView={"auto"}
+                        freeMode={true}
+                        scrollbar={{
+                            draggable: false,
+                            horizontalClass: scrollbarStyle.bar,
+                            dragClass: classNames(
+                                scrollbarStyle.drag,
+                                "swiper-scrollbar-drag",
+                            )
+                        }}
+                        ref={setSwiperRef("genre")}
+                        controller={{
+                            by: "container"
+                        }}
+                    >
+                        {checkLists.genre?.map((element, i) => (
+                            i % 2 ? 
+                            <SwiperSlide style={{width: "auto"}} key={element.id}>
+                                <CheckContent
+                                    id={element.id}
+                                    name={element.name}
+                                    isChecked={element.isChecked}
+                                    toggleCheck={() =>
+                                        toggleCheck({
+                                            key: "genre",
+                                            id: element.id,
+                                        })
+                                    }
+                                />
+                            </SwiperSlide>
+                            : null
+                        ))}
+                    </Swiper>
                 </div>
             </div>
             <div className="flex items-center h-[45px]">
