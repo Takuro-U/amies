@@ -110,15 +110,15 @@ $white: #ffffff;
 .modal {
     border-width: 0px !important; //なんか!importantしないとデフォの共通スタイルに負けるっぽい
     .header {
-        background-color: $bg;
+        background-color: $lightgray;
 
         .title {
-            color: $accent;
+            color: $gray;
             font-size: x-large;
             font-weight: bold;
         }
         .title::before {
-            content: "・";
+            content: "+";
         }
         .closeButton {
             color: white;
