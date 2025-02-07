@@ -1,0 +1,35 @@
+@use "sass:map";
+@use "../styles/Gourmet.module.scss";
+
+.menusScroll {
+    overflow-y: scroll;
+    //overflow-x: hidden;
+    scroll-snap-type: y mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    div {
+        scroll-snap-align: center;
+    }
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.modal {
+    @extend .modal;
+    .header {
+        .title::before {
+            content: "";
+        }
+    }
+}

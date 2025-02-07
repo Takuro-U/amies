@@ -17,4 +17,10 @@ export default defineConfig({
             },
         },
     },
+    //
+    server: {
+        proxy: {
+            "/app": "http://localhost:8000", // Laravelサーバーへのプロキシ
+        },
+    },
 });

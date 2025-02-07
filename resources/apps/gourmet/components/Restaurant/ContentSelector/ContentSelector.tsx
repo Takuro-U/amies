@@ -28,21 +28,20 @@ const ContentSelector: React.FC = () => {
     const Children = contentList[contentId].Component;
 
     return (
-        <div className="border-b border-slate-500">
+        <div className=" bg-white">
             <div className="flex ">
                 {contentList.map((content, index) => (
                     <button
                         key={index}
-                        className={classNames("w-1/4", {
-                            "": index === contentId,
-                            "border-l border-slate-500":
-                                index === contentId && index !== 0,
-                            "border-r border-slate-500":
-                                index === contentId &&
-                                index !== contentList.length - 1,
-                            "bg-slate-200 border-b border-slate-500":
-                                index !== contentId,
-                        })}
+                        className={classNames(
+                            "w-1/4 h-[40px] font-gourmet font-semibold text-[14px] ",
+                            {
+                                "text-[#ff832b] border-t-2 border-[#ff832b]":
+                                    index === contentId,
+                                "bg-[#e2e1dd] border-t-2 border-transparent text-slate-800":
+                                    index !== contentId,
+                            }
+                        )}
                         onClick={() => setContentId(index)}
                     >
                         {content.label}

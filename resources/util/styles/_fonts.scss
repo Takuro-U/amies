@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Agdasima:wght@400;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Agdasima:wght@400;700&family=Zen+Maru+Gothic&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Sawarabi+Gothic&family=Zen+Kaku+Gothic+New&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&family=Sawarabi+Gothic&family=Zen+Kaku+Gothic+New&display=swap");
 
 * {
     font-weight: 400;
@@ -14,4 +15,12 @@
 
 .font-gourmet {
     font-family: "Sawarabi Gothic", sans-serif;
+}
+
+.font-pop {
+    font-family: "Mochiy Pop One", "sans-serif";
+}
+
+.font-awesome {
+    font-family: "Font Awesome 5 Free", "Font Awesome 5 Brands", "sans-serif";
 }

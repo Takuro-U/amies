@@ -5,23 +5,22 @@ namespace App\Models\Gourmet;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class OpeningHours extends Model
+class Menus extends Model
 {
     use HasFactory;
 
-    protected $table = 'opening_hours';
+    protected $table = 'menus';
 
     protected $primaryKey = 'id';
 
     protected $fillable = [
         'id',
-        'restaurant_id',
-        'day_id',
-        'open',
-        'close',
-        'open2',
-        'close2',
-        'is_open'
+        'parent_id',
+        'category_id',
+        'name',
+        'price',
+        'description',
+        'img_path'
     ];
 
     public $incrementing = false;

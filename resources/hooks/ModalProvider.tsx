@@ -6,7 +6,7 @@ type PROPS = {
 
 interface ModalStatus {
     isOpen: boolean;
-    text: string;
+    title?: string;
     classNames?: {
         //Modalのスタイルを個別に変更できるように引数を追加
         modal?: string; //モーダル本体
@@ -23,7 +23,7 @@ interface ModalStatus {
 
 const defaultModalStatus: ModalStatus = {
     isOpen: false,
-    text: "",
+    title: "",
     coreFunction: () => {},
     Component: null,
     componentProps: null,
@@ -32,7 +32,7 @@ const defaultModalStatus: ModalStatus = {
 const defaultContext = {
     modalStatus: defaultModalStatus,
     openModal: (p: {
-        text: string;
+        title?: string;
         coreFunction: (...args: any[]) => any;
         Component: React.ComponentType<any> | null;
         componentProps: any;
@@ -59,7 +59,7 @@ const ModalProvider: React.FC<PROPS> = ({ children }) => {
     const [modalStatus, setModalStatus] = useState(defaultModalStatus);
 
     const openModal = (p: {
-        text: string;
+        title?: string;
         coreFunction: (...args: any[]) => any;
         Component: React.ComponentType<any> | null;
         componentProps: any;
@@ -75,7 +75,7 @@ const ModalProvider: React.FC<PROPS> = ({ children }) => {
     }) => {
         setModalStatus({
             isOpen: true,
-            text: p.text,
+            title: p.title,
             classNames: p.classNames,
             coreFunction: p.coreFunction,
             Component: p.Component,

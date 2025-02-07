@@ -18,7 +18,7 @@ const Modal: React.FC = () => {
     const { modalStatus, closeModal } = useModalContext();
 
     // textでモーダルのタイトル、classNamesでモーダルの個別スタイルを取得
-    const { Component, componentProps, text, classNames } = modalStatus;
+    const { Component, componentProps, title, classNames } = modalStatus;
 
     const blockClickEvent = (e: React.MouseEvent) => {
         e.stopPropagation();
@@ -83,7 +83,7 @@ const Modal: React.FC = () => {
                                     classNames?.title
                                 )}
                             >
-                                {text}
+                                {title && title}
                             </h1>
                             <button
                                 onClick={closeModal}
@@ -95,17 +95,17 @@ const Modal: React.FC = () => {
                                 <ClearIcon />
                             </button>
                         </div>
+
                         <hr
                             className={classNamesJoin(
                                 "border-slate-700 w-[96%] m-auto",
                                 classNames?.hr
                             )}
                         />
+
                         <div
-                            className={classNamesJoin(
-                                "h-full",
-                                classNames?.body
-                            )}
+                            className={classNames?.body}
+                            style={{ height: "calc(100% - 36px)" }}
                         >
                             <Component {...componentProps} />
                         </div>
