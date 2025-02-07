@@ -19,6 +19,8 @@ export interface WeeklyHours {
     date: string;
     open: string;
     close: string;
+    open2: string;
+    close2: string;
     is_open: number;
 }
 
@@ -29,4 +31,30 @@ export interface DetailRestaurantData {
     price_max: number;
     price_min: number;
     capacity: number;
+    images: number;
 }
+
+export type OpeningHour = {
+    date: Date;
+    day_id: number;
+    open: string;
+    close: string;
+    open2: string;
+    close2: string;
+    is_open: number;
+};
+
+export type DefaultHour = {
+    open: string;
+    close: string;
+    open2: string;
+    close2: string;
+    is_open: number;
+};
+
+export type Menu = {
+    name: string;
+    price: number;
+    description: string;
+    img_path: string;
+};

@@ -35,7 +35,7 @@ const SearchLinks: React.FC = () => {
                         key={index}
                         onClick={() =>
                             openModal({
-                                text: link.title,
+                                title: link.title,
                                 classNames: link.classNames,
                                 coreFunction: () => {},
                                 Component: link.Component,

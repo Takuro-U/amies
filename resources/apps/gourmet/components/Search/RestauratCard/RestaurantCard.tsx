@@ -23,7 +23,7 @@ const RestaurantCard: React.FC<PROPS> = (props) => {
             <div className="flex items-start">
                 <img
                     className="w-[35%] border border-[#6B4226] bg-white "
-                    src="../images/logo_480p.png"
+                    src="../images/common/logo_480p.png"
                 />
                 <BasicInfo
                     restaurant={props.restaurant}

@@ -13,64 +13,148 @@ use App\Models\Gourmet\ExceptionalHours;
 
 class GourmetController extends Controller {
 
+    //一週間分の日付と曜日を取得
     public function weeklyData() {
         $today = Carbon::today();
         $result = [];
-
         for ($i = 0; $i < 7; $i++) {
             $date = $today->copy()->addDays($i);
             $result[] = [
                 'date' => $date->toDateString(),
-                'day' => $date->dayOfWeek, 
+                'day' =>$date->dayOfWeek, 
+            ];
+        }
+        return $result;
+    }
+
+    public function quarterlyData() {
+        $today = Carbon::today();
+        $result = [];
+    
+        for ($monthOffset = 0; $monthOffset < 3; $monthOffset++) {
+            $startOfMonth = $today->copy()->addMonths($monthOffset)->startOfMonth();
+            $endOfMonth = $startOfMonth->copy()->endOfMonth();
+            
+            $monthlyData = [];
+            foreach (new \DatePeriod($startOfMonth, \DateInterval::createFromDateString('1 day'), $endOfMonth) as $date) {
+                $carbonDate = Carbon::instance($date);
+                $monthlyData[] = [
+                    'date' => $carbonDate->toDateString(),
+                    'day' => $carbonDate->dayOfWeek,
+                ];
+            }
+            
+            $result[] = [
+                'month' => $startOfMonth->month,
+                'dates' => $monthlyData,
             ];
         }
 
         return $result;
     }
 
-    public function getWeeklyHours() {
-        $weeklyData = $this->weeklyData();
-        
-        //基本的な営業時間を取得
-        $regulars = OpeningHours::all()->groupBy('restaurant_id')->map(function ($group) use ($weeklyData) {
-            $result = collect($weeklyData)->pluck('day')->mapWithKeys(function ($dayId) {
-                return [$dayId => null];
-            });
-        
-            $group->each(function ($day) use ($result) {
-                $result[$day['day_id']] = $day;
-            });
-        
-            return $result->values();
+    //通常の営業時間
+    public function regularData($restaurantList, $dates) {
+        $initialData = collect($restaurantList)->mapWithKeys(function ($id) use ($dates) {
+            $days = collect($dates)->pluck('day');
+            return [
+                $id => $days->values()
+            ];
         });
-
-        //例外の営業時間を取得
-        $dateValues = array_column($weeklyData, 'date');
-        $exceptions = ExceptionalHours::whereIn('date', $dateValues)->get()->groupBy('restaurant_id');
-
-        $result = $regulars->map(function ($regular, $restaurantId) use ($exceptions, $weeklyData) {
-            $restaurantExceptions = $exceptions->get($restaurantId, collect());
-
-            return $regular->map(function ($record, $index) use ($restaurantExceptions, $weeklyData) {
-                // 該当する例外のデータを取得
-                $exception = $restaurantExceptions->firstWhere('date', $weeklyData[$index]['date']);
         
-                $record['date'] = $weeklyData[$index]['date'];
+        $unshaped = OpeningHours::whereIn('restaurant_id', $restaurantList)
+            ->get()
+            ->groupBy('restaurant_id');
 
-                if ($exception) {
-                    // open と close を上書き
-                    $record['open'] = $exception->open;
-                    $record['close'] = $exception->close;
-                    $record['is_open'] = $exception->is_open;
+        $regularHours = $unshaped
+            ->map(function ($restaurant) {
+                return $restaurant->groupBy('day_id')->map(function ($day) {
+                    return $day->first();
+                });
+            });
+
+        
+            dd($unshaped);
+
+        $result = collect($restaurantList)->mapWithKeys(function ($restaurantId) use ($initialData, $regularHours) {
+            $restaurantHours = $initialData[$restaurantId]->map(function ($date) use ($regularHours, $restaurantId) {
+                if (isset($regularHours[$restaurantId]) && isset($regularHours[$restaurantId][$date])) {
+                    // データが存在する場合
+                    $record = $regularHours[$restaurantId][$date];
+                    return [
+                        'open' => $record['open'],
+                        'close' => $record['close'],
+                        'is_open' => $record['is_open']
+                    ];
+                } else {
+                    return [
+                        'open' => null,
+                        'close' => null,
+                        'is_open' => null
+                    ];
                 }
-        
-                return $record;
             });
+            return [$restaurantId => $restaurantHours];
         });
-
-        return $result->toArray();;
+        return $result;
     }
 
+    //例外の営業時間
+    public function exceptionalData($restaurantList, $dates) {
+        $dateList = array_column($dates, 'date');
+        $result = ExceptionalHours::whereIn('restaurant_id', $restaurantList)
+                                ->whereIn('date', $dateList)
+                                ->get()
+                                ->groupBy('restaurant_id');
+        return $result;
+    }
+
+    //最終的な営業時間
+    public function mergedHours($regularData, $exceptionalData, $dates) {
+        $result = $regularData->map(function ($regularHours, $restaurantId) use ($exceptionalData, $dates) {
+            
+            $exceptionalHours = $exceptionalData->get($restaurantId, collect());
+          
+            return $regularHours->map(function ($hour, $dateIndex) use ($exceptionalHours, $dates) {
+                $exception = $exceptionalHours->firstWhere('date', $dates[$dateIndex]['date']);
+                $hour['date'] = $dates[$dateIndex]['date'];
+                if ($exception) {
+                    $hour['open'] = $exception->open;
+                    $hour['close'] = $exception->close;
+                    $hour['is_open'] = $exception->is_open;
+                }
+                return $hour;
+            });
+        });
+        return $result;
+    }
+
+    //一週間分の営業時間を取得
+    public function getWeeklyHours($restaurantList) {
+        $dates = $this->weeklyData();
+        $regularData = $this->regularData($restaurantList, $dates);
+        $exceptionalData = $this->exceptionalData($restaurantList, $dates);
+        $result = $this->mergedHours($regularData, $exceptionalData, $dates);
+        return $result;
+    }
+
+    //三ヶ月分の営業時間を取得
+    public function getQuarterlyHours($restaurantId) {
+        $pseudoIdList = array($restaurantId);
+        $result = collect($this->quarterlyData())->map(function ($monthlyData) use ($pseudoIdList) {
+            $dates = $monthlyData['dates'];
+            $regularData = $this->regularData($pseudoIdList, $dates);
+            $exceptionalData = $this->exceptionalData($pseudoIdList, $dates);
+            $monthlyHours = $this->mergedHours($regularData, $exceptionalData, $dates)->first();
+            return [
+                'month' => $monthlyData['month'], 
+                'hours' => $monthlyHours
+            ];
+        });
+        return $result;
+    }
+
+    //飲食店を検索
     public function searchRestaurant(Request $request) {
         $status = (object) [
             'areas' => $request->input('areas'),
@@ -85,11 +169,11 @@ class GourmetController extends Controller {
             $query->whereIn('area_id', $status->areas);
         }
         if (!is_null($status->genres)) {
-            $idList = RestaurantGenres::whereIn('genre_id', $status->genres)
+            $list = RestaurantGenres::whereIn('genre_id', $status->genres)
                                     ->pluck('restaurant_id')
                                     ->unique()
                                     ->toArray();
-            $query->whereIn('id', $idList);
+            $query->whereIn('id', $list);
         }
         if (!is_null($status->price)) {
             if (!is_null($status->price['min'])) {
@@ -104,17 +188,31 @@ class GourmetController extends Controller {
         }
 
         $result = $query->get();
+        $idList = $result->pluck('id')->toArray();
 
         $chunkedResult = collect([[]])->merge(
             UtilHelper::splitIntoChunks($result, 5)
         );
-
-        $relation = RestaurantGenres::all();
+        $relation = RestaurantGenres::whereIn('restaurant_id', $idList)->get();
+        $hours = $this->getWeeklyHours($idList);
 
         return Inertia::render('gourmet/search', [
-            'result' => $chunkedResult,
+            'restaurants' => $chunkedResult,
             'relation' => $relation,
-            'hours' => $this->getWeeklyHours()
+            'hours' => $hours
+        ]);
+    }
+
+    //
+    public function getRestaurantData(Request $request) {
+        $id = $request->input('id');
+        $result = Restaurant::where('id', $id)->get()->first();
+        $relation = RestaurantGenres::where('restaurant_id', $id)->get();
+
+        return Inertia::render('gourmet/restaurant', [
+            'restaurant' => $result,
+            'relation' => $relation,
+            'hours' => $this->getQuarterlyHours($id)
         ]);
     }
 }

@@ -5,3 +5,9 @@ export const accentColors = {
     blue: "#afe1ff",
     purple: "#dccaff",
 };
+
+export const gourmetColors = {
+    orange: "#ff832b",
+    fill: "#e2e1dd",
+    calender: { open: "#afe1ff", close: "#ff9999", null: "#ffffad" },
+};

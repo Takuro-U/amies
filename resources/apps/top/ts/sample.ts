@@ -3,19 +3,19 @@ import { ArticleType } from "../../../types/top";
 
 export const articles: ArticleType[] = [
     {
-        image_path: "../images/thumbnail_0.jpg",
+        image_path: "../images/test/thumbnail_0.jpg",
         link: "/",
     },
     {
-        image_path: "../images/thumbnail_1.png",
+        image_path: "../images/test/thumbnail_1.png",
         link: "/",
     },
     {
-        image_path: "../images/thumbnail_1.jpg",
+        image_path: "../images/test/thumbnail_1.jpg",
         link: "/",
     },
     {
-        image_path: "../images/thumbnail_2.png",
+        image_path: "../images/test/thumbnail_2.png",
         link: "/",
     },
 ];
