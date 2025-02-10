@@ -13,6 +13,10 @@ $main: map.get($c, "main");
 $sub: map.get($c, "sub");
 $accent: map.get($c, "accent");
 
+$orange: #ffc17f;
+$gray: #6c5e58;
+$lightgray: #cab2a7;
+
 $alpha: #ffffff00;
 $white: #ffffff;
 
@@ -24,8 +28,8 @@ $white: #ffffff;
 .bgBase {
     background: linear-gradient(
         to bottom right,
-        rgba($main, 0.3),
-        rgba($main, 0.4)
+        rgba($orange, 0.5),
+        rgba($orange, 0.7)
     );
 }
 
@@ -46,7 +50,7 @@ $white: #ffffff;
 }
 
 .searchOptionsToggleBtn {
-    background-color: $sub;
+    background-color: $lightgray;
 }
 
 .drawer {
@@ -62,11 +66,11 @@ $white: #ffffff;
     margin-top: 2vh;
     order: 2;
 
-    border: 1px $sub solid;
+    // border: 1px $lightgray solid;
 }
 
 .searchOptionsBtn {
-    background-color: $accent;
+    background-color: $gray;
 }
 
 .searchLinks {
@@ -78,7 +82,7 @@ $white: #ffffff;
     margin-bottom: 2vh;
     order: 1;
 
-    background-color: $main;
+    background-color: $gray;
 }
 
 .aside {
@@ -106,15 +110,15 @@ $white: #ffffff;
 .modal {
     border-width: 0px !important; //なんか!importantしないとデフォの共通スタイルに負けるっぽい
     .header {
-        background-color: $bg;
+        background-color: $lightgray;
 
         .title {
-            color: $accent;
+            color: $gray;
             font-size: x-large;
             font-weight: bold;
         }
         .title::before {
-            content: "・";
+            content: "+";
         }
         .closeButton {
             color: white;

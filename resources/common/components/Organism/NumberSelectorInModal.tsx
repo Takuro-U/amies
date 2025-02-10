@@ -72,7 +72,7 @@ const NumberSelectorInModal: React.FC<PROPS> = (props) => {
             className={classNames(
                 styles.component,
                 "flex flex-col items-center justify-center",
-                "h-[80%]",
+                "h-full",
                 "gap-7"
             )}
         >

@@ -9,6 +9,10 @@ $main: map.get($c, "main");
 $sub: map.get($c, "sub");
 $accent: map.get($c, "accent");
 
+$orange: #ffc17f;
+$gray: #6c5e58;
+$lightgray: #cab2a7;
+
 .none {
     -ms-overflow-style: none; //For IE, Edge
     scrollbar-width: none; //For FireFox
@@ -19,10 +23,10 @@ $accent: map.get($c, "accent");
 
 .filterBox {
     .bar {
-        background-color: $bg;
+        background-color: $lightgray;
 
         .drag {
-            background-color: $accent;
+            background-color: $gray;
         }
     }
 }
@@ -32,7 +36,7 @@ $accent: map.get($c, "accent");
         background-color: $alpha;
 
         .drag {
-            background-color: $sub;
+            background-color: $gray;
         }
     }
 }
