@@ -31,7 +31,7 @@ const ListInModal: React.FC<PROPS> = (props) => {
             className={classNames(
                 props.style.tag,
                 "flex flex-col items-center",
-                "w-[90%] h-[75%] m-auto mt-2",
+                "w-[90%] h-[90%] m-auto mt-2",
                 "border-[2px]",
                 "overflow-y-auto"
             )}

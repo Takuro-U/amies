@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from "react";
 
-import { MapContainer, TileLayer } from "react-leaflet";
-import L, { LatLngExpression } from "leaflet";
+import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
 import { usePageStatesContext } from "../../../../../../hooks/PageStatesProvider";
