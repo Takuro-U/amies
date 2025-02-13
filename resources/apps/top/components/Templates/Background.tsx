@@ -22,6 +22,7 @@ const density: number = 4; // 抽出する枚数 4以上推奨（3以下だと�
 export default function BackGround() {
     const [delay, setdelay] = useState(200);
     const [snapshots, setSnapshots] = useState<string[]>([]);
+    const [allowLoop, setAllowLoop] = useState<boolean>(false);
 
     // 抽出処理
     const selectSnapshots = () => {
@@ -45,6 +46,7 @@ export default function BackGround() {
     // 初期設定。レンダリング直後
     useEffect(() => {
         selectSnapshots();
+        setAllowLoop(true);
         setdelay(0); //なんか更新してやらないとオートスクロールが機能しないので無理やり更新
     }, []);
 
@@ -84,7 +86,7 @@ export default function BackGround() {
                             slideShadows: false,
                         }}
                         speed={20000}
-                        loop={true}
+                        loop={ allowLoop }
                     >
                         {snapshots.map((i, key) => (
                             <SwiperSlide key={key}>
