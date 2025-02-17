@@ -18,12 +18,16 @@ Route::middleware([AddViewData::class])->group(function () {
         return InertiaHelper::renderPage('common', 'user');
     })->name('/user');
 
+    Route::prefix('auth')->group(function () {
+        require base_path('routes/web/auth.php');
+    });
+
     Route::prefix('gourmet')->group(function () {
         require base_path('routes/web/gourmet.php');
     });
     
     Route::prefix('console')->group(function () {
-        require base_path('routes/web/adminConsole.php');
+        require base_path('routes/web/console.php');
     });
 });
 
