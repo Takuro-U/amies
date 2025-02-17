@@ -14,6 +14,9 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         // $middleware->append(AddViewData::class);
+        $middleware->alias([
+            'restaurant.auth' => \App\Http\Middleware\RestaurantAuth::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

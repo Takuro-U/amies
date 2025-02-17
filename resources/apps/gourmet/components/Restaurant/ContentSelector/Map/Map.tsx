@@ -16,6 +16,18 @@ const Map: React.FC = () => {
         return degrees + minutes / 60 + seconds / 3600;
     };
 
+    const updateStyles = (
+        classList: string,
+        styles: { [key: string]: any }
+    ) => {
+        document.querySelectorAll(classList).forEach((element) => {
+            const attribution = element as HTMLElement;
+            Object.keys(styles).forEach((key) => {
+                (attribution.style as any)[key] = styles[key];
+            });
+        });
+    };
+
     const latitude = dmsToDecimal(34, 44, 53.78);
     const longitude = dmsToDecimal(136, 31, 27.46);
 
@@ -43,6 +55,11 @@ const Map: React.FC = () => {
         })
             .addTo(map)
             .bindPopup("三重大学 正門");
+
+        updateStyles(
+            ".leaflet-control-attribution, .leaflet-control-attribution a, .leaflet-control-attribution span",
+            { fontSize: "14px" }
+        );
 
         return () => {
             map.remove();

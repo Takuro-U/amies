@@ -17,6 +17,18 @@ const Map: React.FC = () => {
         return degrees + minutes / 60 + seconds / 3600;
     };
 
+    const updateStyles = (
+        classList: string,
+        styles: { [key: string]: any }
+    ) => {
+        document.querySelectorAll(classList).forEach((element) => {
+            const attribution = element as HTMLElement;
+            Object.keys(styles).forEach((key) => {
+                (attribution.style as any)[key] = styles[key];
+            });
+        });
+    };
+
     useEffect(() => {
         const map = L.map("map").setView(
             [dmsToDecimal(34, 44, 46.78), dmsToDecimal(136, 31, 21.46)],
@@ -27,7 +39,16 @@ const Map: React.FC = () => {
             attribution:
                 '<a href="https://www.openstreetmap.org/copyright" target="_blank">©OpenStreetMap</a> contributors',
         }).addTo(map);
-    });
+
+        updateStyles(
+            ".leaflet-control-attribution, .leaflet-control-attribution a, .leaflet-control-attribution span",
+            { fontSize: "14px" }
+        );
+
+        return () => {
+            map.remove();
+        };
+    }, []);
 
     return (
         <div className={styles.mapContainer}>
