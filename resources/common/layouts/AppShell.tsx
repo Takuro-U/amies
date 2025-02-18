@@ -49,8 +49,10 @@ const AppShell: React.FC<PROPS> = ({ children }) => {
         <div>
             <Header menuIsOpen={menuIsOpen} setMenuIsOpen={setMenuIsOpen} />
             <BackToPageTopButton />
-            {modalStatus.isOpen && <Modal />}
-            {children}
+            <div>
+                {modalStatus.isOpen && <Modal />}
+                {children}
+            </div>
             <Footer />
         </div>
     );
