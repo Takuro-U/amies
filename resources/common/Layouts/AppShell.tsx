@@ -55,13 +55,11 @@ const AppShell: React.FC<PROPS> = ({ children }) => {
     }, []);
 
     return (
-        <div style={{minHeight: "100vh"}} className="flex flex-wrap flex-col content-between">
+        <div className="min-h-[100vh] flex flex-col">
             <Header />
             <BackToPageTopButton />
-            <div className="flex-grow">
             {modalStatus.isOpen && <Modal />}
             {children}
-            </div>
             <Footer />
         </div>
     );

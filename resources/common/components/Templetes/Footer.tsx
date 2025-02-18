@@ -32,32 +32,13 @@ const footerColumn: FooterColumnType[] = [
 ];
 
 export default function Footer() {
-    const footerRef = useRef<HTMLElement>(null);
-
-    const positionSetter =()=>{
-        if(footerRef.current){
-            const footer = footerRef.current;
-            if(document.body.clientHeight < window.innerHeight) footer.style.position = "absolute";
-            else footer.style.position = "relative";
-            console.log(footer.style.position);
-        }
-    }
-    
-    const heightObserver = new ResizeObserver(() => {
-        positionSetter();
-    });
-
-    // useEffect(()=>{
-    //     heightObserver.observe(document.body)
-    // }, []);
-
     return (
         <footer
-            ref={ footerRef }
             className={classNames(
                 "font-main",
                 "w-full bg-white bg-opacity-40 p-2",
-                "relative z-10"
+                "relative z-10",
+                "mt-auto"
             )}
         >
             <h1 className="text-xl">AMie's</h1>
