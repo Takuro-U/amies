@@ -2,7 +2,6 @@ import { FC } from "react";
 
 // CSS
 import style from "../../styles/SnapshotContainer.module.scss";
-import classNames from "classnames";
 
 type Props = {
     path: string;
