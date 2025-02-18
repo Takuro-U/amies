@@ -43,6 +43,27 @@ const FilterBox: React.FC = () => {
             isChecked: false,
         })),
     });
+    let upperLists: {[key: string]: CheckContentProps[];} = {area: [], genre: []};
+    let lowerLists: {[key: string]: CheckContentProps[];} = {area: [], genre: []};
+
+    Object.keys(checkLists).map((key)=>{
+        const list: CheckContentProps[] = checkLists[key].sort((a, b)=>b.name.length - a.name.length);
+        let upperLen: number = 0;
+        let lowerLen: number = 0;
+
+        list.map((el)=>{
+            const elLen = el.name.length;
+            if(upperLen < lowerLen){
+                upperLists[key].push(el);
+                upperLen += elLen;
+            }else{
+                lowerLists[key].push(el);
+                lowerLen += elLen;
+            }
+        })
+        console.log("upper", upperLen, "lower", lowerLen);
+    })
+    
     const [isAnyQueries, setIsAnyQueries] = useState<boolean>(false);
     const queryListRef = useRef<HTMLDivElement>(null);
 
@@ -152,8 +173,7 @@ const FilterBox: React.FC = () => {
                             by: "container",
                         }}
                     >
-                        {checkLists.area?.map((element, i) => {
-                            if(!(i % 2)) return (
+                        {upperLists.area?.map((element, i) => 
                             <SwiperSlide style={{width: "auto"}} key={element.id}>
                                 <CheckContent
                                     id={element.id}
@@ -167,8 +187,7 @@ const FilterBox: React.FC = () => {
                                     }
                                 />
                             </SwiperSlide>
-                            )
-                        })}
+                        )}
                     </Swiper>
                     <Swiper
                         className={classNames("h-3/5 relative", scrollbarStyle.filterBox)}
@@ -187,8 +206,7 @@ const FilterBox: React.FC = () => {
                         controller={{
                         }}
                     >
-                        {checkLists.area?.map((element, i) => (
-                            i % 2 ?
+                        {lowerLists.area?.map((element, i) => 
                             <SwiperSlide style={{width: "auto"}} key={element.id}>
                                 <CheckContent
                                     id={element.id}
@@ -202,8 +220,7 @@ const FilterBox: React.FC = () => {
                                     }
                                 />
                             </SwiperSlide>
-                            : null
-                        ))}
+                        )}
                     </Swiper>
                 </div>
             </div>
@@ -229,8 +246,7 @@ const FilterBox: React.FC = () => {
                             by: "container"
                         }}
                     >
-                        {checkLists.genre?.map((element, i) => (
-                            !(i % 2)? 
+                        {upperLists.genre?.map((element, i) => 
                             <SwiperSlide style={{width: "auto"}} key={element.id}>
                                 <CheckContent
                                     id={element.id}
@@ -244,8 +260,7 @@ const FilterBox: React.FC = () => {
                                     }
                                 />
                             </SwiperSlide>
-                            : null
-                        ))}
+                        )}
                     </Swiper>
                     <Swiper
                         className={classNames("h-3/5", scrollbarStyle.filterBox)}
@@ -265,8 +280,7 @@ const FilterBox: React.FC = () => {
                             by: "container"
                         }}
                     >
-                        {checkLists.genre?.map((element, i) => (
-                            i % 2 ? 
+                        {lowerLists.genre?.map((element, i) => 
                             <SwiperSlide style={{width: "auto"}} key={element.id}>
                                 <CheckContent
                                     id={element.id}
@@ -280,8 +294,7 @@ const FilterBox: React.FC = () => {
                                     }
                                 />
                             </SwiperSlide>
-                            : null
-                        ))}
+                        )}
                     </Swiper>
                 </div>
             </div>
