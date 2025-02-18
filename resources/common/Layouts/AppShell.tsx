@@ -58,8 +58,10 @@ const AppShell: React.FC<PROPS> = ({ children }) => {
         <div className="min-h-[100vh] flex flex-col">
             <Header />
             <BackToPageTopButton />
-            {modalStatus.isOpen && <Modal />}
-            {children}
+            <div>
+                {modalStatus.isOpen && <Modal />}
+                {children}
+            </div>
             <Footer />
         </div>
     );
