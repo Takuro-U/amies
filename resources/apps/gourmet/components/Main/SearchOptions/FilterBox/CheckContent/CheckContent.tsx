@@ -1,4 +1,4 @@
-import React from "react";
+import React, { RefObject, forwardRef } from "react";
 // Types
 import { Category } from "../../../../../../../types/common";
 
@@ -12,9 +12,10 @@ interface CheckContentProps extends Category {
 
 type PROPS = CheckContentProps;
 
-const CheckContent: React.FC<PROPS> = (props) => {
-    return (
+export const CheckContent = forwardRef<HTMLDivElement, PROPS>((props, ref) =>
+    (
         <div
+            ref={ ref }
             className={classNames("flex items-center", "mr-[15px]", {
                 "ml-[10px]": props.id === 11111,
             })}
@@ -38,7 +39,5 @@ const CheckContent: React.FC<PROPS> = (props) => {
                 {props.name}
             </label>
         </div>
-    );
-};
-
-export default CheckContent;
+    )
+)
