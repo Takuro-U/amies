@@ -11,34 +11,20 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-        'admin' => [
-            'driver' => 'session',
-            'provider' => 'admins',
-        ],
-        'restaurant' => [
-            'driver' => 'session',
-            'provider' => 'restaurants',
-        ],
     ],
 
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', App\Models\User::class),
+            'model' => App\Models\User::class,
         ],
+
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',
         // ],
-        'restaurants' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\Restaurant::class,
-        ],
-        'admins' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\Admin::class,
-        ],
     ],
+
 
     'passwords' => [
         'users' => [
