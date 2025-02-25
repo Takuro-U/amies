@@ -8,9 +8,7 @@ use Illuminate\Http\Request;
 
 class EmailVerificationNotificationController extends Controller
 {
-    /**
-     * Send a new email verification notification.
-     */
+    //メールアドレス認証_メール送信処理
     public function store(Request $request): RedirectResponse
     {
         if ($request->user()->hasVerifiedEmail()) {

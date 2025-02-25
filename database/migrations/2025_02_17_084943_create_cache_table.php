@@ -9,21 +9,21 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->email()->unique();
-            $table->password();
-            $table->timestamps();
-        });
-    }
+    public function up()
+{
+    Schema::create('cache', function (Blueprint $table) {
+        $table->string('key')->primary();  // ここで`key`カラムを作成
+        $table->text('value');
+        $table->integer('expiration');
+    });
+}
+
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('cache');
     }
 };
