@@ -1,8 +1,11 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import { AuthStatus } from "../types/common";
+
+import { Inertia } from "@inertiajs/inertia";
 
 type PROPS = {
     children: React.ReactNode;
+    authProps: any;
 };
 
 const defaultAuthStatus: AuthStatus = {
@@ -23,8 +26,10 @@ export const useAuthContext = () => {
     return useContext(AuthContext);
 };
 
-export const AuthProvider: React.FC<PROPS> = ({ children }) => {
+export const AuthProvider: React.FC<PROPS> = ({ children, authProps }) => {
     const [authStatus, setAuthStatus] = useState<AuthStatus>(defaultAuthStatus);
+
+    console.log(authProps);
 
     //認証チェックは済んだ前提
     const login = (newStatus: AuthStatus) => {
