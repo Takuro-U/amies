@@ -21,9 +21,10 @@ import ForgotPassword from "../../auth/Pages/Auth/ForgotPassword";
 import ResetPassword from "../../auth/Pages/Auth/ResetPassword";
 import ConfirmPassword from "../../auth/Pages/Auth/ConfirmPassword";
 import VerifyEmail from "../../auth/Pages/Auth/VerifyEmail";
+import Dashboard from "../../auth/Pages/Dashboard";
 
 export const pageRouter: Pages = {
-    common: { auth: Auth, user: UserProfile },
+    common: { auth: Auth, user: UserProfile, dash_board: Dashboard },
     auth: {
         login: Login,
         register: Register,

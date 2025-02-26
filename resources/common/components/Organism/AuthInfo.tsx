@@ -39,14 +39,14 @@ const AuthInfoMenu: React.FC = () => {
                 <MenuLink
                     link={{
                         label: authStatus.username,
-                        route: "/user",
+                        route: "/",
                     }}
                 />
             ) : (
                 <MenuLink
                     link={{
                         label: "LOGIN",
-                        route: "/auth",
+                        route: "login",
                     }}
                 />
             )}
