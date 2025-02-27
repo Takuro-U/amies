@@ -5,9 +5,11 @@ export interface Pages {
 }
 
 export interface AuthStatus {
-    isAuthenticated: boolean;
-    id: string;
-    username: string;
+    user: {
+        id: number;
+        name: string;
+    } | null;
+    check: boolean;
 }
 
 export interface Category {

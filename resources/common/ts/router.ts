@@ -1,9 +1,9 @@
-//common
-import Auth from "../pages/Auth";
-import UserProfile from "../pages/UserProfile";
-
 // top
 import TopMain from "../../apps/top/pages/Main";
+
+//profile
+import Profile from "../pages/Profile";
+import Edit from "../../auth/Pages/Profile/Edit";
 
 // gourmet
 import GourmetMain from "../../apps/gourmet/pages/Main";
@@ -14,17 +14,20 @@ import Restaurant from "../../apps/gourmet/pages/Restaurant";
 import { Pages } from "../../types/common";
 import { MenuLinkType } from "../../types/common";
 
-// breeze
+// auth
 import Login from "../../auth/Pages/Auth/Login";
 import Register from "../../auth/Pages/Auth/Register";
+import VerifyEmail from "../../auth/Pages/Auth/VerifyEmail";
 import ForgotPassword from "../../auth/Pages/Auth/ForgotPassword";
 import ResetPassword from "../../auth/Pages/Auth/ResetPassword";
 import ConfirmPassword from "../../auth/Pages/Auth/ConfirmPassword";
-import VerifyEmail from "../../auth/Pages/Auth/VerifyEmail";
+
+// test
 import Dashboard from "../../auth/Pages/Dashboard";
 
 export const pageRouter: Pages = {
-    common: { auth: Auth, user: UserProfile, dash_board: Dashboard },
+    test: { dash_board: Dashboard },
+    profile: { main: Profile, edit: Edit },
     auth: {
         login: Login,
         register: Register,

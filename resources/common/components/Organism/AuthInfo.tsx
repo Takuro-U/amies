@@ -14,10 +14,10 @@ const AuthInfoHeader: React.FC = () => {
 
     return (
         <div>
-            {authStatus.isAuthenticated ? (
+            {authStatus.user && authStatus.check ? (
                 //ユーザー表示
                 <>
-                    <Link href="/user">{authStatus.username}</Link>
+                    <Link href="/user">{authStatus.user.name}</Link>
                 </>
             ) : (
                 //ログインボタン
@@ -30,15 +30,15 @@ const AuthInfoHeader: React.FC = () => {
 };
 
 const AuthInfoMenu: React.FC = () => {
-    const { authStatus, logout } = useAuthContext();
+    const { authStatus } = useAuthContext();
 
     return (
         <div>
-            {authStatus.isAuthenticated ? (
+            {authStatus.user && authStatus.check ? (
                 //ユーザー表示
                 <MenuLink
                     link={{
-                        label: authStatus.username,
+                        label: authStatus.user.name,
                         route: "/",
                     }}
                 />

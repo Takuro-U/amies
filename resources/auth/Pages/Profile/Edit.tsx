@@ -5,10 +5,10 @@ import DeleteUserForm from "./Partials/DeleteUserForm";
 import UpdatePasswordForm from "./Partials/UpdatePasswordForm";
 import UpdateProfileInformationForm from "./Partials/UpdateProfileInformationForm";
 
-export default function Edit({
+const Edit: React.FC<{ mustVerifyEmail: boolean; status?: string }> = ({
     mustVerifyEmail,
     status,
-}: PageProps<{ mustVerifyEmail: boolean; status?: string }>) {
+}) => {
     return (
         <AuthenticatedLayout
             header={
@@ -40,4 +40,6 @@ export default function Edit({
             </div>
         </AuthenticatedLayout>
     );
-}
+};
+
+export default Edit;
