@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Helpers\InertiaHelper;
+use App\Http\Controllers\ProfileController;
 
 Route::middleware('auth')->group(function () {
     Route::get('/', function () {

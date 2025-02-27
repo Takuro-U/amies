@@ -10,23 +10,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Models\UserHasProfile;
 
 class ProfileController extends Controller
 {
-    /**
-     * Display the user's profile form.
-     */
-    public function edit(Request $request): Response
-    {
-        return Inertia::render('Profile/Edit', [
-            'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
-            'status' => session('status'),
-        ]);
-    }
-
-    /**
-     * Update the user's profile information.
-     */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
         $request->user()->fill($request->validated());
@@ -37,12 +24,20 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
+        $profile = UserHasProfile::where('user_id', $request->user()->id)->first();
+        if ($profile) {
+            $profile->nickname = $request->nickname;
+            $profile->save();
+        } else {
+            $profile = new UserHasProfile();
+            $profile->user_id = $request->user()->id;
+            $profile->nickname = $request->nickname;
+            $profile->save();
+        }
+
         return Redirect::route('profile.edit');
     }
 
-    /**
-     * Delete the user's account.
-     */
     public function destroy(Request $request): RedirectResponse
     {
         $request->validate([

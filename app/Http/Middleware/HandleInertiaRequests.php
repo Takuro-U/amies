@@ -12,18 +12,18 @@ class HandleInertiaRequests extends Middleware {
         return parent::version($request);
     }
 
-    public function share(Request $request): array {
+     public function share(Request $request): array
+    {
         return [
             ...parent::share($request),
-            'auth' => function () {
-                return [
-                    'user' => Auth::user() ? [
-                        'id' => Auth::user()->id,
-                        'name' => Auth::user()->name,
-                    ] : null,
-                    'check' => Auth::check(),
-                ];
-            },
+            'auth' => [
+                'user' => $request->user() ? array_merge(
+                    $request->user()->toArray(),
+                    [
+                        'nickname' => !empty($request->user()->profile?->nickname) ? $request->user()->profile->nickname : "匿名"
+                    ]
+                ) : null,
+            ],
         ];
     }
 }
