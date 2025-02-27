@@ -4,7 +4,7 @@ import { createInertiaApp } from "@inertiajs/react";
 // Components
 import Test from "./test/pages/Test";
 import ModalProvider from "./hooks/ModalProvider";
-import ConsoleAuthProvider from "./hooks/ConsoleAuthProvider";
+import AuthProvider from "./hooks/AuthProvider";
 
 //types
 import { Pages } from "./types/common";
@@ -22,9 +22,9 @@ createInertiaApp({
         const root = createRoot(el);
         root.render(
             <ModalProvider>
-                <ConsoleAuthProvider>
+                <AuthProvider authStatus={}>
                     <App {...props} />
-                </ConsoleAuthProvider>
+                </AuthProvider>
             </ModalProvider>
         );
     },

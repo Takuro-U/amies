@@ -23,9 +23,9 @@ createInertiaApp({
 
         document.getElementById("initial-content")?.remove();
 
-        const renderApp = (authProps: any) => {
+        const renderApp = (authStatus: any) => {
             root.render(
-                <AuthProvider authProps={authProps}>
+                <AuthProvider authStatus={authStatus}>
                     <ModalProvider>
                         <AppShell>
                             <App {...props} />

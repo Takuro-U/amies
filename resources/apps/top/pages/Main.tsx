@@ -1,6 +1,5 @@
 import React from "react";
 import { route } from "ziggy-js";
-import { useAuthContext } from "../../../hooks/AuthProvider";
 import classNames from "classnames";
 import { TopicsIcon, GourmetIcon } from "../components/Organisms/SvgIcons";
 import { FadeIn } from "../components/Organisms/MotionContainer";
@@ -12,8 +11,6 @@ import BackGround from "../components/Templates/Background";
 import layout from "../styles/layout.module.scss";
 
 const Main: React.FC = () => {
-    const { authStatus, login, logout } = useAuthContext();
-
     return (
         <>
             <BackGround />
