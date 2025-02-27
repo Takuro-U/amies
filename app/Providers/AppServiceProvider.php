@@ -18,6 +18,7 @@ class AppServiceProvider extends ServiceProvider {
                     'user' => Auth::user() ? [
                         'id' => Auth::user()->id,
                         'name' => Auth::user()->name,
+                        'nickname' => Auth::user()->nickname ? Auth::user()->nickname->nickname : null,
                     ] : null,
                     'check' => Auth::check(),
                 ];
