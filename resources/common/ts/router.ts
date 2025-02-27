@@ -3,7 +3,7 @@ import TopMain from "../../apps/top/pages/Main";
 
 //profile
 import Profile from "../pages/Profile";
-import Edit from "../../auth/Pages/Profile/Edit";
+import EditProfile from "../pages/EditProfile";
 
 // gourmet
 import GourmetMain from "../../apps/gourmet/pages/Main";
@@ -27,7 +27,7 @@ import Dashboard from "../../auth/Pages/Dashboard";
 
 export const pageRouter: Pages = {
     test: { dash_board: Dashboard },
-    profile: { main: Profile, edit: Edit },
+    profile: { main: Profile, edit: EditProfile },
     auth: {
         login: Login,
         register: Register,
