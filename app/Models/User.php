@@ -35,8 +35,8 @@ class User extends Authenticatable implements MustVerifyEmail
         ];
     }
     
-    public function nickname()
+    public function profile()
     {
-        return $this->hasOne(UserHasNickname::class);
+        return $this->hasOne(UserHasProfile::class);
     }
 }
