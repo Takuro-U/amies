@@ -13,7 +13,14 @@ const Profile: React.FC = () => {
     return (
         <div className="bg-blue-50 py-10">
             <div className="flex flex-col items-center w-full">
-                <img className="rounded-full w-[100px] h-[100px] bg-white" />
+                <img
+                    src={
+                        user.icon_path
+                            ? user.icon_path
+                            : "/images/common/no_image.jpg"
+                    }
+                    className="object-cover rounded-full w-[100px] h-[100px] bg-white"
+                />
                 <p className="py-1">{user.nickname}</p>
                 <Link
                     href="/profile/edit"

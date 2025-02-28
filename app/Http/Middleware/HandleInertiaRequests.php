@@ -20,7 +20,8 @@ class HandleInertiaRequests extends Middleware {
                 'user' => $request->user() ? array_merge(
                     $request->user()->toArray(),
                     [
-                        'nickname' => !empty($request->user()->profile?->nickname) ? $request->user()->profile->nickname : "匿名"
+                        'nickname' => !empty($request->user()->profile?->nickname) ? $request->user()->profile->nickname : "匿名",
+                        'icon_path' => $request->user()->profile?->icon_path
                     ]
                 ) : null,
             ],
