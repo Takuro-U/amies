@@ -13,7 +13,7 @@ Route::middleware([AddViewData::class])->group(function () {
     })->name('/');
 
     //プロフィール
-    Route::prefix('profile')->group(function () {
+    Route::middleware(['auth', 'verified'])->prefix('profile')->group(function () {
         require base_path('routes/web/profile.php');
     });
 

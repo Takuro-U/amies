@@ -13,7 +13,8 @@ class UserHasProfile extends Model
 
     protected $fillable = [
         'user_id',
-        'nickname'
+        'nickname',
+        'icon_path'
     ];
 
     public function user()
