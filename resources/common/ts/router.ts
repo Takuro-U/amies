@@ -22,12 +22,16 @@ import ForgotPassword from "../../auth/Pages/Auth/ForgotPassword";
 import ResetPassword from "../../auth/Pages/Auth/ResetPassword";
 import ConfirmPassword from "../../auth/Pages/Auth/ConfirmPassword";
 
+// console
+import AdminConsole from "../../console/admin/pages/ConsolePage";
+import UserCreator from "../../console/admin/pages/UserCreator";
+import RestaurantConsole from "../../console/restaurant/pages/ConsolePage";
+
 // test
 import Dashboard from "../../auth/Pages/Dashboard";
 
 export const pageRouter: Pages = {
     test: { dash_board: Dashboard },
-    profile: { main: Profile, edit: EditProfile },
     auth: {
         login: Login,
         register: Register,
@@ -36,8 +40,19 @@ export const pageRouter: Pages = {
         confirm_password: ConfirmPassword,
         verify_email: VerifyEmail,
     },
+    profile: { main: Profile, edit: EditProfile },
     top: { main: TopMain },
     gourmet: { main: GourmetMain, search: Search, restaurant: Restaurant },
+};
+
+export const consoleRouter: Pages = {
+    admin: {
+        main: AdminConsole,
+        user_creator: UserCreator,
+    },
+    restaurant: {
+        main: RestaurantConsole,
+    },
 };
 
 export const menuLinks: MenuLinkType[] = [

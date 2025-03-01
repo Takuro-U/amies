@@ -62,8 +62,15 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('verify-email', function () {
-        return InertiaHelper::renderPage('auth', 'verify_email');
+    //認証されていればリダイレクトするようにしたいなあ
+    //したでえ
+    Route::get('verify-email', function (Request $request) {
+        if ($request->user()->hasVerifiedEmail()) {
+            return redirect('/profile');
+        }
+        return Inertia::render('auth/verify_email', [
+            'status' => session('status'),
+        ]);
     })->name('verification.notice');
 
     Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)

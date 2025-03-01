@@ -7,30 +7,32 @@ use App\Helpers\InertiaHelper;
 
 Route::middleware([AddViewData::class])->group(function () {
 
-    //トップ
-    Route::get('/', function () {
-        return InertiaHelper::renderPage('top', 'main');
-    })->name('/');
+    //認証
+    Route::prefix('auth')->group(function () {
+        require base_path('routes/web/auth.php');
+    });
+
+    //コンソール
+    Route::middleware(['auth', 'verified'])->prefix('console')->group(function () {
+        require base_path('routes/web/console.php');
+    });
 
     //プロフィール
     Route::middleware(['auth', 'verified'])->prefix('profile')->group(function () {
         require base_path('routes/web/profile.php');
     });
 
-    //認証
-    Route::prefix('auth')->group(function () {
-        require base_path('routes/web/auth.php');
-    });
+    //トップ
+    Route::get('/', function () {
+        return InertiaHelper::renderPage('top', 'main');
+    })->name('/');
 
     //グルメ
     Route::prefix('gourmet')->group(function () {
         require base_path('routes/web/gourmet.php');
     });
 
-    //コンソール
-    Route::prefix('console')->group(function () {
-        require base_path('routes/web/console.php');
-    });
+    
 
     //本番では要らないやつ
     Route::get('/dashboard', function () {

@@ -22,8 +22,6 @@ export const useAuthContext = () => {
 };
 
 export const AuthProvider: React.FC<PROPS> = ({ children, authStatus }) => {
-    console.log(authStatus);
-
     return (
         <div>
             <AuthContext.Provider value={{ authStatus }}>

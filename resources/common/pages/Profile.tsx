@@ -34,7 +34,9 @@ const Profile: React.FC = () => {
                     プロフィール編集
                 </Link>
                 <Link
-                    href="/"
+                    href={route("logout")}
+                    method="post"
+                    as="button"
                     className={classNames(
                         "flex justify-center items-center",
                         "w-[80%] h-[35px] my-1",
