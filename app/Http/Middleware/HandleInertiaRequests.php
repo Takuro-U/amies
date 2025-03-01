@@ -24,6 +24,7 @@ class HandleInertiaRequests extends Middleware {
                         'icon_path' => $request->user()->profile?->icon_path
                     ]
                 ) : null,
+                'check' => $request->user() ? $request->user()->hasVerifiedEmail() : false,
             ],
         ];
     }

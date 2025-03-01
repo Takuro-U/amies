@@ -14,10 +14,10 @@ const AuthInfoHeader: React.FC = () => {
 
     return (
         <div>
-            {authStatus.user && authStatus.check ? (
+            {authStatus.user ? (
                 //ユーザー表示
                 <>
-                    <Link href="/user">{authStatus.user.name}</Link>
+                    <Link href="/user">プロフィール</Link>
                 </>
             ) : (
                 //ログインボタン
@@ -34,12 +34,12 @@ const AuthInfoMenu: React.FC = () => {
 
     return (
         <div>
-            {authStatus.user && authStatus.check ? (
+            {authStatus.user ? (
                 //ユーザー表示
                 <MenuLink
                     link={{
-                        label: authStatus.user.name,
-                        route: "/",
+                        label: "プロフィール",
+                        route: "/profile",
                     }}
                 />
             ) : (
