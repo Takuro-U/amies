@@ -13,6 +13,9 @@ use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\InitialPasswordMail;
+use Illuminate\Auth\Events\Verified;
+
 class CreateUserController extends Controller
 {
     //ユーザー発行処理
@@ -30,19 +33,11 @@ class CreateUserController extends Controller
             'password' => Hash::make($initialPassword),
         ]);
 
-        event(new Registered($user));
+        $user->email_verified_at = now();
+        $user->save();
 
-        Mail::html(
-            '
-            <p>AMie\'sへの仮登録が完了しました。</p>
-            <p><strong>初期パスワード:</strong> ' . $initialPassword . '</p>
-            <p>このパスワードを使用してログインしてください。</p>
-            ', 
-            function ($message) use ($request) {
-                $message->to($request->email)
-                ->subject('AMie\'s仮登録完了のお知らせ');
-            }
-        );
+        Mail::to($user->email)->send(new InitialPasswordMail($initialPassword));
+        
 
         return redirect()->back();
     }
