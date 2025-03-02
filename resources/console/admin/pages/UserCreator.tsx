@@ -7,11 +7,12 @@ import PrimaryButton from "../../../auth/Components/PrimaryButton";
 import TextInput from "../../../auth/Components/TextInput";
 import { FormEventHandler } from "react";
 import { useForm } from "@inertiajs/react";
+import classNames from "classnames";
 
 const UserCreator: React.FC = () => {
     const { data, setData, post, processing, errors, reset } = useForm({
-        name: "",
         email: "",
+        role: { student: false, restaurant: false, user: true },
     });
 
     const submit: FormEventHandler = (e) => {
@@ -28,23 +29,6 @@ const UserCreator: React.FC = () => {
             <Head title="Register" />
 
             <form onSubmit={submit}>
-                <div>
-                    <InputLabel htmlFor="name" value="Name" />
-
-                    <TextInput
-                        id="name"
-                        name="name"
-                        value={data.name}
-                        className="mt-1 block w-full"
-                        autoComplete="name"
-                        isFocused={true}
-                        onChange={(e) => setData("name", e.target.value)}
-                        required
-                    />
-
-                    <InputError message={errors.name} className="mt-2" />
-                </div>
-
                 <div className="mt-4">
                     <InputLabel htmlFor="email" value="Email" />
 
@@ -60,6 +44,34 @@ const UserCreator: React.FC = () => {
                     />
 
                     <InputError message={errors.email} className="mt-2" />
+                </div>
+
+                <div className="mt-4">
+                    <InputLabel htmlFor="role" value="Role" />
+                    <div id="role" className="mt-1 block w-full">
+                        {Object.entries(data.role).map(([key, value]) => (
+                            <button
+                                type="button"
+                                key={key}
+                                className={classNames(
+                                    "py-1 px-2 mr-1 rounded-md",
+                                    {
+                                        "bg-green-400 text-white": value,
+                                        "bg-gray-200": !value,
+                                    }
+                                )}
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    setData("role", {
+                                        ...data.role,
+                                        [key]: !value,
+                                    });
+                                }}
+                            >
+                                {key}
+                            </button>
+                        ))}
+                    </div>
                 </div>
 
                 <div className="mt-4 flex items-center justify-end">
