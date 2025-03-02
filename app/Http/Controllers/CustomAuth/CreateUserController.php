@@ -15,6 +15,8 @@ use Inertia\Response;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\InitialPasswordMail;
 use Illuminate\Auth\Events\Verified;
+use Spatie\Permission\Models\Role;
+use Illuminate\Validation\ValidationException;
 
 class CreateUserController extends Controller
 {
@@ -23,7 +25,13 @@ class CreateUserController extends Controller
     {
         $request->validate([
             'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
+            'role' => 'array', 
+            'role.*' => 'boolean', 
         ]);
+
+        if (isset($request->role['admin']) && $request->role['admin']) {
+            return redirect()->back();
+        }
 
         $initialPassword = bin2hex(random_bytes(12));
 
@@ -32,6 +40,16 @@ class CreateUserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($initialPassword),
         ]);
+
+       
+
+        // リクエストのroleオブジェクトからtrueのロールを付与
+        foreach ($request->role as $roleName => $hasRole) {
+            if ($hasRole) {
+                $user->assignRole(Role::where('name', $roleName)->first());
+            }
+        }
+        
 
         $user->email_verified_at = now();
         $user->save();

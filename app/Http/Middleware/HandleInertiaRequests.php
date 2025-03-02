@@ -21,7 +21,8 @@ class HandleInertiaRequests extends Middleware {
                     $request->user()->toArray(),
                     [
                         'nickname' => !empty($request->user()->profile?->nickname) ? $request->user()->profile->nickname : "匿名",
-                        'icon_path' => $request->user()->profile?->icon_path
+                        'icon_path' => $request->user()->profile?->icon_path,
+                        'is_restaurant' => $request->user()->roles->pluck('name')->contains('restaurant'),
                     ]
                 ) : null,
                 'check' => $request->user() ? $request->user()->hasVerifiedEmail() : false,
