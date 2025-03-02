@@ -17,8 +17,6 @@ const UserCreator: React.FC = () => {
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
-        console.log("done");
-
         post("/console/admin/user-creator", {
             //たぶん要らない
             onFinish: () => reset(),
