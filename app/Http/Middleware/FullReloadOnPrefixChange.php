@@ -16,8 +16,6 @@ class FullReloadOnPrefixChange
         $consoleToElse = $currentPrefix === 'console' && $previousPrefix !== 'console';
         $elseToConsole = $currentPrefix !== 'console' && $previousPrefix === 'console';
 
-        //$request->session()->put('prefix', $currentPrefix);
-
         if ($consoleToElse || $elseToConsole) {
             if ($request->header('X-Inertia')) {
                 return Inertia::location($request->fullUrl());
