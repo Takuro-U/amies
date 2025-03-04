@@ -21,7 +21,7 @@ Route::prefix('admin')->middleware(['auth', 'can:admin'])->group(function () {
 Route::prefix('restaurant')->middleware(['auth', 'can:restaurant'])->group(function () {
     Route::get('/edit', [RestaurantController::class, 'showRestaurantEditor'])->name('/console/restaurant/edit');
     Route::get('/edit-menus', [RestaurantController::class, 'showMenusEditor'])->name('/console/restaurant/edit-menus');
-    Route::post('/edit-menus', [RestaurantController::class, 'updateMenus'])->name('/console/restaurant/edit-menus');
+    Route::patch('/edit-menus', [RestaurantController::class, 'updateMenus'])->name('/console/restaurant/edit-menus');
     Route::post('/edit-menus/images', [RestaurantController::class, 'updateMenusImages'])->name('/console/restaurant/edit-menus/images');
 });
 
