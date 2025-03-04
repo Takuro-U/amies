@@ -27,10 +27,17 @@ export interface WeeklyHours {
 export interface DetailRestaurantData {
     id: number;
     name: string;
+    public: number;
+    location: string;
     area_id: number;
+    tell: string;
     price_max: number;
     price_min: number;
     capacity: number;
+    description: string;
+    smoking: number;
+    parking: number;
+    reservation: number;
     images: number;
 }
 
@@ -53,8 +60,9 @@ export type DefaultHour = {
 };
 
 export type Menu = {
+    id: number;
     name: string;
     price: number;
     description: string;
-    img_path: string;
+    has_image: number;
 };

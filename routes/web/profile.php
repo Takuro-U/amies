@@ -15,6 +15,6 @@ Route::get('/edit', function (Request $request) {
         'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
         'status' => session('status'),
     ]);
-})->name('/profile/edit');
+})->name('/profile.edit');
 Route::patch('/edit', [ProfileController::class, 'update'])->name('profile.update');
 Route::delete('/edit', [ProfileController::class, 'destroy'])->name('profile.destroy');

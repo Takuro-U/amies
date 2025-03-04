@@ -9,5 +9,5 @@ Route::get('/test', function() {
 });
 
 Route::group(['prefix' => 'console'], function () {
-    require base_path('routes/api/adminConsole.php');
+    require base_path('routes/api/console.php');
 });

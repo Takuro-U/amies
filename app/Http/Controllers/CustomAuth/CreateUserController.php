@@ -17,6 +17,7 @@ use App\Mail\InitialPasswordMail;
 use Illuminate\Auth\Events\Verified;
 use Spatie\Permission\Models\Role;
 use Illuminate\Validation\ValidationException;
+use App\Models\Gourmet\Restaurant;
 
 class CreateUserController extends Controller
 {
@@ -40,6 +41,13 @@ class CreateUserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($initialPassword),
         ]);
+
+        if (isset($request->role['restaurant']) && $request->role['restaurant']) {
+            Restaurant::create([
+                'user_id' => $user->id,
+                'public' => 0,
+            ]);
+        }
 
        
 

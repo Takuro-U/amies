@@ -33,17 +33,33 @@ const Profile: React.FC = () => {
                 >
                     プロフィール編集
                 </Link>
-                <Link
-                    href="/console/restaurant"
-                    className={classNames(
-                        "flex justify-center items-center",
-                        "w-[80%] h-[35px] my-1",
-                        "rounded-md",
-                        "text-white bg-slate-500"
-                    )}
-                >
-                    店舗情報編集
-                </Link>
+
+                {user.is_restaurant && (
+                    <>
+                        <Link
+                            href="/console/restaurant/edit"
+                            className={classNames(
+                                "flex justify-center items-center",
+                                "w-[80%] h-[35px] my-1",
+                                "rounded-md",
+                                "text-white bg-slate-500"
+                            )}
+                        >
+                            店舗情報編集
+                        </Link>
+                        <Link
+                            href="/console/restaurant/edit-menus"
+                            className={classNames(
+                                "flex justify-center items-center",
+                                "w-[80%] h-[35px] my-1",
+                                "rounded-md",
+                                "text-white bg-slate-500"
+                            )}
+                        >
+                            メニュー編集
+                        </Link>
+                    </>
+                )}
                 <Link
                     href={route("logout")}
                     method="post"
