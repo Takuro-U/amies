@@ -11,13 +11,6 @@ const EditMenus: React.FC<{ menus: { [key: number]: Menu[] } }> = ({
     menus,
 }) => {
     const [menuType, setMenuType] = useState(0);
-    const [imgDataList, setImgDataList] = useState<{
-        [key: number]: (File | null)[];
-    }>({
-        0: [],
-        1: [],
-        2: [],
-    });
 
     const menuTypeList = ["コース", "単品", "ドリンク"];
 
@@ -26,6 +19,7 @@ const EditMenus: React.FC<{ menus: { [key: number]: Menu[] } }> = ({
         name: string;
         price: number;
         description: string;
+        img_data: File | null;
     }[][] = () => {
         const result = menuTypeList.map((type, index) => {
             if (!menus[index]) {
@@ -33,6 +27,13 @@ const EditMenus: React.FC<{ menus: { [key: number]: Menu[] } }> = ({
             }
             return menus[index].map((menu, i) => ({
                 ...menu,
+                img_data:
+                    menu.has_image === 1
+                        ? new File(
+                              [],
+                              "/images/gourmet/menus/" + menu.id + ".jpg"
+                          )
+                        : null,
             }));
         });
 
@@ -65,58 +66,16 @@ const EditMenus: React.FC<{ menus: { [key: number]: Menu[] } }> = ({
             name: "",
             price: 0,
             description: "",
+            img_data: null,
         });
-        setImgDataList((prev) => ({
-            ...prev,
-            [menuType]: [...prev[menuType], null],
-        }));
         setData("menus", newMenus);
     };
 
-    useEffect(() => {
-        const updatedImgDataList = menuTypeList.reduce((acc, _, index) => {
-            if (menus[index]) {
-                acc[index] = menus[index].map((menu) =>
-                    menu.has_image === 1
-                        ? new File(
-                              [],
-                              "/images/gourmet/menus/" + menu.id + ".jpg"
-                          )
-                        : null
-                );
-            }
-            return acc;
-        }, {} as { [key: number]: (File | null)[] });
-
-        setImgDataList(updatedImgDataList);
-    }, [menus]);
-
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
+        console.log(data.menus);
 
-        patch(route("/console/restaurant/edit-menus"), {
-            onSuccess: () => {
-                const formData = new FormData();
-                Object.keys(imgDataList).forEach((categoryIndex) => {
-                    imgDataList[parseInt(categoryIndex)].forEach(
-                        (file, menuIndex) => {
-                            if (file) {
-                                formData.append(
-                                    `img_data[${categoryIndex}][${menuIndex}]`,
-                                    file
-                                );
-                            }
-                        }
-                    );
-                });
-
-                console.log(formData.getAll("img_data[0][0]"));
-                axios.patch(route("/console/restaurant/edit-menus/images"), {
-                    data: formData,
-                    headers: { "Content-Type": "multipart/form-data" },
-                });
-            },
-        });
+        patch(route("/console/restaurant/edit-menus"));
     };
 
     return (
@@ -157,11 +116,11 @@ const EditMenus: React.FC<{ menus: { [key: number]: Menu[] } }> = ({
                                 <div className="flex">
                                     <img
                                         src={
-                                            imgDataList[menuType][index]
+                                            data.menus[menuType][index].img_data
                                                 ? URL.createObjectURL(
-                                                      imgDataList[menuType][
+                                                      data.menus[menuType][
                                                           index
-                                                      ]
+                                                      ].img_data
                                                   )
                                                 : "/images/common/no_image.jpg"
                                         }
@@ -181,19 +140,12 @@ const EditMenus: React.FC<{ menus: { [key: number]: Menu[] } }> = ({
                                             accept="jpg,png,jpeg"
                                             className="text-[14px] font-medium mt-1 hidden"
                                             onChange={(e) => {
-                                                setImgDataList((prev) => ({
-                                                    ...prev,
-                                                    [menuType]: prev[
-                                                        menuType
-                                                    ].map((item, idx) =>
-                                                        idx === index
-                                                            ? e.target.files
-                                                                ? e.target
-                                                                      .files[0]
-                                                                : null
-                                                            : item
-                                                    ),
-                                                }));
+                                                updateData(
+                                                    menuType,
+                                                    index,
+                                                    "img_data",
+                                                    e.target.files?.[0] ?? null
+                                                );
                                             }}
                                         />
                                     </div>
