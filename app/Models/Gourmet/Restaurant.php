@@ -15,12 +15,17 @@ class Restaurant extends Model
 
     protected $fillable = [
         'id',
+        'user_id',
+        'public',
         'name',
         'area_id',
         'tell',
         'price_max',
         'price_min',
-        'description'
+        'description',
+        'parking',
+        'smoking',
+        'reservation',
     ];
 
     public $incrementing = false;

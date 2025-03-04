@@ -25,8 +25,8 @@ import ConfirmPassword from "../../auth/Pages/Auth/ConfirmPassword";
 // console
 import AdminConsole from "../../console/admin/pages/ConsolePage";
 import UserCreator from "../../console/admin/pages/UserCreator";
-import RestaurantConsole from "../../console/restaurant/pages/ConsolePage";
-
+import EditRestaurant from "../../console/restaurant/pages/EditRestaurant";
+import EditMenus from "../../console/restaurant/pages/EditMenus";
 // test
 import Dashboard from "../../auth/Pages/Dashboard";
 
@@ -51,7 +51,8 @@ export const consoleRouter: Pages = {
         user_creator: UserCreator,
     },
     restaurant: {
-        main: RestaurantConsole,
+        edit: EditRestaurant,
+        edit_menus: EditMenus,
     },
 };
 

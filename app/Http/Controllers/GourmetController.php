@@ -161,7 +161,7 @@ class GourmetController extends Controller {
                         'name' => $menu['name'],
                         'price' => $menu['price'],
                         'description' => $menu['description'],
-                        'img_path' => $menu['img_path'],
+                        'has_image' => $menu['has_image'],
                     ];
                 });
             });

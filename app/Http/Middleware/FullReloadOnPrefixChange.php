@@ -11,7 +11,9 @@ class FullReloadOnPrefixChange
     public function handle(Request $request, Closure $next)
     {
         $currentPrefix = $this->getPrefix($request);
-        $previousPrefix = $request->headers->get('X-Previous-Prefix');
+        $previousPrefix = $request->header('X-Previous-Prefix');
+
+        //dd($request);
 
         $consoleToElse = $currentPrefix === 'console' && $previousPrefix !== 'console';
         $elseToConsole = $currentPrefix !== 'console' && $previousPrefix === 'console';

@@ -41,5 +41,12 @@ createInertiaApp({
             console.log("Navigated to a new page:", event.detail.page.url);
             renderApp(event.detail.page.props.auth);
         });
+
+        Inertia.on("before", (event) => {
+            const path = window.location.pathname;
+            const prefix = path.split("/")[1];
+
+            event.detail.visit.headers["X-Previous-Prefix"] = prefix;
+        });
     },
 });

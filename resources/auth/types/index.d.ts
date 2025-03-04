@@ -5,6 +5,7 @@ export interface User {
     icon_path: string;
     email: string;
     email_verified_at?: string;
+    is_restaurant: boolean;
 }
 
 export type PageProps<

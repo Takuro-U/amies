@@ -17,12 +17,12 @@ const AuthInfoHeader: React.FC = () => {
             {authStatus.user ? (
                 //ユーザー表示
                 <>
-                    <Link href="/user">プロフィール</Link>
+                    <Link href="/profile">プロフィール</Link>
                 </>
             ) : (
                 //ログインボタン
                 <>
-                    <Link href="/auth">ログイン</Link>
+                    <Link href="/auth/login">ログイン</Link>
                 </>
             )}
         </div>
