@@ -12,15 +12,9 @@
 }
 .veil .modalCard {
   width: 80vw;
-  height: 30vh;
+  height: 40vh;
   max-width: 500px;
   background-color: white;
   border: solid 1px rgb(200, 200, 200);
   border-radius: 10px;
-}
-.veil .modalCard .component {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 }/*# sourceMappingURL=Modal.module.css.map */

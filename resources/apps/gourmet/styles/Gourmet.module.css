@@ -1,11 +1,10 @@
-@charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Shippori+Antique+B1&display=swap");
 .accessable {
   font-family: "Shippori Antique B1";
 }
 
 .bgBase {
-  background: linear-gradient(to bottom right, rgba(243, 161, 79, 0.3), rgba(243, 161, 79, 0.4));
+  background: linear-gradient(to bottom right, rgba(255, 193, 127, 0.5), rgba(255, 193, 127, 0.7));
 }
 
 .page {
@@ -24,7 +23,7 @@
 }
 
 .searchOptionsToggleBtn {
-  background-color: #eb713d;
+  background-color: #cab2a7;
 }
 
 .drawer {
@@ -39,11 +38,10 @@
   margin-bottom: 2vh;
   margin-top: 2vh;
   order: 2;
-  border: 1px #eb713d solid;
 }
 
 .searchOptionsBtn {
-  background-color: #ae4a29;
+  background-color: #6c5e58;
 }
 
 .searchLinks {
@@ -54,7 +52,7 @@
   margin-top: 2vh;
   margin-bottom: 2vh;
   order: 1;
-  background-color: #f3a14f;
+  background-color: #6c5e58;
 }
 
 .aside {
@@ -80,15 +78,15 @@
   border-width: 0px !important;
 }
 .modal .header {
-  background-color: #f8daab;
+  background-color: #cab2a7;
 }
 .modal .header .title {
-  color: #ae4a29;
+  color: #6c5e58;
   font-size: x-large;
   font-weight: bold;
 }
 .modal .header .title::before {
-  content: "・";
+  content: "+";
 }
 .modal .header .closeButton {
   color: white;

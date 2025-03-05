@@ -8,15 +8,15 @@
 }
 
 .filterBox .bar {
-  background-color: #f8daab;
+  background-color: #cab2a7;
 }
 .filterBox .bar .drag {
-  background-color: #ae4a29;
+  background-color: #6c5e58;
 }
 
 .searchLinkList .bar {
   background-color: rgba(255, 255, 255, 0);
 }
 .searchLinkList .bar .drag {
-  background-color: #eb713d;
+  background-color: #6c5e58;
 }/*# sourceMappingURL=scrollbar.module.css.map */

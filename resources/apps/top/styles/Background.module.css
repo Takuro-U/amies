@@ -1,3 +1,8 @@
+.bgBase {
+  background: #4e54c8;
+  background: linear-gradient(to bottom right, rgba(175, 225, 255, 0.1), rgba(175, 225, 255, 0.4));
+}
+
 .sideFade {
   background: linear-gradient(to right, white 25px, rgba(255, 255, 255, 0) 75px, rgba(255, 255, 255, 0) calc(100% - 25px - 50px), white calc(100% - 25px));
 }

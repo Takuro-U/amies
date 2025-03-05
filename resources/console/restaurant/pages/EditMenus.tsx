@@ -1,48 +1,27 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import PrimaryButton from "../../../auth/Components/PrimaryButton";
-import { Transition } from "@headlessui/react";
+import React, { useState, useEffect, FormEventHandler } from "react";
 import { useForm } from "@inertiajs/react";
-import { FormEventHandler } from "react";
-import classNames from "classnames";
+//
+import PrimaryButton from "../../../auth/Components/PrimaryButton";
+import MenuCard from "../components/MenuCard";
+//
 import { Menu } from "../../../types/gourmet";
+//
+import { Transition } from "@headlessui/react";
+import classNames from "classnames";
+//
+import { initialForm, initialImages, menuTypeList } from "../ts/_EditMenu";
 
 const EditMenus: React.FC<{ menus: { [key: number]: Menu[] } }> = ({
     menus,
 }) => {
     const [menuType, setMenuType] = useState(0);
-
-    const menuTypeList = ["コース", "単品", "ドリンク"];
-
-    const initialForm: () => {
-        id: number;
-        name: string;
-        price: number;
-        description: string;
-        img_data: File | null;
-    }[][] = () => {
-        const result = menuTypeList.map((type, index) => {
-            if (!menus[index]) {
-                return [];
-            }
-            return menus[index].map((menu, i) => ({
-                ...menu,
-                img_data:
-                    menu.has_image === 1
-                        ? new File(
-                              [],
-                              "/images/gourmet/menus/" + menu.id + ".jpg"
-                          )
-                        : null,
-            }));
-        });
-
-        return result;
-    };
+    const [currentImages, setCurrentImages] = useState<{
+        [key: number]: (File | null)[];
+    }>(initialImages(menus));
 
     const { data, setData, patch, errors, processing, recentlySuccessful } =
         useForm({
-            menus: initialForm(),
+            menus: initialForm(menus),
         });
 
     const updateData = (
@@ -66,191 +45,136 @@ const EditMenus: React.FC<{ menus: { [key: number]: Menu[] } }> = ({
             name: "",
             price: 0,
             description: "",
-            img_data: null,
+            img_data_base64: null,
         });
+        setData("menus", newMenus);
+    };
+
+    const deleteMenu = (index: number) => {
+        const newMenus = [...data.menus];
+        newMenus[menuType].splice(index, 1);
         setData("menus", newMenus);
     };
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-        console.log(data.menus);
 
         patch(route("/console/restaurant/edit-menus"));
     };
 
-    return (
-        <section className="bg-blue-50 px-[7.5%] pt-5 pb-8">
-            <form onSubmit={submit}>
-                <div className="w-full flex rounded-t-[10px] border-[2px] border-slate-500">
-                    {menuTypeList.map((element, index) => (
-                        <button
-                            key={index}
-                            className={classNames(
-                                "w-1/3 py-1 text-[15px] font-medium",
-                                {
-                                    "bg-white text-slate-600":
-                                        menuType === index,
-                                    "bg-slate-500 text-white":
-                                        menuType !== index,
-                                    "rounded-tl-[7px]": index === 0,
-                                    "rounded-tr-[7px]":
-                                        index === menuTypeList.length - 1,
-                                }
-                            )}
-                            onClick={(e) => {
-                                e.preventDefault();
-                                setMenuType(index);
-                            }}
-                        >
-                            {element}
-                        </button>
-                    ))}
-                </div>
-                <div className="w-full">
-                    {data.menus[menuType]?.map((menu, index) => (
-                        <div
-                            key={index}
-                            className="flex flex-col border-[1px] border-slate-500 bg-gray-100 px-5 py-2 my-3"
-                        >
-                            <div>
-                                <div className="flex">
-                                    <img
-                                        src={
-                                            data.menus[menuType][index].img_data
-                                                ? URL.createObjectURL(
-                                                      data.menus[menuType][
-                                                          index
-                                                      ].img_data
-                                                  )
-                                                : "/images/common/no_image.jpg"
-                                        }
-                                        alt="メニュー画像"
-                                        className="w-[40%] border aspect-1 object-cover"
-                                    />
-                                    <div className="flex items-center justify-center w-[60%]">
-                                        <label
-                                            htmlFor={index.toString()}
-                                            className="text-[12px] font-medium bg-slate-800 text-white px-3 py-1"
-                                        >
-                                            メニュー画像を選択
-                                        </label>
-                                        <input
-                                            id={index.toString()}
-                                            type="file"
-                                            accept="jpg,png,jpeg"
-                                            className="text-[14px] font-medium mt-1 hidden"
-                                            onChange={(e) => {
-                                                updateData(
-                                                    menuType,
-                                                    index,
-                                                    "img_data",
-                                                    e.target.files?.[0] ?? null
-                                                );
-                                            }}
-                                        />
-                                    </div>
-                                </div>
+    useEffect(() => {
+        const currentData = menuTypeList.map((type, typeId) => {
+            return data.menus[typeId].map((menu, index) => {
+                return {
+                    ...menu,
+                    has_image: menu.img_data_base64 ? 1 : 0,
+                };
+            });
+        });
+        setCurrentImages(initialImages(currentData));
+    }, [data.menus]);
 
-                                <label
-                                    htmlFor="name"
-                                    className="text-xs font-medium mt-1"
-                                >
-                                    メニュー名
-                                </label>
-                                <input
-                                    id="name"
-                                    type="text"
-                                    value={menu.name}
-                                    onChange={(e) =>
-                                        updateData(
-                                            menuType,
-                                            index,
-                                            "name",
-                                            e.target.value
-                                        )
+    return (
+        <section className="bg-gray-200 min-h-screen py-8 px-6 sm:px-6 md:px-8 lg:px-12">
+            <button onClick={() => console.log(currentImages)}>ログ</button>
+            <form onSubmit={submit} className="max-w-4xl mx-auto">
+                <div className="mb-6">
+                    <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+                        メニュー編集
+                    </h2>
+                    <div className="w-full flex rounded-lg overflow-hidden shadow-sm">
+                        {menuTypeList.map((element, index) => (
+                            <button
+                                key={index}
+                                className={classNames(
+                                    "w-1/3 py-3 text-[15px] font-medium transition-all duration-200",
+                                    {
+                                        "bg-white text-gray-800 border-t-2 border-orange-500":
+                                            menuType === index,
+                                        "bg-gray-300 text-gray-800 border-t-2 border-transparent hover:bg-gray-400":
+                                            menuType !== index,
                                     }
-                                    className="w-full text-[14px] h-[32px] my-1 py-1 rounded-md border-b border-gray-400"
-                                />
-                                <label
-                                    htmlFor="price"
-                                    className="text-xs font-medium mt-1"
-                                >
-                                    価格
-                                </label>
-                                <div className="flex">
-                                    <input
-                                        id="price"
-                                        type="number"
-                                        value={menu.price}
-                                        onChange={(e) =>
-                                            updateData(
-                                                menuType,
-                                                index,
-                                                "price",
-                                                e.target.value
-                                            )
-                                        }
-                                        className="w-[40%] text-[14px] h-[32px] my-1 py-1 rounded-md border-b border-gray-400"
-                                    />
-                                    <p className="text-xs flex items-center font-medium">
-                                        円
-                                    </p>
-                                </div>
-                                <label
-                                    htmlFor="description"
-                                    className="text-xs font-medium mt-1"
-                                >
-                                    メニュー詳細
-                                </label>
-                                <textarea
-                                    id="description"
-                                    value={menu.description}
-                                    onChange={(e) =>
-                                        updateData(
-                                            menuType,
-                                            index,
-                                            "description",
-                                            e.target.value
-                                        )
-                                    }
-                                    className="w-full text-[14px] my-1 py-1 h-[65px] rounded-md border-b border-gray-400"
-                                />
-                                <button
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        const newMenus = [...data.menus];
-                                        newMenus[menuType].splice(index, 1);
-                                        setData("menus", newMenus);
-                                    }}
-                                    className="w-full bg-red-500 text-white text-sm my-1 py-1 rounded-md"
-                                >
-                                    削除
-                                </button>
-                            </div>
-                        </div>
+                                )}
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    setMenuType(index);
+                                }}
+                            >
+                                {element}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+
+                <div className="space-y-4">
+                    {data.menus[menuType]?.map((menu, index) => (
+                        <MenuCard
+                            key={index}
+                            index={index}
+                            menu={menu}
+                            currentImage={currentImages[menuType][index]}
+                            menuType={menuType}
+                            updateData={updateData}
+                            deleteMenu={deleteMenu}
+                        />
                     ))}
                 </div>
+
                 <button
-                    className="w-full h-[32px] my-3 text-xl flex items-center justify-center font-bold bg-gray-100 border border-slate-500"
+                    className="w-full py-3 my-4 text-gray-600 flex items-center justify-center bg-white rounded-lg border border-gray-300 shadow-sm hover:bg-gray-50 transition-colors duration-200"
                     onClick={(e) => {
                         e.preventDefault();
                         addMenu();
                     }}
                 >
-                    ＋
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5 mr-2"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                    >
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M12 4v16m8-8H4"
+                        />
+                    </svg>
+                    新しいメニューを追加
                 </button>
 
-                <div className="mt-5 w-full flex justify-center">
-                    <PrimaryButton disabled={processing}>Save</PrimaryButton>
+                <div className="mt-8 flex items-center justify-center space-x-4">
+                    <PrimaryButton
+                        disabled={processing}
+                        className="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500"
+                    >
+                        保存する
+                    </PrimaryButton>
 
                     <Transition
                         show={recentlySuccessful}
-                        enter="transition ease-in-out"
-                        enterFrom="opacity-0"
-                        leave="transition ease-in-out"
+                        enter="transition ease-in-out duration-300"
+                        enterFrom="opacity-0 transform translate-y-2"
+                        enterTo="opacity-100 transform translate-y-0"
+                        leave="transition ease-in-out duration-300"
                         leaveTo="opacity-0"
                     >
-                        <p>Saved.</p>
+                        <p className="text-sm text-green-600 flex items-center">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-5 w-5 mr-1"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                            >
+                                <path
+                                    fillRule="evenodd"
+                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                    clipRule="evenodd"
+                                />
+                            </svg>
+                            保存しました
+                        </p>
                     </Transition>
                 </div>
             </form>
