@@ -8,6 +8,7 @@ use App\Models\Gourmet\Restaurant;
 use Inertia\Inertia;
 use App\Models\Gourmet\Menus;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class RestaurantController extends Controller {
 
@@ -19,6 +20,8 @@ class RestaurantController extends Controller {
                 return $group->map(function ($menu) {
                     return [
                         'id' => $menu['id'],
+                        'parent_id' => $menu['parent_id'],
+                        'category_id' => $menu['category_id'],
                         'name' => $menu['name'],
                         'price' => $menu['price'],
                         'description' => $menu['description'],
@@ -26,6 +29,58 @@ class RestaurantController extends Controller {
                     ];
                 });
             });
+        return $result;
+    }
+
+    public function decordAndSaveImage($menu, $parentId, $categoryId, $index) {
+        if (preg_match('/^data:image\/(\w+);base64,/', $menu['imgDataBase64'], $matches)) {
+            $base64Data = preg_replace('/^data:\w+\/[\w\-\+\.]+;base64,/', '', $menu['imgDataBase64']);
+
+            $binaryData = base64_decode($base64Data);
+            if ($binaryData === false) {
+                return;
+            }
+
+            $imageInfo = getimagesizefromstring($binaryData);
+            if ($imageInfo === false) {
+                return;
+            }
+
+            $isJpeg = in_array($imageInfo['mime'], ['image/jpeg'], true);
+            $isPng = in_array($imageInfo['mime'], ['image/png'], true);
+            if (!$isJpeg && !$isPng) {
+                return;
+            }
+
+            $extension = $isJpeg ? 'jpg' : 'png';
+
+            $path = "uploaded_images/gourmet/menus/{$parentId}/{$categoryId}";
+            $fileName = "{$index}.{$extension}";
+
+            if (!file_exists($path)) {
+                mkdir($path, 0777, true);
+            } else {
+                $files = glob($path . '/*');
+                foreach ($files as $file) {
+                    if (is_file($file)) {
+                        unlink($file);
+                    }
+                }
+            }
+
+            file_put_contents("{$path}/{$fileName}", $binaryData);
+        }
+    }
+
+    private function convertToJpg($binaryData) {
+        $image = imagecreatefromstring($binaryData);
+        if ($image === false) {
+            return false;
+        }
+        ob_start();
+        imagejpeg($image, null, 100);
+        $result = ob_get_clean();
+        imagedestroy($image);
         return $result;
     }
 
@@ -50,8 +105,18 @@ class RestaurantController extends Controller {
     }
 
     public function updateMenus(Request $request) {
-        dd( $request->all());
-       
+
+        // $request->validate([
+        //     'menus' => 'required|array',
+        //     'menus.*' => 'required|array',
+        //     'menus.*.name' => 'required|string|max:255',
+        //     'menus.*.price' => 'required|numeric|min:0',
+        //     'menus.*.description' => 'required|string',
+        //     'menus.*.imgDataBase64' => 'nullable|string',
+        // ]);
+
+        //dd($request->all());
+
         $user_id = $request->user()->id;
         if ($user_id !== Auth::id()) {
             return redirect()->back();
@@ -63,26 +128,24 @@ class RestaurantController extends Controller {
             $menu->delete();
         }
 
-        foreach ($request->menus as $categoryId => $categoryMenus) {
-            foreach ($categoryMenus as $menu) {
+        foreach ($request->props['menus'] as $categoryId => $categoryMenus) {
+            foreach ($categoryMenus as $index => $menu) {
                 $newMenu = new Menus();
-                
                 $newMenu->parent_id = $restaurant->id;
                 $newMenu->category_id = $categoryId;
+                $newMenu->index = $index;
                 $newMenu->name = $menu['name'];
                 $newMenu->price = $menu['price'];
                 $newMenu->description = $menu['description'];
-                $newMenu->has_image = 0;
-               
+                $newMenu->has_image = $menu['imgDataBase64'] !== null ? 1 : 0;
                 $newMenu->save();
+    
+                if ($menu['imgDataBase64'] !== null) {
+                    $this->decordAndSaveImage($menu, $restaurant->id, $categoryId, $index);
+                }
             }
         }
 
         return redirect()->back();
-    }
-
-    public function updateMenusImages(Request $request) {
-       
-        dd($request->all());
     }
 }

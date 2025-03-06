@@ -61,6 +61,9 @@ export type DefaultHour = {
 
 export type Menu = {
     id: number;
+    parent_id: number;
+    category_id: number;
+    index: number;
     name: string;
     price: number;
     description: string;

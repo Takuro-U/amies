@@ -9,19 +9,17 @@ import { Menu } from "../../../types/gourmet";
 import { Transition } from "@headlessui/react";
 import classNames from "classnames";
 //
-import { initialForm, initialImages, menuTypeList } from "../ts/_EditMenu";
+import { initialForm, menuTypeList, encordToBase64 } from "../ts/_EditMenu";
+import { updateElement } from "../../../util/ts/functions";
 
 const EditMenus: React.FC<{ menus: { [key: number]: Menu[] } }> = ({
     menus,
 }) => {
     const [menuType, setMenuType] = useState(0);
-    const [currentImages, setCurrentImages] = useState<{
-        [key: number]: (File | null)[];
-    }>(initialImages(menus));
 
     const { data, setData, patch, errors, processing, recentlySuccessful } =
         useForm({
-            menus: initialForm(menus),
+            props: { menus: initialForm(menus), flag: false },
         });
 
     const updateData = (
@@ -30,53 +28,75 @@ const EditMenus: React.FC<{ menus: { [key: number]: Menu[] } }> = ({
         property: string,
         value: any
     ) => {
-        const newMenus = [...data.menus];
-        newMenus[menuType][index] = {
-            ...newMenus[menuType][index],
-            [property]: value,
-        };
-        setData("menus", newMenus);
+        const newMenus = updateElement(
+            data.props.menus,
+            menuType,
+            updateElement(data.props.menus[menuType], index, {
+                ...data.props.menus[menuType][index],
+                [property]: value,
+            })
+        );
+        setData("props", { ...data.props, menus: newMenus });
     };
 
     const addMenu = () => {
-        const newMenus = [...data.menus];
+        const newMenus = [...data.props.menus];
         newMenus[menuType].push({
-            id: data.menus[menuType].length + 1,
+            id: data.props.menus[menuType].length + 1,
             name: "",
             price: 0,
             description: "",
-            img_data_base64: null,
+            imgDataTemp: null,
         });
-        setData("menus", newMenus);
+        setData("props", { ...data.props, menus: newMenus });
     };
 
     const deleteMenu = (index: number) => {
-        const newMenus = [...data.menus];
+        const newMenus = [...data.props.menus];
         newMenus[menuType].splice(index, 1);
-        setData("menus", newMenus);
+        setData("props", { ...data.props, menus: newMenus });
     };
 
-    const submit: FormEventHandler = (e) => {
+    const finalForm = async () => {
+        const result = await Promise.all(
+            menuTypeList.map(async (type, typeId) => {
+                return await Promise.all(
+                    data.props.menus[typeId].map(async (menu, index) => {
+                        const { imgDataTemp, ...menuWithoutImg } = menu;
+                        return {
+                            ...menuWithoutImg,
+                            imgDataBase64: imgDataTemp
+                                ? ((await encordToBase64(
+                                      imgDataTemp
+                                  )) as string)
+                                : null,
+                        };
+                    })
+                );
+            })
+        );
+        return result;
+    };
+
+    const submit: FormEventHandler = async (e) => {
         e.preventDefault();
 
-        patch(route("/console/restaurant/edit-menus"));
+        const formattedData = await finalForm();
+
+        setData("props", {
+            menus: formattedData,
+            flag: true,
+        });
     };
 
     useEffect(() => {
-        const currentData = menuTypeList.map((type, typeId) => {
-            return data.menus[typeId].map((menu, index) => {
-                return {
-                    ...menu,
-                    has_image: menu.img_data_base64 ? 1 : 0,
-                };
-            });
-        });
-        setCurrentImages(initialImages(currentData));
-    }, [data.menus]);
+        if (data.props.flag) {
+            patch(route("/console/restaurant/edit-menus"));
+        }
+    }, [data.props.flag]);
 
     return (
         <section className="bg-gray-200 min-h-screen py-8 px-6 sm:px-6 md:px-8 lg:px-12">
-            <button onClick={() => console.log(currentImages)}>ログ</button>
             <form onSubmit={submit} className="max-w-4xl mx-auto">
                 <div className="mb-6">
                     <h2 className="text-2xl font-semibold text-gray-800 mb-4">
@@ -107,12 +127,11 @@ const EditMenus: React.FC<{ menus: { [key: number]: Menu[] } }> = ({
                 </div>
 
                 <div className="space-y-4">
-                    {data.menus[menuType]?.map((menu, index) => (
+                    {data.props.menus[menuType]?.map((menu, index) => (
                         <MenuCard
                             key={index}
                             index={index}
                             menu={menu}
-                            currentImage={currentImages[menuType][index]}
                             menuType={menuType}
                             updateData={updateData}
                             deleteMenu={deleteMenu}
