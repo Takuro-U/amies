@@ -1,7 +1,5 @@
 import React from "react";
 
-import { encordToBase64 } from "../ts/_EditMenu";
-
 type PROPS = {
     index: number;
     menu: {
@@ -9,10 +7,9 @@ type PROPS = {
         name: string;
         price: number;
         description: string;
-        img_data_base64: string | null;
+        imgDataTemp?: File | null;
     };
     menuType: number;
-    currentImage: File | null;
     updateData: (
         menuType: number,
         index: number,
@@ -22,17 +19,25 @@ type PROPS = {
     deleteMenu: (index: number) => void;
 };
 
+const checkNumber = (value: string, prev: number) => {
+    if (value.trim() === "" || /^[0-9]+$/.test(value)) {
+        return Number(value);
+    }
+    return prev;
+};
+
 const MenuCard: React.FC<PROPS> = (props) => {
     return (
         <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 transition-all duration-200 hover:shadow-lg">
             <div className="p-6">
                 <div className="flex flex-col md:flex-row gap-4">
                     <div className="w-full md:w-1/3 relative">
-                        <p>{props.currentImage ? "true" : "false"}</p>
                         <img
                             src={
-                                props.currentImage
-                                    ? URL.createObjectURL(props.currentImage)
+                                props.menu.imgDataTemp
+                                    ? URL.createObjectURL(
+                                          props.menu.imgDataTemp
+                                      )
                                     : "/images/common/no_image.jpg"
                             }
                             alt="メニュー画像"
@@ -40,7 +45,7 @@ const MenuCard: React.FC<PROPS> = (props) => {
                         />
                         <div className="mt-2">
                             <label
-                                htmlFor={props.index.toString()}
+                                htmlFor={`img-${props.index}`}
                                 className="inline-flex items-center justify-center w-full px-3 py-2 text-sm font-medium text-gray-700 bg-gray-100 border border-gray-300 rounded-md cursor-pointer hover:bg-gray-200 transition-colors duration-200"
                             >
                                 <svg
@@ -60,7 +65,7 @@ const MenuCard: React.FC<PROPS> = (props) => {
                                 画像を選択
                             </label>
                             <input
-                                id={props.index.toString()}
+                                id={`img-${props.index}`}
                                 type="file"
                                 accept="jpg,png,jpeg"
                                 className="hidden"
@@ -68,12 +73,8 @@ const MenuCard: React.FC<PROPS> = (props) => {
                                     props.updateData(
                                         props.menuType,
                                         props.index,
-                                        "img_data_base64",
-                                        e.target.files?.[0]
-                                            ? await encordToBase64(
-                                                  e.target.files?.[0]
-                                              )
-                                            : null
+                                        "imgDataTemp",
+                                        e.target.files?.[0] ?? null
                                     );
                                 }}
                             />
@@ -115,14 +116,17 @@ const MenuCard: React.FC<PROPS> = (props) => {
                             <div className="flex items-center">
                                 <input
                                     id={`price-${props.index}`}
-                                    type="number"
+                                    type="text"
                                     value={props.menu.price}
                                     onChange={(e) =>
                                         props.updateData(
                                             props.menuType,
                                             props.index,
                                             "price",
-                                            e.target.value
+                                            checkNumber(
+                                                e.target.value,
+                                                props.menu.price
+                                            )
                                         )
                                     }
                                     className="w-1/3 px-3 py-1 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"

@@ -49,8 +49,6 @@ class CreateUserController extends Controller
             ]);
         }
 
-       
-
         // リクエストのroleオブジェクトからtrueのロールを付与
         foreach ($request->role as $roleName => $hasRole) {
             if ($hasRole) {
@@ -58,7 +56,6 @@ class CreateUserController extends Controller
             }
         }
         
-
         $user->email_verified_at = now();
         $user->save();
 
