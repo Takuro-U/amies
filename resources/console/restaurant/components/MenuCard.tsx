@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 type PROPS = {
     index: number;
@@ -7,7 +7,7 @@ type PROPS = {
         name: string;
         price: number;
         description: string;
-        imgDataTemp?: File | null;
+        imgPath?: string | null;
     };
     menuType: number;
     updateData: (
@@ -27,6 +27,8 @@ const checkNumber = (value: string, prev: number) => {
 };
 
 const MenuCard: React.FC<PROPS> = (props) => {
+    const [extension, setExtension] = useState<string>(".jpg");
+    console.log(props.menu.imgPath);
     return (
         <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 transition-all duration-200 hover:shadow-lg">
             <div className="p-6">
@@ -34,12 +36,13 @@ const MenuCard: React.FC<PROPS> = (props) => {
                     <div className="w-full md:w-1/3 relative">
                         <img
                             src={
-                                props.menu.imgDataTemp
-                                    ? URL.createObjectURL(
-                                          props.menu.imgDataTemp
-                                      )
+                                props.menu.imgPath
+                                    ? props.menu.imgPath + extension
                                     : "/images/common/no_image.jpg"
                             }
+                            onError={(e) => {
+                                setExtension(".png");
+                            }}
                             alt="メニュー画像"
                             className="w-full aspect-1 object-cover rounded-md border border-gray-500"
                         />
@@ -70,11 +73,16 @@ const MenuCard: React.FC<PROPS> = (props) => {
                                 accept="jpg,png,jpeg"
                                 className="hidden"
                                 onChange={async (e) => {
+                                    setExtension("");
                                     props.updateData(
                                         props.menuType,
                                         props.index,
-                                        "imgDataTemp",
-                                        e.target.files?.[0] ?? null
+                                        "imgPath",
+                                        e.target.files?.[0]
+                                            ? URL.createObjectURL(
+                                                  e.target.files[0]
+                                              )
+                                            : null
                                     );
                                 }}
                             />

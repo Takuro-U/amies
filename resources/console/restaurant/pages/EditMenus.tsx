@@ -46,7 +46,7 @@ const EditMenus: React.FC<{ menus: { [key: number]: Menu[] } }> = ({
             name: "",
             price: 0,
             description: "",
-            imgDataTemp: null,
+            imgPath: null,
         });
         setData("props", { ...data.props, menus: newMenus });
     };
@@ -57,18 +57,37 @@ const EditMenus: React.FC<{ menus: { [key: number]: Menu[] } }> = ({
         setData("props", { ...data.props, menus: newMenus });
     };
 
-    const finalForm = async () => {
+    const finalizedForm = async () => {
         const result = await Promise.all(
             menuTypeList.map(async (type, typeId) => {
                 return await Promise.all(
                     data.props.menus[typeId].map(async (menu, index) => {
-                        const { imgDataTemp, ...menuWithoutImg } = menu;
+                        const { imgPath, ...menuWithoutImg } = menu;
+                        let imgData = null;
+                        if (imgPath) {
+                            try {
+                                let response = await fetch(imgPath);
+                                if (!response.ok) {
+                                    response = await fetch(imgPath + ".jpg");
+                                }
+                                if (!response.ok) {
+                                    response = await fetch(imgPath + ".png");
+                                }
+                                const blob = await response.blob();
+                                imgData = new File([blob], "image.jpg", {
+                                    type: blob.type,
+                                });
+                            } catch (error) {
+                                console.error(
+                                    "画像データの取得に失敗しました:",
+                                    error
+                                );
+                            }
+                        }
                         return {
                             ...menuWithoutImg,
-                            imgDataBase64: imgDataTemp
-                                ? ((await encordToBase64(
-                                      imgDataTemp
-                                  )) as string)
+                            imgDataBase64: imgData
+                                ? ((await encordToBase64(imgData)) as string)
                                 : null,
                         };
                     })
@@ -81,7 +100,7 @@ const EditMenus: React.FC<{ menus: { [key: number]: Menu[] } }> = ({
     const submit: FormEventHandler = async (e) => {
         e.preventDefault();
 
-        const formattedData = await finalForm();
+        const formattedData = await finalizedForm();
 
         setData("props", {
             menus: formattedData,
