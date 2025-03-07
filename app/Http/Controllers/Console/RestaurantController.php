@@ -25,7 +25,7 @@ class RestaurantController extends Controller {
                         'name' => $menu['name'],
                         'price' => $menu['price'],
                         'description' => $menu['description'],
-                        'has_image' => $menu['has_image'],
+                        'extension' => $menu['extension'],
                     ];
                 });
             });
@@ -69,6 +69,14 @@ class RestaurantController extends Controller {
             }
 
             file_put_contents("{$path}/{$fileName}", $binaryData);
+
+            if ($isJpeg) {
+                return 1;
+            }
+            if ($isPng) {
+                return 2;
+            }
+            return 0;
         }
     }
 
@@ -105,18 +113,6 @@ class RestaurantController extends Controller {
     }
 
     public function updateMenus(Request $request) {
-
-        // $request->validate([
-        //     'menus' => 'required|array',
-        //     'menus.*' => 'required|array',
-        //     'menus.*.name' => 'required|string|max:255',
-        //     'menus.*.price' => 'required|numeric|min:0',
-        //     'menus.*.description' => 'required|string',
-        //     'menus.*.imgDataBase64' => 'nullable|string',
-        // ]);
-
-        //dd($request->all());
-
         $user_id = $request->user()->id;
         if ($user_id !== Auth::id()) {
             return redirect()->back();
@@ -130,6 +126,11 @@ class RestaurantController extends Controller {
 
         foreach ($request->props['menus'] as $categoryId => $categoryMenus) {
             foreach ($categoryMenus as $index => $menu) {
+                if ($menu['imgDataBase64'] !== null) {
+                    $extension = $this->decordAndSaveImage($menu, $restaurant->id, $categoryId, $index);
+                } else {
+                    $extension = 0;
+                }
                 $newMenu = new Menus();
                 $newMenu->parent_id = $restaurant->id;
                 $newMenu->category_id = $categoryId;
@@ -137,12 +138,8 @@ class RestaurantController extends Controller {
                 $newMenu->name = $menu['name'];
                 $newMenu->price = $menu['price'];
                 $newMenu->description = $menu['description'];
-                $newMenu->has_image = $menu['imgDataBase64'] !== null ? 1 : 0;
+                $newMenu->extension = $extension;
                 $newMenu->save();
-    
-                if ($menu['imgDataBase64'] !== null) {
-                    $this->decordAndSaveImage($menu, $restaurant->id, $categoryId, $index);
-                }
             }
         }
 

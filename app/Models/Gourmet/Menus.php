@@ -20,7 +20,7 @@ class Menus extends Model
         'name',
         'price',
         'description',
-        'img_path'
+        'extension'
     ];
 
     public $incrementing = false;

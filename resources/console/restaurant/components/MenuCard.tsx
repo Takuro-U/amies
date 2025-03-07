@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { extensionList } from "../ts/_EditMenu";
 
 type PROPS = {
     index: number;
@@ -7,6 +8,7 @@ type PROPS = {
         name: string;
         price: number;
         description: string;
+        extension: number;
         imgPath?: string | null;
     };
     menuType: number;
@@ -27,22 +29,19 @@ const checkNumber = (value: string, prev: number) => {
 };
 
 const MenuCard: React.FC<PROPS> = (props) => {
-    const [extension, setExtension] = useState<string>(".jpg");
-    console.log(props.menu.imgPath);
     return (
         <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 transition-all duration-200 hover:shadow-lg">
             <div className="p-6">
                 <div className="flex flex-col md:flex-row gap-4">
                     <div className="w-full md:w-1/3 relative">
+                        <>{props.menu.extension}</>
                         <img
                             src={
                                 props.menu.imgPath
-                                    ? props.menu.imgPath + extension
+                                    ? props.menu.imgPath +
+                                      extensionList[props.menu.extension]
                                     : "/images/common/no_image.jpg"
                             }
-                            onError={(e) => {
-                                setExtension(".png");
-                            }}
                             alt="メニュー画像"
                             className="w-full aspect-1 object-cover rounded-md border border-gray-500"
                         />
@@ -72,8 +71,13 @@ const MenuCard: React.FC<PROPS> = (props) => {
                                 type="file"
                                 accept="jpg,png,jpeg"
                                 className="hidden"
-                                onChange={async (e) => {
-                                    setExtension("");
+                                onChange={(e) => {
+                                    props.updateData(
+                                        props.menuType,
+                                        props.index,
+                                        "extension",
+                                        0
+                                    );
                                     props.updateData(
                                         props.menuType,
                                         props.index,

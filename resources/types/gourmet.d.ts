@@ -67,5 +67,5 @@ export type Menu = {
     name: string;
     price: number;
     description: string;
-    has_image: number;
+    extension: number;
 };
