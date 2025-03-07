@@ -9,7 +9,13 @@ import { Menu } from "../../../types/gourmet";
 import { Transition } from "@headlessui/react";
 import classNames from "classnames";
 //
-import { initialForm, menuTypeList, encordToBase64 } from "../ts/_EditMenu";
+import {
+    initialForm,
+    menuTypeList,
+    encordToBase64,
+    extensionList,
+} from "../ts/_EditMenu";
+
 import { updateElement } from "../../../util/ts/functions";
 
 const EditMenus: React.FC<{ menus: { [key: number]: Menu[] } }> = ({
@@ -21,6 +27,8 @@ const EditMenus: React.FC<{ menus: { [key: number]: Menu[] } }> = ({
         useForm({
             props: { menus: initialForm(menus), flag: false },
         });
+
+    console.log(data.props.menus);
 
     const updateData = (
         menuType: number,
@@ -46,6 +54,7 @@ const EditMenus: React.FC<{ menus: { [key: number]: Menu[] } }> = ({
             name: "",
             price: 0,
             description: "",
+            extension: 0,
             imgPath: null,
         });
         setData("props", { ...data.props, menus: newMenus });
@@ -66,13 +75,10 @@ const EditMenus: React.FC<{ menus: { [key: number]: Menu[] } }> = ({
                         let imgData = null;
                         if (imgPath) {
                             try {
-                                let response = await fetch(imgPath);
-                                if (!response.ok) {
-                                    response = await fetch(imgPath + ".jpg");
-                                }
-                                if (!response.ok) {
-                                    response = await fetch(imgPath + ".png");
-                                }
+                                let response = await fetch(
+                                    imgPath + extensionList[menu.extension]
+                                );
+                                console.log(response);
                                 const blob = await response.blob();
                                 imgData = new File([blob], "image.jpg", {
                                     type: blob.type,

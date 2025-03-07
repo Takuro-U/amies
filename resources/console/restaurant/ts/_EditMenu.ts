@@ -2,6 +2,8 @@ import { Menu } from "../../../types/gourmet";
 
 export const menuTypeList = ["コース", "単品", "ドリンク"];
 
+export const extensionList = ["", ".jpg", ".png"];
+
 export const fetchImageAsFile = async (path: string, fileName: string) => {
     const response = await fetch(path);
     const blob = await response.blob();
@@ -22,6 +24,7 @@ export const initialForm: (menus: { [key: number]: Menu[] }) => {
     name: string;
     price: number;
     description: string;
+    extension: number;
     imgPath?: string | null;
     imgDataBase64?: string | null;
 }[][] = (menus) => {
@@ -39,7 +42,7 @@ export const initialForm: (menus: { [key: number]: Menu[] }) => {
                 index;
             return {
                 ...menu,
-                imgPath: menu.has_image === 1 ? path : null,
+                imgPath: menu.extension !== 0 ? path : null,
             };
         });
     });
