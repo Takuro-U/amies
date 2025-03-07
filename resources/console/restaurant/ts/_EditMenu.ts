@@ -2,6 +2,12 @@ import { Menu } from "../../../types/gourmet";
 
 export const menuTypeList = ["コース", "単品", "ドリンク"];
 
+export const fetchImageAsFile = async (path: string, fileName: string) => {
+    const response = await fetch(path);
+    const blob = await response.blob();
+    return new File([blob], fileName, { type: blob.type });
+};
+
 export const encordToBase64 = async (file: File) => {
     return await new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -16,7 +22,7 @@ export const initialForm: (menus: { [key: number]: Menu[] }) => {
     name: string;
     price: number;
     description: string;
-    imgDataTemp?: File | null;
+    imgPath?: string | null;
     imgDataBase64?: string | null;
 }[][] = (menus) => {
     const result = menuTypeList.map((type, typeId) => {
@@ -31,12 +37,9 @@ export const initialForm: (menus: { [key: number]: Menu[] }) => {
                 menu.category_id +
                 "/" +
                 index;
-            const file = new File([], path + ".png");
-            console.log(file);
             return {
                 ...menu,
-                imgDataTemp:
-                    menu.has_image === 1 ? new File([], path + ".png") : null,
+                imgPath: menu.has_image === 1 ? path : null,
             };
         });
     });
