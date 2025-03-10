@@ -12,6 +12,8 @@ import { useModalContext } from "../../../../../../../hooks/ModalProvider";
 const MenuCard: React.FC<Menu> = (menu) => {
     const { openModal } = useModalContext();
 
+    const extensions = ["", ".jpg", ".png"];
+
     return (
         <div
             className="flex items-start w-[90%] h-[140px] my-[15px] bg-white"
@@ -22,7 +24,11 @@ const MenuCard: React.FC<Menu> = (menu) => {
         >
             <img
                 src={
-                    menu.img_path ? menu.img_path : "/images/gourmet/oniku.jpg"
+                    menu.extension !== 0
+                        ? `/upload_images/gormet/menus/${menu.parent_id}/${
+                              menu.category_id
+                          }/${menu.id}.${extensions[menu.extension]}`
+                        : "/images/common/no_image.png"
                 }
                 className="h-full aspect-1"
             />

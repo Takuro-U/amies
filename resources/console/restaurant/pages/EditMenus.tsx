@@ -28,20 +28,17 @@ const EditMenus: React.FC<{ menus: { [key: number]: Menu[] } }> = ({
             props: { menus: initialForm(menus), flag: false },
         });
 
-    console.log(data.props.menus);
-
     const updateData = (
         menuType: number,
         index: number,
-        property: string,
-        value: any
+        updates: { [key: string]: any }
     ) => {
         const newMenus = updateElement(
             data.props.menus,
             menuType,
             updateElement(data.props.menus[menuType], index, {
                 ...data.props.menus[menuType][index],
-                [property]: value,
+                ...updates,
             })
         );
         setData("props", { ...data.props, menus: newMenus });

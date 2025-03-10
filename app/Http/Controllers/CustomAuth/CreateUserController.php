@@ -46,6 +46,14 @@ class CreateUserController extends Controller
             Restaurant::create([
                 'user_id' => $user->id,
                 'public' => 0,
+                'name' => "",
+                'location' => "",
+                'area_id' => 0,
+                'tell' => "",
+                'description' => "",
+                'parking' => "",
+                'smoking' => "",
+                'reservation' => "",
             ]);
         }
 

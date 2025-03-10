@@ -15,8 +15,7 @@ type PROPS = {
     updateData: (
         menuType: number,
         index: number,
-        key: string,
-        value: string | number | File | null
+        updates: { [key: string]: any }
     ) => void;
     deleteMenu: (index: number) => void;
 };
@@ -34,7 +33,6 @@ const MenuCard: React.FC<PROPS> = (props) => {
             <div className="p-6">
                 <div className="flex flex-col md:flex-row gap-4">
                     <div className="w-full md:w-1/3 relative">
-                        <>{props.menu.extension}</>
                         <img
                             src={
                                 props.menu.imgPath
@@ -75,18 +73,14 @@ const MenuCard: React.FC<PROPS> = (props) => {
                                     props.updateData(
                                         props.menuType,
                                         props.index,
-                                        "extension",
-                                        0
-                                    );
-                                    props.updateData(
-                                        props.menuType,
-                                        props.index,
-                                        "imgPath",
-                                        e.target.files?.[0]
-                                            ? URL.createObjectURL(
-                                                  e.target.files[0]
-                                              )
-                                            : null
+                                        {
+                                            extension: 0,
+                                            imgPath: e.target.files?.[0]
+                                                ? URL.createObjectURL(
+                                                      e.target.files[0]
+                                                  )
+                                                : null,
+                                        }
                                     );
                                 }}
                             />
@@ -109,8 +103,7 @@ const MenuCard: React.FC<PROPS> = (props) => {
                                     props.updateData(
                                         props.menuType,
                                         props.index,
-                                        "name",
-                                        e.target.value
+                                        { name: e.target.value }
                                     )
                                 }
                                 className="w-full px-3 py-1 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
@@ -134,11 +127,12 @@ const MenuCard: React.FC<PROPS> = (props) => {
                                         props.updateData(
                                             props.menuType,
                                             props.index,
-                                            "price",
-                                            checkNumber(
-                                                e.target.value,
-                                                props.menu.price
-                                            )
+                                            {
+                                                price: checkNumber(
+                                                    e.target.value,
+                                                    props.menu.price
+                                                ),
+                                            }
                                         )
                                     }
                                     className="w-1/3 px-3 py-1 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
@@ -162,8 +156,7 @@ const MenuCard: React.FC<PROPS> = (props) => {
                                     props.updateData(
                                         props.menuType,
                                         props.index,
-                                        "description",
-                                        e.target.value
+                                        { description: e.target.value }
                                     )
                                 }
                                 className="w-full px-3 py-1 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
