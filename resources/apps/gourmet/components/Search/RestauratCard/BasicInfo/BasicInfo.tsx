@@ -39,7 +39,9 @@ const BasicInfo: React.FC<PROPS> = (props) => {
                 {props.genres.map((id) => data.genreList[id].name).join("/")}
             </p>
             <p className="text-[3.7vw]">
-                {data.areaList[props.restaurant.area_id].name}
+                {props.restaurant.area_id
+                    ? data.areaList[props.restaurant.area_id].name
+                    : "エリア未設定"}
             </p>
             <div className="flex">
                 <p className="">
