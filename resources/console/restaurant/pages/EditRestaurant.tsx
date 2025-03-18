@@ -8,7 +8,6 @@ import { FormEventHandler } from "react";
 import { DetailRestaurantData } from "../../../types/gourmet";
 import classNames from "classnames";
 import publicData from "../../../../storage/app/data.json";
-import { checkNumber } from "../../../util/ts/functions";
 
 const InputTemplate: React.FC<{
     property: keyof DetailRestaurantData;
@@ -35,12 +34,11 @@ const InputTemplate: React.FC<{
                 type={type || "text"}
                 value={data[property]}
                 onChange={(e) => setData(property, e.target.value)}
-                required
                 autoComplete={property}
                 className="w-full h-[40px] border border-gray-300 rounded-lg p-2 shadow-sm focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
             />
 
-            <InputError message={errors.name} />
+            <InputError message={errors[property]} />
         </div>
     );
 };
@@ -63,26 +61,28 @@ const TextAreaTemplate: React.FC<{
                 id={property}
                 value={data[property]}
                 onChange={(e) => setData(property, e.target.value)}
-                required
                 autoComplete={property}
                 className="w-full h-[90px] border border-gray-300 rounded-lg p-2 shadow-sm focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
             />
 
-            <InputError message={errors.name} />
+            <InputError message={errors[property]} />
         </div>
     );
 };
 
-const EditRestaurant: React.FC<{ restaurant: DetailRestaurantData }> = ({
-    restaurant,
-}) => {
+const EditRestaurant: React.FC<{
+    restaurant: DetailRestaurantData;
+    genres: number[];
+}> = ({ restaurant, genres }) => {
     const { data, setData, patch, errors, processing, recentlySuccessful } =
         useForm({
             public: restaurant.public,
             name: restaurant.name,
-            location: restaurant.location,
-            area_id: restaurant.area_id,
+            address: restaurant.address,
             tell: restaurant.tell,
+            genres: publicData.genreList.map((genre) => {
+                return genres.includes(genre.id);
+            }),
             price_max: restaurant.price_max,
             price_min: restaurant.price_min,
             capacity: restaurant.capacity,
@@ -93,9 +93,31 @@ const EditRestaurant: React.FC<{ restaurant: DetailRestaurantData }> = ({
             images: restaurant.images,
         });
 
+    const checkNumber = (value: string, prev: number | null) => {
+        if (value.trim() === "") {
+            return null;
+        }
+        if (/^[0-9]+$/.test(value)) {
+            return Number(value);
+        }
+        return prev;
+    };
+
+    const updateGenres = (id: number) => {
+        const trueCount = data.genres.filter((genre) => genre === true).length;
+        if (trueCount >= 3 && !data.genres[id]) {
+            alert("ジャンルは3つまでしか選択できません");
+            return;
+        }
+        const newGenres = [...data.genres];
+        newGenres[id] = !newGenres[id];
+        setData("genres", newGenres);
+    };
+
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-        patch(route("profile.update"));
+        console.log(data);
+        patch(route("/console/restaurant/edit"));
     };
 
     return (
@@ -131,7 +153,7 @@ const EditRestaurant: React.FC<{ restaurant: DetailRestaurantData }> = ({
                                 {data.public === 1 ? "公開" : "非公開"}
                             </button>
 
-                            <InputError message={errors.name} />
+                            <InputError message={errors.public} />
                         </div>
 
                         <InputTemplate
@@ -143,7 +165,7 @@ const EditRestaurant: React.FC<{ restaurant: DetailRestaurantData }> = ({
                         />
 
                         <InputTemplate
-                            property="location"
+                            property="address"
                             label="住所"
                             errors={errors}
                             data={data}
@@ -161,25 +183,23 @@ const EditRestaurant: React.FC<{ restaurant: DetailRestaurantData }> = ({
 
                         <div className="mb-4 w-full">
                             <InputLabel
-                                htmlFor="area_id"
-                                value="エリア"
+                                htmlFor="genre_id"
+                                value="ジャンル（※3つまで選択可能）"
                                 className="text-gray-700 font-medium mb-1"
                             />
                             <div id="area_id" className="flex flex-wrap gap-2">
-                                {publicData.areaList.map((element) => (
+                                {publicData.genreList.map((element) => (
                                     <button
                                         key={element.id}
                                         type="button"
-                                        onClick={() =>
-                                            setData("area_id", element.id)
-                                        }
+                                        onClick={() => updateGenres(element.id)}
                                         className={classNames(
                                             "px-3 py-2 text-[15px] rounded-lg font-medium transition-colors duration-200",
                                             {
                                                 "bg-green-500 hover:bg-green-600 text-white":
-                                                    data.area_id === element.id,
+                                                    data.genres[element.id],
                                                 "bg-gray-200 hover:bg-gray-300 text-gray-700 ":
-                                                    data.area_id !== element.id,
+                                                    !data.genres[element.id],
                                             }
                                         )}
                                     >
@@ -187,6 +207,7 @@ const EditRestaurant: React.FC<{ restaurant: DetailRestaurantData }> = ({
                                     </button>
                                 ))}
                             </div>
+                            <InputError message={errors.genres} />
                         </div>
                     </div>
 
@@ -207,7 +228,7 @@ const EditRestaurant: React.FC<{ restaurant: DetailRestaurantData }> = ({
                             >
                                 <input
                                     type="text"
-                                    value={data.price_min}
+                                    value={data.price_min || ""}
                                     onChange={(e) =>
                                         setData(
                                             "price_min",
@@ -224,7 +245,7 @@ const EditRestaurant: React.FC<{ restaurant: DetailRestaurantData }> = ({
                                 </p>
                                 <input
                                     type="text"
-                                    value={data.price_max}
+                                    value={data.price_max || ""}
                                     onChange={(e) =>
                                         setData(
                                             "price_max",
@@ -240,8 +261,6 @@ const EditRestaurant: React.FC<{ restaurant: DetailRestaurantData }> = ({
                                     円
                                 </p>
                             </div>
-
-                            <InputError message={errors.name} />
                         </div>
 
                         <div className="mb-4 w-[40%]">
@@ -253,7 +272,7 @@ const EditRestaurant: React.FC<{ restaurant: DetailRestaurantData }> = ({
                             <input
                                 id="capacity"
                                 type="text"
-                                value={data.capacity}
+                                value={data.capacity || ""}
                                 onChange={(e) =>
                                     setData(
                                         "capacity",
@@ -263,12 +282,9 @@ const EditRestaurant: React.FC<{ restaurant: DetailRestaurantData }> = ({
                                         )
                                     )
                                 }
-                                required
                                 autoComplete="capacity"
                                 className="w-full h-[40px] border border-gray-300 rounded-lg p-2 shadow-sm focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
                             />
-
-                            <InputError message={errors.name} />
                         </div>
 
                         <TextAreaTemplate

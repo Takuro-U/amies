@@ -28,12 +28,12 @@ export interface DetailRestaurantData {
     id: number;
     name: string;
     public: number;
-    location: string;
+    address: string;
     area_id: number;
     tell: string;
-    price_max: number;
-    price_min: number;
-    capacity: number;
+    price_max: number | null;
+    price_min: number | null;
+    capacity: number | null;
     description: string;
     smoking: number;
     parking: number;

@@ -47,7 +47,7 @@ class CreateUserController extends Controller
                 'user_id' => $user->id,
                 'public' => 0,
                 'name' => "",
-                'location' => "",
+                'address' => "",
                 'area_id' => 0,
                 'tell' => "",
                 'description' => "",

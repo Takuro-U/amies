@@ -18,6 +18,7 @@ class Restaurant extends Model
         'user_id',
         'public',
         'name',
+        'address',
         'area_id',
         'tell',
         'price_max',

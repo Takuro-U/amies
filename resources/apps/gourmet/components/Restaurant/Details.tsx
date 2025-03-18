@@ -247,14 +247,21 @@ const Details: React.FC<PROPS> = (props) => {
                                 </p>
                             )}
                         </RowLayout>
+
+                        <RowLayout title="予約">
+                            <p className="text-[15px]">
+                                {props.restaurant.reservation}
+                            </p>
+                        </RowLayout>
                         <RowLayout title="駐車場">
-                            <></>
+                            <p className="text-[15px]">
+                                {props.restaurant.parking}
+                            </p>
                         </RowLayout>
                         <RowLayout title="禁煙/喫煙">
-                            <></>
-                        </RowLayout>
-                        <RowLayout title="貸切">
-                            <></>
+                            <p className="text-[15px]">
+                                {props.restaurant.smoking}
+                            </p>
                         </RowLayout>
                     </>
                 )}
