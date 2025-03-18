@@ -2,6 +2,8 @@ import React from "react";
 
 import { Menu } from "../../../../../../../types/gourmet";
 
+const extensions = ["", ".jpg", ".png"];
+
 const Description: React.FC<Menu> = (menu) => {
     return (
         <div
@@ -12,18 +14,24 @@ const Description: React.FC<Menu> = (menu) => {
                 className="relative flex justify-center my-1"
                 style={{
                     backgroundImage: `${
-                        menu.img_path
-                            ? menu.img_path
-                            : "url(/images/gourmet/oniku.jpg)"
+                        menu.extension !== 0
+                            ? `/upload_images/gormet/menus/${menu.parent_id}/${
+                                  menu.category_id
+                              }/${menu.id}.${extensions[menu.extension]}`
+                            : "/images/common/no_image.png"
                     }`,
                 }}
             >
                 <div className="absolute bg-white opacity-30 w-full h-full"></div>
                 <img
                     src={
-                        menu.img_path
-                            ? menu.img_path
-                            : "/images/gourmet/oniku.jpg"
+                        menu.extension !== 0
+                            ? `/uploaded_images/gourmet/menus/${
+                                  menu.parent_id
+                              }/${menu.category_id}/${menu.index}${
+                                  extensions[menu.extension]
+                              }`
+                            : "/images/common/no_image.png"
                     }
                     className="w-[50%] z-20"
                 />

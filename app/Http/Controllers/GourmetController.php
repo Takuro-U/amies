@@ -158,10 +158,14 @@ class GourmetController extends Controller {
             ->map(function ($group) {
                 return $group->map(function ($menu) {
                     return [
+                        'id' => $menu['id'],
+                        'parent_id' => $menu['parent_id'],
+                        'category_id' => $menu['category_id'],
+                        'index' => $menu['index'],
                         'name' => $menu['name'],
                         'price' => $menu['price'],
                         'description' => $menu['description'],
-                        'has_image' => $menu['has_image'],
+                        'extension' => $menu['extension'],
                     ];
                 });
             });
@@ -177,7 +181,7 @@ class GourmetController extends Controller {
             'customers' => $request->input('customers'),
         ];
 
-        $query = Restaurant::query();
+        $query = Restaurant::where('public', 1);
 
         if (!is_null($status->areas)) {
             $query->whereIn('area_id', $status->areas);

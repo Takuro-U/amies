@@ -14,6 +14,8 @@ const MenuCard: React.FC<Menu> = (menu) => {
 
     const extensions = ["", ".jpg", ".png"];
 
+    console.log(menu);
+
     return (
         <div
             className="flex items-start w-[90%] h-[140px] my-[15px] bg-white"
@@ -25,9 +27,9 @@ const MenuCard: React.FC<Menu> = (menu) => {
             <img
                 src={
                     menu.extension !== 0
-                        ? `/upload_images/gormet/menus/${menu.parent_id}/${
+                        ? `/uploaded_images/gourmet/menus/${menu.parent_id}/${
                               menu.category_id
-                          }/${menu.id}.${extensions[menu.extension]}`
+                          }/${menu.index}${extensions[menu.extension]}`
                         : "/images/common/no_image.png"
                 }
                 className="h-full aspect-1"
