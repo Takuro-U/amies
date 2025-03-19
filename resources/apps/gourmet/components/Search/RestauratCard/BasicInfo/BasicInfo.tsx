@@ -24,7 +24,7 @@ const BasicInfo: React.FC<PROPS> = (props) => {
                 <p
                     className={classNames(
                         "w-full",
-                        "font-gourmet text-[4.7vw] underline",
+                        "font-gourmet text-[4.7vw] md:text-[2.3vw] underline",
                         "overflow-hidden whitespace-nowrap"
                     )}
                     style={{
@@ -35,10 +35,10 @@ const BasicInfo: React.FC<PROPS> = (props) => {
                 </p>
             </Link>
 
-            <p className="text-[3.7vw]">
+            <p className="text-[3.7vw] md:text-[1.8vw]">
                 {props.genres.map((id) => data.genreList[id].name).join("/")}
             </p>
-            <p className="text-[3.7vw]">
+            <p className="text-[3.7vw] md:text-[1.8vw]">
                 {props.restaurant.area_id
                     ? data.areaList[props.restaurant.area_id].name
                     : "エリア未設定"}

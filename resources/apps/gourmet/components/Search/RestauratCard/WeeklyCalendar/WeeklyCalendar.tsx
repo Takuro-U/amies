@@ -16,7 +16,7 @@ const WeeklyCalendar: React.FC<PROPS> = (props) => {
         <div className="flex mt-[2%] bg-white">
             {props.hours?.map((element, index) => (
                 <div key={index} className="flex flex-col flex-1">
-                    <p className="text-[4vw] text-center">
+                    <p className="text-[4vw] md:text-[2vw] text-center">
                         {convertDateToString(element.date)}
                     </p>
                     {element.is_open != null ? (
