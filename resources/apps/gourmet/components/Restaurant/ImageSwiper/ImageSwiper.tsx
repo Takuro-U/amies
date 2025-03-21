@@ -14,6 +14,9 @@ const ImageSwiper: React.FC = () => {
     const { pageStates } = usePageStatesContext();
 
     const [isAutoScrolling, setIsAutoScrolling] = useState(true);
+    const [activeIndex, setActiveIndex] = useState(0);
+    const [displayIndex, setDisplayIndex] = useState(0);
+    const [isFading, setIsFading] = useState(false);
 
     const swiperRef = useRef<SwiperRef>(null);
 
@@ -35,8 +38,52 @@ const ImageSwiper: React.FC = () => {
         }
     }, [isAutoScrolling]);
 
+    useEffect(() => {
+        if (activeIndex !== displayIndex && !isFading) {
+            setIsFading(true);
+
+            setTimeout(() => {
+                setDisplayIndex(activeIndex);
+
+                setTimeout(() => {
+                    setIsFading(false);
+                }, 50);
+            }, 500);
+        }
+    }, [activeIndex, displayIndex, isFading]);
+
     return (
         <div className="relative w-[100vw] flex justify-center">
+            <div
+                className="absolute top-0 left-0 w-full h-full z-[-10]"
+                style={{ backgroundColor: "rgba(255, 255, 255, 0.6)" }}
+            />
+            <div
+                className="absolute top-0 left-0 w-full h-full z-[-20]"
+                style={{
+                    backgroundImage: `url(/uploaded_images/gourmet/restaurants/${
+                        pageStates.pageProps.restaurant.id
+                    }/${displayIndex + 1}.jpg)`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat",
+                    opacity: isFading ? 0 : 1,
+                    transition: isFading ? "opacity 500ms ease" : "none",
+                }}
+            />
+            <div
+                className="absolute top-0 left-0 w-full h-full z-[-21]"
+                style={{
+                    backgroundImage: `url(/uploaded_images/gourmet/restaurants/${
+                        pageStates.pageProps.restaurant.id
+                    }/${activeIndex + 1}.jpg)`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat",
+                    opacity: isFading ? 1 : 0,
+                    transition: isFading ? "opacity 500ms ease" : "none",
+                }}
+            />
             {pageStates.pageProps.restaurant.images != 0 && (
                 <Swiper
                     className="w-[100%] max-w-[600px] aspect-[16/9]"
@@ -46,6 +93,7 @@ const ImageSwiper: React.FC = () => {
                     loop={true}
                     allowTouchMove={false}
                     simulateTouch={false}
+                    onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
                 >
                     {Array(pageStates.pageProps.restaurant.images)
                         .fill(null)
