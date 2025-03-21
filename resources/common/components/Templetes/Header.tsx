@@ -12,7 +12,6 @@ import ResponsiveMenu from "./ResponsiveMenu";
 import { menuLinks } from "../../ts/router";
 
 // etc.
-import { Link } from "@inertiajs/react";
 import classNames from "classnames";
 
 const Header: React.FC = () => {
@@ -28,7 +27,7 @@ const Header: React.FC = () => {
                     "w-full h-16 bg-white px-1 py-2 text-black flex justify-between sticky top-0 shadow-sm shadow-slate-700 z-40"
                 )}
             >
-                <Link href="/" className="flex">
+                <a href="/" className="flex">
                     <div className="inline-flex h-full">
                         <img
                             src="../images/logo_480p.png"
@@ -44,7 +43,7 @@ const Header: React.FC = () => {
                             ~Find your Amusement~
                         </span>
                     </p>
-                </Link>
+                </a>
                 <div className="flex">
                     <div
                         className={classNames(

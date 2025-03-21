@@ -24,7 +24,6 @@ import "swiper/css/free-mode";
 import "swiper/css/controller";
 import scrollbarStyle from "../../../../styles/scrollbar.module.scss"; //スクロールバーのスタイル
 import styles from "../../../../styles/Gourmet.module.scss";
-import { list } from "postcss";
 
 interface CheckContentProps extends Category {
     isChecked: boolean;
