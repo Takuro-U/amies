@@ -74,7 +74,6 @@ const FilterBox: React.FC = () => {
                     return w;
                 })
             const maxWidth = Math.max(...widthDeltas); //最長を取得
-            console.log(key, maxWidth)
             widthDeltas = widthDeltas.map((w)=> maxWidth - w); //差に変換
 
             lastElemRefs.current[key].map((elem, i)=>{
