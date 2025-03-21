@@ -8,7 +8,7 @@ export const Cover: FC = () => {
     return (
         <div className={classNames(layout.cover, "relative z-10")}>
             <div className={classNames(styles.card)}>
-                <img src="../images/logo_720p.png" />
+                <img src="../images/logo_480p.webp" />
                 <h1
                     className={classNames(
                         "text-center text-5xl font-bold",

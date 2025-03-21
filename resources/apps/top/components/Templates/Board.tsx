@@ -1,3 +1,5 @@
+import { useEffect, useRef, useState } from "react";
+
 // Components
 import { Section } from "../Organisms/Section";
 import { motion } from "framer-motion";
@@ -5,16 +7,26 @@ import { motion } from "framer-motion";
 import layout from "../../styles/layout.module.scss";
 
 export default function Board() {
+    const [canPlay, setCanPlay] = useState<boolean>(false);
+    const imgRef = useRef<HTMLImageElement>(null);
+
+    useEffect(()=>{
+        if(imgRef.current){
+            imgRef.current.addEventListener("load", ()=>{
+                setCanPlay(true);
+            })
+        }
+    }, [])
     return (
         <motion.div
             initial={{
                 opacity: 0,
                 y: "-400px",
             }}
-            animate={{
+            animate={ canPlay ? {
                 opacity: 1,
                 y: "0px",
-            }}
+            } : false}
             transition={{
                 duration: 0.5,
                 delay: 1.0,
@@ -23,7 +35,11 @@ export default function Board() {
             className={layout.board}
         >
             <Section className="mb-0">
-                <img src="../images/top/boardBG.png" className="object-fill" />
+                <img
+                    ref={ imgRef }
+                    src="../images/top/boardBG.webp" 
+                    className="object-fill" 
+                />
             </Section>
         </motion.div>
     );

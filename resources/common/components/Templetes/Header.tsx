@@ -30,7 +30,7 @@ const Header: React.FC = () => {
                 <a href="/" className="flex">
                     <div className="inline-flex h-full">
                         <img
-                            src="../images/logo_480p.png"
+                            src="../images/logo_480p.webp"
                             className="object-contain h-full"
                         />
                     </div>
