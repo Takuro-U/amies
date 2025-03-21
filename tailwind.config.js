@@ -1,6 +1,5 @@
 import defaultTheme from "tailwindcss/defaultTheme";
 const forms = require("@tailwindcss/forms");
-const flowbite = require("flowbite-react/tailwind");
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -8,7 +7,6 @@ export default {
         "./resources/views/**/*.blade.php",
         "./resources/**/*.tsx",
         "./resources/**/*.module.scss",
-        flowbite.content(),
     ],
     theme: {
         extend: {
@@ -17,5 +15,5 @@ export default {
             },
         },
     },
-    plugins: [forms, flowbite.plugin(), require("@tailwindcss/aspect-ratio")],
+    plugins: [forms, require("@tailwindcss/aspect-ratio")],
 };
