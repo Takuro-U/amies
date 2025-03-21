@@ -16,11 +16,11 @@
         "@types/react-dom": "^18.3.1",
         "autoprefixer": "^10.4.20",
         "axios": "^1.6.4",
-        "laravel-vite-plugin": "^1.0",
+        "laravel-vite-plugin": "^0.7.8",
         "postcss": "^8.4.49",
         "sass-embedded": "^1.81.0",
         "tailwindcss": "^3.4.15",
-        "vite": "^5.0"
+        "vite": "^4.4.12"
     },
     "dependencies": {
         "@emotion/react": "^11.13.5",
@@ -37,7 +37,7 @@
         "@tailwindcss/aspect-ratio": "^0.4.2",
         "@tailwindcss/line-clamp": "^0.4.4",
         "@tippyjs/react": "^4.2.6",
-        "@vitejs/plugin-react": "^4.3.3",
+        "@vitejs/plugin-react": "^4.0.4",
         "classnames": "^2.5.1",
         "framer-motion": "^11.16.0",
         "leaflet": "^1.9.4",
