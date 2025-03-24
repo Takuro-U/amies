@@ -1,5 +1,9 @@
 import React from "react";
 
+import styles from "../../../../styles/Search.module.scss";
+
+import classNames from "classnames";
+
 import { WeeklyHours } from "../../../../../../types/gourmet";
 
 type PROPS = {
@@ -16,23 +20,38 @@ const WeeklyCalendar: React.FC<PROPS> = (props) => {
         <div className="flex mt-[2%] bg-white">
             {props.hours?.map((element, index) => (
                 <div key={index} className="flex flex-col flex-1">
-                    <p className="text-[4vw] md:text-[2vw] text-center">
+                    <p className={classNames(styles.date, "text-center")}>
                         {convertDateToString(element.date)}
                     </p>
                     {element.is_open != null ? (
                         <>
                             {element.is_open == 1 ? (
-                                <p className="text-center font-medium text-blue-500">
+                                <p
+                                    className={classNames(
+                                        styles.openingStatus,
+                                        "text-center font-medium text-blue-500"
+                                    )}
+                                >
                                     営
                                 </p>
                             ) : (
-                                <p className="text-center font-medium  text-red-500">
+                                <p
+                                    className={classNames(
+                                        styles.openingStatus,
+                                        "text-center font-medium text-red-500"
+                                    )}
+                                >
                                     休
                                 </p>
                             )}
                         </>
                     ) : (
-                        <p className="text-center font-medium text-green-500">
+                        <p
+                            className={classNames(
+                                styles.openingStatus,
+                                "text-center font-medium text-green-500"
+                            )}
+                        >
                             ？
                         </p>
                     )}

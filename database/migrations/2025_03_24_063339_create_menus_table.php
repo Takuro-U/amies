@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('menus', function (Blueprint $table) {
-            $table->integer('id', true)->unique('id_unique');
+            $table->id();
             $table->integer('parent_id');
             $table->integer('category_id');
             $table->string('index', 45);
@@ -21,7 +21,7 @@ return new class extends Migration
             $table->longText('description')->nullable();
             $table->boolean('extension')->default(false);
 
-            $table->primary(['id']);
+            //$table->primary(['id']);
         });
     }
 

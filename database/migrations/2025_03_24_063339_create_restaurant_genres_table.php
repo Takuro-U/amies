@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_has_nickname', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
-            $table->string('nickname');
-            $table->timestamps();
+        Schema::create('restaurant_genres', function (Blueprint $table) {
+            $table->id();
+            $table->integer('restaurant_id');
+            $table->integer('genre_id');
         });
     }
 
@@ -24,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_has_nickname');
+        Schema::dropIfExists('restaurant_genres');
     }
 };

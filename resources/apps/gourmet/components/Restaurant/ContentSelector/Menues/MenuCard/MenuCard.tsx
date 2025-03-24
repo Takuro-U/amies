@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "../../../../../styles/Restaurant.module.scss";
 
 import Description from "./Description";
 
@@ -18,7 +19,10 @@ const MenuCard: React.FC<Menu> = (menu) => {
 
     return (
         <div
-            className="flex items-start w-[90%] h-[140px] my-[15px] bg-white"
+            className={classNames(
+                styles.menuCard,
+                "flex items-start h-[140px] bg-white"
+            )}
             style={{
                 borderTop: `solid 2px ${gourmetColors.fill}`,
                 borderBottom: `solid 2px ${gourmetColors.fill}`,

@@ -105,7 +105,7 @@ const Menues: React.FC = () => {
                     className={classNames(
                         styles.menusScroll,
                         "flex flex-col items-center",
-                        "h-[170px] bg-slate-100"
+                        " bg-slate-100"
                     )}
                 >
                     {pageStates.pageProps.menus[currentCategory] ? (

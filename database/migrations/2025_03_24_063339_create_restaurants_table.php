@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('restaurants', function (Blueprint $table) {
-            $table->bigInteger('id', true)->unique('id_unique');
+            $table->id();
             $table->bigInteger('user_id')->unique('uid_unique');
             $table->boolean('public');
             $table->string('name', 32);
@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('smoking');
             $table->string('reservation');
 
-            $table->primary(['id']);
+            //$table->primary(['id']);
         });
     }
 

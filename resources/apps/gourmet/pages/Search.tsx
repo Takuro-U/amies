@@ -7,6 +7,8 @@ import { BasicRestaurantData, WeeklyHours } from "../../../types/gourmet";
 import RestaurantCard from "../components/Search/RestauratCard/RestaurantCard";
 import Pagenations from "../components/Search/Pagenations";
 
+import classNames from "classnames";
+
 type PROPS = {
     restaurants: BasicRestaurantData[][];
     relation: { id: number; restaurant_id: number; genre_id: number }[];
@@ -38,7 +40,10 @@ const Search: React.FC<PROPS> = (props) => {
                 setPageNumber={setPageNumber}
             />
             <div
-                className="flex flex-col md:flex-row md:flex-wrap md:justify-center items-center pt-[50px]"
+                className={classNames(
+                    styles.restaurantCardContainer,
+                    "flex flex-col items-center pt-[50px]"
+                )}
                 style={{
                     maskImage:
                         "linear-gradient(to bottom, transparent, black 50px)",
@@ -52,7 +57,7 @@ const Search: React.FC<PROPS> = (props) => {
                         restaurant={element}
                         genres={selectedGenres(element.id)}
                         hours={props.hours[element.id]}
-                        className="md:w-1/2 lg:w-[calc(50%-20px)] md:mx-2.5"
+                        className={styles.restaurantCard}
                     />
                 ))}
             </div>
