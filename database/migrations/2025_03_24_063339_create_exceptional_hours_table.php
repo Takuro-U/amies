@@ -11,15 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('opening_hours', function (Blueprint $table) {
-            $table->integer('id')->primary();
+        Schema::create('exceptional_hours', function (Blueprint $table) {
+            $table->id();
             $table->integer('restaurant_id');
-            $table->integer('day_id');
-            $table->tinyInteger('is_open')->nullable();
+            $table->date('date');
             $table->time('open')->nullable();
             $table->time('close')->nullable();
-            $table->time('open2')->nullable();
-            $table->time('close2')->nullable();
+            $table->boolean('is_open')->nullable();
         });
     }
 
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('opening_hours');
+        Schema::dropIfExists('exceptional_hours');
     }
 };

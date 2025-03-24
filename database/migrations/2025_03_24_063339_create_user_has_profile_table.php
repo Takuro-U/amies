@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('roles', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name');
-            $table->string('guard_name');
+        Schema::create('user_has_profile', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('user_id')->index('user_has_nickname_user_id_foreign');
+            $table->string('nickname')->default('匿名');
             $table->timestamps();
-
-            $table->unique(['name', 'guard_name']);
+            $table->string('icon_path')->nullable();
         });
     }
 
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('roles');
+        Schema::dropIfExists('user_has_profile');
     }
 };

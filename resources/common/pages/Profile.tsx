@@ -34,6 +34,20 @@ const Profile: React.FC = () => {
                     プロフィール編集
                 </Link>
 
+                {user.is_admin && (
+                    <Link
+                        href={"/console/admin"}
+                        className={classNames(
+                            "flex justify-center items-center",
+                            "w-[80%] h-[35px] my-1",
+                            "rounded-md",
+                            "text-white bg-slate-500"
+                        )}
+                    >
+                        管理画面
+                    </Link>
+                )}
+
                 {user.is_restaurant && (
                     <>
                         <Link

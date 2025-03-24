@@ -22,6 +22,7 @@ class HandleInertiaRequests extends Middleware {
                     [
                         'nickname' => !empty($request->user()->profile?->nickname) ? $request->user()->profile->nickname : "匿名",
                         'icon_path' => $request->user()->profile?->icon_path,
+                        'is_admin' => $request->user()->roles->pluck('name')->contains('admin'),
                         'is_restaurant' => $request->user()->roles->pluck('name')->contains('restaurant'),
                     ]
                 ) : null,

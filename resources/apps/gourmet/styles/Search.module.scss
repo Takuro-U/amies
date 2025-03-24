@@ -1,3 +1,10 @@
+@use "sass:map";
+@use "../../../util/styles/variables" as v;
+
+$breakpoint: v.$breakpoint;
+
+$distinctive_breakpoint: calc(map-get($breakpoint, tablet) - 100px);
+
 .page {
     background-image: url("/images/gourmet/background.jpg");
     background-attachment: fixed;
@@ -49,4 +56,63 @@
     //
     font-size: 18px;
     font-weight: 500;
+}
+
+.restaurantCardContainer {
+    display: grid;
+    grid-template-columns: 1fr;
+
+    @media (min-width: $distinctive_breakpoint) {
+        grid-template-columns: 1fr 1fr;
+        margin-left: 2vw;
+        margin-right: 2vw;
+        gap: 2vw;
+    }
+}
+
+.restaurantCard {
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-bottom: 20px;
+    @media (min-width: $distinctive_breakpoint) {
+        width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+        margin-bottom: 5%;
+    }
+}
+
+.restaurantName {
+    font-size: 4.7vw;
+    @media (min-width: $distinctive_breakpoint) {
+        font-size: 2.3vw;
+    }
+}
+
+.genreOrAreaName {
+    font-size: 3.7vw;
+    @media (min-width: $distinctive_breakpoint) {
+        font-size: 1.8vw;
+    }
+}
+
+.price {
+    font-size: 3.7vw;
+    @media (min-width: $distinctive_breakpoint) {
+        font-size: 1.8vw;
+    }
+}
+
+.date {
+    font-size: 4vw;
+    @media (min-width: $distinctive_breakpoint) {
+        font-size: 2vw;
+    }
+}
+
+.openingStatus {
+    font-size: 3.7vw;
+    @media (min-width: $distinctive_breakpoint) {
+        font-size: 1.8vw;
+    }
 }

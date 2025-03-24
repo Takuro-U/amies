@@ -1,8 +1,10 @@
 import React, { LegacyRef, useEffect, useRef, useState } from "react";
+import styles from "../../styles/Restaurant.module.scss";
 import { DetailRestaurantData } from "../../../../types/gourmet";
 
 import data from "../../../../../storage/app/data.json";
 import { DefaultHour, OpeningHour } from "../../../../types/gourmet";
+import classNames from "classnames";
 
 type PROPS = {
     restaurant: DetailRestaurantData;
@@ -120,7 +122,12 @@ const Details: React.FC<PROPS> = (props) => {
                 backgroundColor: "rgba(255, 255, 255, 0.1)",
             }}
         >
-            <div className="mx-[7%] border-y-2 border-[#e2e1dd] bg-white">
+            <div
+                className={classNames(
+                    styles.details,
+                    "border-y-2 border-[#e2e1dd] bg-white"
+                )}
+            >
                 <RowLayout title="ジャンル">
                     <p className="text-[15px]">
                         {selectedGenres(props.restaurant.id)

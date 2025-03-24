@@ -1,5 +1,8 @@
 @use "sass:map";
 @use "../styles/Gourmet.module.scss";
+@use "../../../util/styles/variables" as v;
+
+$breakpoint: v.$breakpoint;
 
 .menusScroll {
     overflow-y: scroll;
@@ -31,5 +34,22 @@
         .title::before {
             content: "";
         }
+    }
+}
+
+.details {
+    $width: min(86%, 750px);
+    margin-left: calc((100% - $width) / 2);
+    margin-right: calc((100% - $width) / 2);
+}
+
+.menuCard {
+    width: min(90%, 850px);
+    margin-top: 15px;
+    margin-bottom: 15px;
+
+    @media (min-width: map-get($breakpoint, tablet)) {
+        margin-top: 30px;
+        margin-bottom: 30px;
     }
 }
