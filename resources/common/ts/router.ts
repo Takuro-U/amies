@@ -25,6 +25,7 @@ import ConfirmPassword from "../../auth/Pages/Auth/ConfirmPassword";
 // console
 import AdminConsole from "../../console/admin/pages/ConsolePage";
 import UserCreator from "../../console/admin/pages/UserCreator";
+import RestaurantList from "../../console/admin/pages/RestaurantList";
 import EditRestaurant from "../../console/restaurant/pages/EditRestaurant";
 import EditMenus from "../../console/restaurant/pages/EditMenus";
 // test
@@ -49,6 +50,7 @@ export const consoleRouter: Pages = {
     admin: {
         main: AdminConsole,
         user_creator: UserCreator,
+        restaurant_list: RestaurantList,
     },
     restaurant: {
         edit: EditRestaurant,
