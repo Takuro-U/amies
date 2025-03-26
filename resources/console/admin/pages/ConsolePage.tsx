@@ -14,7 +14,7 @@ const ConsolePage: React.FC = () => {
                             <span className="font-medium">ユーザー発行</span>
                         </Link>
                         <Link
-                            href="/console/admin/restaurant-management"
+                            href="/console/admin/restaurant-list"
                             className="px-6 py-4 bg-slate-500 text-white rounded-lg hover:bg-slate-600 transition-colors duration-200 flex items-center justify-center"
                         >
                             <span className="font-medium">飲食店管理</span>
