@@ -13,7 +13,7 @@ export default defineConfig({
     css: {
         preprocessorOptions: {
             scss: {
-                // ここに追加のSassオプションを指定できます
+                //追加のSassオプション
             },
         },
     },

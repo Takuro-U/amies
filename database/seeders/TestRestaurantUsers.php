@@ -12,6 +12,8 @@ class TestRestaurantUsers extends Seeder
 {
     public function run(): void
     {
+        Restaurant::truncate();
+
         for ($index = 1; $index <= 10; $index++) {
             $user = User::create([
                 'name' => '飲食店之介その' . $index,
@@ -29,14 +31,17 @@ class TestRestaurantUsers extends Seeder
                 'user_id' => $user->id,
                 'public' => 1,
                 'name' => '三ツ星和風イタリアン U･S･A' . $index . '号店',
+                'tell' => '0120-000-000',
                 'address' => 'ほげほげ' . $index . '丁目',
                 'area_id' => 0,
-                'tell' => '0120-000-000',
+                'latitude' => -999.999,
+                'longitude' => -999.999,
                 'price_min' => 1000,
                 'price_max' => 3000,
                 'capacity' => 10,
                 'description' => '',
                 'reservation' => '',
+                'charter' => '',
                 'parking' => '',
                 'smoking' => '',
             ]);

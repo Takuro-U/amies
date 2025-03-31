@@ -87,10 +87,10 @@ const EditRestaurant: React.FC<{
             price_min: restaurant.price_min,
             capacity: restaurant.capacity,
             description: restaurant.description,
-            smoking: restaurant.smoking,
-            parking: restaurant.parking,
             reservation: restaurant.reservation,
-            images: restaurant.images,
+            charter: restaurant.charter,
+            parking: restaurant.parking,
+            smoking: restaurant.smoking,
         });
 
     const checkNumber = (value: string, prev: number | null) => {
@@ -298,6 +298,14 @@ const EditRestaurant: React.FC<{
                         <TextAreaTemplate
                             property="reservation"
                             label="予約の可否/方法"
+                            errors={errors}
+                            data={data}
+                            setData={setData}
+                        />
+
+                        <TextAreaTemplate
+                            property="charter"
+                            label="貸切の可否/詳細"
                             errors={errors}
                             data={data}
                             setData={setData}

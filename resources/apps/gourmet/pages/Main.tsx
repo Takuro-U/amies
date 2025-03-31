@@ -9,21 +9,24 @@ import SearchLinks from "../components/Main/SearchLinks";
 import SearchOptions from "../components/Main/SearchOptions/SearchOptions";
 import Background from "../components/Templates/Background";
 
-// Types
-import { Category } from "../../../types/common";
-
-// Utilities
-import { apiOfGourmet } from "../../../util/ts/api";
-
 // Modules
 import classNames from "classnames";
 
-const Main: React.FC = () => {
+type PROPS = {
+    restaurants: {
+        id: number;
+        name: string;
+        latitude: number;
+        longitude: number;
+    }[];
+};
+
+const Main: React.FC<PROPS> = (props) => {
     return (
         <>
             <Background />
             <div className={classNames("relative z-10", styles.page)}>
-                <Map />
+                <Map restaurants={props.restaurants} />
                 <SearchOptions />
                 <SearchLinks />
                 <aside className={classNames(styles.aside, "h-64")}>

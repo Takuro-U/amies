@@ -35,9 +35,10 @@ export interface DetailRestaurantData {
     price_min: number | null;
     capacity: number | null;
     description: string;
-    smoking: number;
-    parking: number;
-    reservation: number;
+    reservation: string;
+    charter: string;
+    parking: string;
+    smoking: string;
     images: number;
 }
 

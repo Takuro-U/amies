@@ -3,9 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Helpers\InertiaHelper;
-use App\Models\User;
-use App\Models\Gourmet\Restaurant;
 use App\Http\Controllers\CustomAuth\CreateUserController;
+use App\Http\Controllers\Console\AdminController;
 use App\Http\Controllers\Console\RestaurantController;
 
 Route::prefix('admin')->middleware(['auth', 'can:admin'])->group(function () {
@@ -19,16 +18,13 @@ Route::prefix('admin')->middleware(['auth', 'can:admin'])->group(function () {
 
     Route::post('/user-creator', [CreateUserController::class, 'store']);
 
-    Route::get('/restaurant-list', function () {
-        $restaurants = Restaurant::all();
-        $restaurants = $restaurants->map(function ($restaurant) {
-            $uid = $restaurant->user_id;
-            $user = User::find($uid);
-            $restaurant->email = $user->email;
-            return $restaurant;
-        });
-        return Inertia::render('admin/restaurant_list', ['restaurants' => $restaurants]);
-    })->name('/console/admin/restaurant-list');
+    Route::get('/restaurant-list', 
+        [AdminController::class, 'showRestaurantList']
+    )->name('/console/admin/restaurant-list');
+
+    Route::patch('/restaurant-list', 
+        [AdminController::class, 'updateRestaurants']
+    )->name('/console/admin/restaurant-list');
 });
 
 Route::prefix('restaurant')->middleware(['auth', 'can:restaurant'])->group(function () {

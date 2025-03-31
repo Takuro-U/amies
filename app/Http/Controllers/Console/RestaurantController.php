@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class RestaurantController extends Controller {
-    
     //メニュー取得処理
     public function getMenus($restaurantId) {
         $result = Menus::where('parent_id', $restaurantId)
@@ -134,6 +133,7 @@ class RestaurantController extends Controller {
             'capacity' => 'nullable|integer|min:0',
             'description' => 'nullable|string|max:255',
             'reservation' => 'nullable|string|max:255',
+            'charter' => 'nullable|string|max:255',
             'parking' => 'nullable|string|max:255',
             'smoking' => 'nullable|string|max:255',
         ], [
@@ -145,6 +145,7 @@ class RestaurantController extends Controller {
             'tell.max' => '16文字以内で入力してください',
             'description.max' => '255文字以内で入力してください',
             'reservation.max' => '255文字以内で入力してください',
+            'charter.max' => '255文字以内で入力してください',
             'parking.max' => '255文字以内で入力してください',
             'smoking.max' => '255文字以内で入力してください',
         ]);
@@ -164,6 +165,7 @@ class RestaurantController extends Controller {
         $restaurant->capacity = $request->capacity;
         $restaurant->description = $request->description ?? "";
         $restaurant->reservation = $request->reservation ?? "";
+        $restaurant->charter = $request->charter ?? "";
         $restaurant->parking = $request->parking ?? "";
         $restaurant->smoking = $request->smoking ?? "";
         $restaurant->save();
