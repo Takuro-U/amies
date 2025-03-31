@@ -16,6 +16,27 @@ use App\Models\Gourmet\ExceptionalHours;
 
 class GourmetController extends Controller {
 
+    public function showRestaurantsMap() {
+        $restaurants = Restaurant::where('public', 1)
+            ->where('latitude', '>', 0)
+            ->where('longitude', '>', 0)
+            ->get();
+        
+        $restaurants = $restaurants->map(function ($restaurant) {
+            return [
+                'id' => $restaurant->id,
+                'name' => $restaurant->name,
+                'latitude' => $restaurant->latitude,
+                'longitude' => $restaurant->longitude,
+            ];
+        });
+
+        return Inertia::render('gourmet/main', [
+            'restaurants' => $restaurants
+        ]);
+
+    }
+
     //一週間分の日付と曜日を取得
     public function weeklyData() {
         $today = Carbon::today();
@@ -30,6 +51,7 @@ class GourmetController extends Controller {
         return $result;
     }
 
+    //三ヶ月分の日付と曜日を取得
     public function quarterlyData() {
         $today = Carbon::today();
         $result = [];
@@ -151,6 +173,7 @@ class GourmetController extends Controller {
         return $result;
     }
 
+    //メニュー取得
     public function getMenus($restaurantId) {
         $result = Menus::where('parent_id', $restaurantId)
             ->get()
@@ -221,7 +244,7 @@ class GourmetController extends Controller {
         ]);
     }
 
-    //
+    //飲食店情報取得
     public function getRestaurantData(Request $request) {
         $id = $request->input('id');
         $result = Restaurant::where('id', $id)->get()->first(); //飲食店情報

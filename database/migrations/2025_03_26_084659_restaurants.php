@@ -16,16 +16,19 @@ return new class extends Migration
             $table->bigInteger('user_id')->unique('uid_unique');
             $table->boolean('public');
             $table->string('name', 32);
+            $table->string('tell', 16);
             $table->string('address');
             $table->integer('area_id');
-            $table->string('tell', 16);
+            $table->decimal('latitude', 10, 7);
+            $table->decimal('longitude', 10, 7);
             $table->integer('price_max')->nullable();
             $table->integer('price_min')->nullable();
             $table->integer('capacity')->nullable();
             $table->string('description');
+            $table->string('reservation');
+            $table->string('charter');
             $table->string('parking');
             $table->string('smoking');
-            $table->string('reservation');
 
             //$table->primary(['id']);
         });

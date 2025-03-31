@@ -5,7 +5,14 @@ import { FirstPage, LastPage } from "@mui/icons-material";
 import publicData from "../../../../storage/app/data.json";
 import classNames from "classnames";
 
-type keys = "id" | "name" | "email" | "coordinates" | "area_id" | "public";
+type keys =
+    | "id"
+    | "name"
+    | "email"
+    | "latitude"
+    | "longitude"
+    | "area_id"
+    | "public";
 
 type PROPS = {
     restaurants: (
@@ -30,9 +37,6 @@ const RestaurantList: React.FC<PROPS> = (props) => {
         const result = [];
         for (let i = 0; i < array.length; i += chunkSize) {
             const chunk = array.slice(i, i + chunkSize);
-            // while (chunk.length < chunkSize) {
-            //     chunk.push(null);
-            // }
             result.push(chunk);
         }
         return result;
@@ -99,7 +103,7 @@ const RestaurantList: React.FC<PROPS> = (props) => {
             </div>
 
             <div className="flex flex-col items-center border w-[70vw]">
-                {chunkedList(data.restaurants)[pageNumber - 1].map(
+                {chunkedList(data.restaurants)[pageNumber - 1]?.map(
                     (restaurant, index) => (
                         <div
                             key={restaurant?.id}
@@ -120,13 +124,26 @@ const RestaurantList: React.FC<PROPS> = (props) => {
                                     <div className="flex items-center w-[50%] mr-2">
                                         <input
                                             type="text"
-                                            placeholder="座標"
+                                            placeholder="緯度"
                                             className="border border-gray-300 text-[14px] rounded-md w-full h-[30px] mx-1"
-                                            value={restaurant.coordinates}
+                                            value={restaurant.latitude}
                                             onChange={(e) =>
                                                 updateData(
                                                     restaurant.id as number,
-                                                    "coordinates",
+                                                    "latitude",
+                                                    e.target.value
+                                                )
+                                            }
+                                        />
+                                        <input
+                                            type="text"
+                                            placeholder="経度"
+                                            className="border border-gray-300 text-[14px] rounded-md w-full h-[30px] mx-1"
+                                            value={restaurant.longitude}
+                                            onChange={(e) =>
+                                                updateData(
+                                                    restaurant.id as number,
+                                                    "longitude",
                                                     e.target.value
                                                 )
                                             }
@@ -153,7 +170,7 @@ const RestaurantList: React.FC<PROPS> = (props) => {
                                             ))}
                                         </select>
                                         <button
-                                            className={`w-[140px] my-1 ml-1 px-2 py-1 rounded-md text-[16px] ${
+                                            className={`w-[190px] my-1 ml-1 px-2 py-1 rounded-md text-[14px] ${
                                                 restaurant.public === 1
                                                     ? "bg-green-500 text-white"
                                                     : "bg-red-500 text-white"
@@ -183,6 +200,12 @@ const RestaurantList: React.FC<PROPS> = (props) => {
                     )
                 )}
             </div>
+            <button
+                className="bg-slate-700 text-white text-[18px] px-4 py-1 my-3 rounded-md"
+                onClick={submit}
+            >
+                更新
+            </button>
         </div>
     );
 };

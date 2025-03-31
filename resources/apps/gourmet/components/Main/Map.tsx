@@ -8,7 +8,15 @@ import "leaflet/dist/leaflet.css";
 import classNames from "classnames";
 import L from "leaflet";
 
-const Map: React.FC = () => {
+type PROPS = {
+    restaurants: {
+        id: number;
+        name: string;
+        latitude: number;
+        longitude: number;
+    }[];
+};
+const Map: React.FC<PROPS> = (props) => {
     const dmsToDecimal = (
         degrees: number,
         minutes: number,
@@ -29,16 +37,55 @@ const Map: React.FC = () => {
         });
     };
 
+    const coordOfUniversity = {
+        latitude: dmsToDecimal(34, 44, 46.78),
+        longitude: dmsToDecimal(136, 31, 21.46),
+    };
+
+    const initialZoomLevel = 15;
+
     useEffect(() => {
         const map = L.map("map").setView(
-            [dmsToDecimal(34, 44, 46.78), dmsToDecimal(136, 31, 21.46)],
-            15
+            [coordOfUniversity.latitude, coordOfUniversity.longitude],
+            initialZoomLevel
         );
+
+        const icon = (url: string, size: number) => {
+            return L.icon({
+                iconUrl: url,
+                iconSize: [size, size],
+                iconAnchor: [size / 2, size],
+                popupAnchor: [0, -size],
+            });
+        };
+
+        const icons = {
+            university: icon("/images/gourmet/university.png", 30),
+            restaurant: icon("/images/gourmet/restaurant.png", 30),
+        };
 
         L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
             attribution:
                 '<a href="https://www.openstreetmap.org/copyright" target="_blank">©OpenStreetMap</a> contributors',
         }).addTo(map);
+
+        L.marker([dmsToDecimal(34, 44, 46.78), dmsToDecimal(136, 31, 21.46)], {
+            icon: icons.university,
+        })
+            .addTo(map)
+            .bindPopup("三重大学 正門", {
+                className: styles.customPopup,
+            });
+
+        props.restaurants.forEach((restaurant) => {
+            L.marker([restaurant.latitude, restaurant.longitude], {
+                icon: icons.restaurant,
+            })
+                .addTo(map)
+                .bindPopup(restaurant.name, {
+                    className: styles.customPopup,
+                });
+        });
 
         updateStyles(
             ".leaflet-control-attribution, .leaflet-control-attribution a, .leaflet-control-attribution span",
@@ -52,7 +99,6 @@ const Map: React.FC = () => {
 
     return (
         <div className={styles.mapContainer}>
-            {/* ↓仮のMAP↓ */}
             <div
                 className={classNames(
                     "flex items-center justify-center",

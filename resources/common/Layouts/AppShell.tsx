@@ -25,17 +25,9 @@ const AppShell: React.FC<PROPS> = ({ children }) => {
     const [reload, setReload] = useState(false);
 
     const { modalStatus, closeModal } = useModalContext();
-    const { login } = useAuthContext();
 
     useEffect(() => {
         let isMounted = true;
-
-        //ローカルストレージからユーザー情報を再取得してログイン
-        const storedStatus = localStorage.getItem("authStatus");
-        if (storedStatus) {
-            const parsedData = JSON.parse(storedStatus);
-            login(parsedData);
-        }
 
         //Inertiaの再描画完了時にreloadのトグルを走らせる
         //AppShellはInertiaでは再レンダリングされないので必須

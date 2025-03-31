@@ -5,9 +5,9 @@ use Inertia\Inertia;
 use App\Helpers\InertiaHelper;
 use App\Http\Controllers\GourmetController;
 
-Route::get('/', function () {
-    return InertiaHelper::renderPage('gourmet', 'main');
-})->name('/gourmet');
+Route::get('/',  
+    [GourmetController::class, 'showRestaurantsMap']
+)->name('/gourmet');
 
 Route::get('/search', 
     [GourmetController::class, 'searchRestaurant']

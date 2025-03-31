@@ -13,14 +13,14 @@ export default defineConfig({
     css: {
         preprocessorOptions: {
             scss: {
-                // ここに追加のSassオプションを指定できます
+                //追加のSassオプション
             },
         },
     },
     //
     server: {
         proxy: {
-            "/app": "http://localhost:8000", // Laravelサーバーへのプロキシ
+            "/app": "http://localhost:8000",
         },
     },
 });
