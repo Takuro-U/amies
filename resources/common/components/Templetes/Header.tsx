@@ -15,9 +15,12 @@ import { menuLinks } from "../../ts/router";
 import { Link } from "@inertiajs/react";
 import classNames from "classnames";
 
-const Header: React.FC = () => {
-    const [isOpen, setIsOpen] = useState(false);
+type PROPS = {
+    menuIsOpen: boolean;
+    setMenuIsOpen: (isOpen: boolean) => void;
+};
 
+const Header: React.FC<PROPS> = (props) => {
     const { AuthInfoHeader } = AuthInfo;
 
     return (
@@ -56,7 +59,7 @@ const Header: React.FC = () => {
                     </div>
                     <button
                         onClick={() => {
-                            setIsOpen(!isOpen);
+                            props.setMenuIsOpen(!props.menuIsOpen);
                         }}
                         className={classNames(
                             styles.menuBtn,
@@ -69,9 +72,9 @@ const Header: React.FC = () => {
             </header>
             <ResponsiveMenu
                 menuLinks={menuLinks}
-                isOpen={isOpen}
+                isOpen={props.menuIsOpen}
                 onClose={() => {
-                    setIsOpen(false);
+                    props.setMenuIsOpen(false);
                 }}
             />
         </>

@@ -21,21 +21,20 @@ type PROPS = {
 };
 
 const AppShell: React.FC<PROPS> = ({ children }) => {
-    //ヘッダー等再描画用のフラグ
-    const [reload, setReload] = useState(false);
+    const [reload, setReload] = useState(false); //ヘッダー等再描画用のフラグ
+    const [menuIsOpen, setMenuIsOpen] = useState(false);
 
     const { modalStatus, closeModal } = useModalContext();
 
     useEffect(() => {
         let isMounted = true;
 
-        //Inertiaの再描画完了時にreloadのトグルを走らせる
-        //AppShellはInertiaでは再レンダリングされないので必須
         const handleFinish = () => {
             if (isMounted) {
-                setReload((prev) => !prev);
-                //ついでにModalを閉じる
+                setReload((prev) => !prev); //Inertiaの再描画完了時にreloadのトグルを走らせる(AppShellはInertiaで再レンダリングされないので必須)
+                //ついでにModalとMenuを閉じる
                 closeModal();
+                setMenuIsOpen(false);
             }
         };
 
@@ -48,7 +47,7 @@ const AppShell: React.FC<PROPS> = ({ children }) => {
 
     return (
         <div>
-            <Header />
+            <Header menuIsOpen={menuIsOpen} setMenuIsOpen={setMenuIsOpen} />
             <BackToPageTopButton />
             {modalStatus.isOpen && <Modal />}
             {children}

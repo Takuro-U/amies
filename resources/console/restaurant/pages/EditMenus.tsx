@@ -118,7 +118,7 @@ const EditMenus: React.FC<{ menus: { [key: number]: Menu[] } }> = ({
     }, [data.props.flag]);
 
     return (
-        <section className="bg-gray-200 min-h-screen py-8 px-6 sm:px-6 md:px-8 lg:px-12">
+        <section className="bg-gray-100 min-h-screen py-8 px-6 sm:px-6 md:px-8 lg:px-12">
             <form onSubmit={submit} className="max-w-4xl mx-auto">
                 <div className="mb-6">
                     <h2 className="text-2xl font-semibold text-gray-800 mb-4">
@@ -133,7 +133,7 @@ const EditMenus: React.FC<{ menus: { [key: number]: Menu[] } }> = ({
                                     {
                                         "bg-white text-gray-800 border-t-2 border-orange-500":
                                             menuType === index,
-                                        "bg-gray-300 text-gray-800 border-t-2 border-transparent hover:bg-gray-400":
+                                        "bg-gray-200 text-gray-800 border-t-2 border-transparent hover:bg-gray-300":
                                             menuType !== index,
                                     }
                                 )}

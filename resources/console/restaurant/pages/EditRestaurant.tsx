@@ -7,7 +7,7 @@ import { useForm } from "@inertiajs/react";
 import { FormEventHandler } from "react";
 import { DetailRestaurantData } from "../../../types/gourmet";
 import classNames from "classnames";
-import publicData from "../../../../storage/app/data.json";
+import publicData from "../../../../public/data.json";
 
 const InputTemplate: React.FC<{
     property: keyof DetailRestaurantData;
@@ -80,9 +80,11 @@ const EditRestaurant: React.FC<{
             name: restaurant.name,
             address: restaurant.address,
             tell: restaurant.tell,
-            genres: publicData.genreList.map((genre) => {
-                return genres.includes(genre.id);
-            }),
+            genres: publicData.genreList
+                .filter((genre) => genre.id !== 0)
+                .map((genre) => {
+                    return genres.includes(genre.id);
+                }),
             price_max: restaurant.price_max,
             price_min: restaurant.price_min,
             capacity: restaurant.capacity,
@@ -188,24 +190,30 @@ const EditRestaurant: React.FC<{
                                 className="text-gray-700 font-medium mb-1"
                             />
                             <div id="area_id" className="flex flex-wrap gap-2">
-                                {publicData.genreList.map((element) => (
-                                    <button
-                                        key={element.id}
-                                        type="button"
-                                        onClick={() => updateGenres(element.id)}
-                                        className={classNames(
-                                            "px-3 py-2 text-[15px] rounded-lg font-medium transition-colors duration-200",
-                                            {
-                                                "bg-green-500 hover:bg-green-600 text-white":
-                                                    data.genres[element.id],
-                                                "bg-gray-200 hover:bg-gray-300 text-gray-700 ":
-                                                    !data.genres[element.id],
+                                {publicData.genreList
+                                    .filter((genre) => genre.id !== 0)
+                                    .map((element) => (
+                                        <button
+                                            key={element.id}
+                                            type="button"
+                                            onClick={() =>
+                                                updateGenres(element.id)
                                             }
-                                        )}
-                                    >
-                                        {element.name}
-                                    </button>
-                                ))}
+                                            className={classNames(
+                                                "px-3 py-2 text-[15px] rounded-lg font-medium transition-colors duration-200",
+                                                {
+                                                    "bg-green-500 hover:bg-green-600 text-white":
+                                                        data.genres[element.id],
+                                                    "bg-gray-200 hover:bg-gray-300 text-gray-700 ":
+                                                        !data.genres[
+                                                            element.id
+                                                        ],
+                                                }
+                                            )}
+                                        >
+                                            {element.name}
+                                        </button>
+                                    ))}
                             </div>
                             <InputError message={errors.genres} />
                         </div>
