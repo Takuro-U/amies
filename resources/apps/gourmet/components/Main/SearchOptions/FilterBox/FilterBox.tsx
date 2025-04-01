@@ -1,16 +1,23 @@
-import React, { createRef, RefObject, useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, {
+    createRef,
+    RefObject,
+    useEffect,
+    useLayoutEffect,
+    useRef,
+    useState,
+} from "react";
 
 // Component
 import { CheckContent } from "./CheckContent/CheckContent";
 import { Swiper, SwiperRef, SwiperSlide } from "swiper/react";
 import { Scrollbar, FreeMode, Controller } from "swiper/modules";
-import SearchIcon from "@mui/icons-material/Search";
+import { Search as SearchIcon } from "@mui/icons-material";
 
 // Types
 import { Category } from "../../../../../../types/common";
 
 // JSON
-import data from "../../../../../../../storage/app/data.json";
+import publicData from "../../../../../../../public/data.json";
 
 // Modules
 import { Link } from "@inertiajs/react";
@@ -34,14 +41,18 @@ const FilterBox: React.FC = () => {
     const [checkLists, setCheckLists] = useState<{
         [key: string]: CheckContentProps[];
     }>({
-        area: data.areaList.map((element) => ({
-            ...element,
-            isChecked: false,
-        })),
-        genre: data.genreList.map((element) => ({
-            ...element,
-            isChecked: false,
-        })),
+        area: publicData.areaList
+            .map((element) => ({
+                ...element,
+                isChecked: false,
+            }))
+            .filter((element) => element.id !== 0),
+        genre: publicData.genreList
+            .map((element) => ({
+                ...element,
+                isChecked: false,
+            }))
+            .filter((element) => element.id !== 0),
     });
 
     //チェックボックスリストを複数段に分ける
@@ -105,26 +116,31 @@ const FilterBox: React.FC = () => {
     useEffect(queryListCtrl, [checkLists]);
 
     // SwiperController参照用のref
-    const swiperRefs = useRef<{[key: string]: RefObject<SwiperRef>[]}>({area: [], genre: []});
-    const setSwiperRef = (type: "area" | "genre")=>{
+    const swiperRefs = useRef<{ [key: string]: RefObject<SwiperRef>[] }>({
+        area: [],
+        genre: [],
+    });
+    const setSwiperRef = (type: "area" | "genre") => {
         const ref = createRef<SwiperRef>();
         swiperRefs.current[type].push(ref);
         return ref;
-    }
+    };
 
     // 各Swiperに同グループの自身を除いたSwiper[]をControllerとして登録
-    useEffect(()=>{
-        if(swiperRefs.current){
-            Object.keys(swiperRefs.current).map((key)=>{
+    useEffect(() => {
+        if (swiperRefs.current) {
+            Object.keys(swiperRefs.current).map((key) => {
                 // グループ内のrefからswiperインスタンスを取り出し配列化
-                const instances = swiperRefs.current[key].map((ref)=>ref.current?.swiper).filter((ins)=> ins !== undefined);
-                instances.map((ins)=>{
+                const instances = swiperRefs.current[key]
+                    .map((ref) => ref.current?.swiper)
+                    .filter((ins) => ins !== undefined);
+                instances.map((ins) => {
                     // 自身を除いたインスタンス配列をControllerに登録
-                    ins.controller.control = instances.filter((i)=>i !== ins);
-                })
-            })
+                    ins.controller.control = instances.filter((i) => i !== ins);
+                });
+            });
         }
-    },[])
+    }, []);
 
     const [priceRange, setPriceRange] = useState<{
         max: number | null;

@@ -25,6 +25,12 @@ const ConsolePage: React.FC = () => {
                         >
                             <span className="font-medium">ボード編集</span>
                         </Link>
+                        <Link
+                            href="/console/admin/etc"
+                            className="px-6 py-4 bg-slate-500 text-white rounded-lg hover:bg-slate-600 transition-colors duration-200 flex items-center justify-center"
+                        >
+                            <span className="font-medium">その他の管理</span>
+                        </Link>
                     </div>
                 </div>
             </div>

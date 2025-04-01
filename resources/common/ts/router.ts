@@ -22,17 +22,17 @@ import ForgotPassword from "../../auth/Pages/Auth/ForgotPassword";
 import ResetPassword from "../../auth/Pages/Auth/ResetPassword";
 import ConfirmPassword from "../../auth/Pages/Auth/ConfirmPassword";
 
-// console
+// console_admin
 import AdminConsole from "../../console/admin/pages/ConsolePage";
 import UserCreator from "../../console/admin/pages/UserCreator";
 import RestaurantList from "../../console/admin/pages/RestaurantList";
+import OtherManager from "../../console/admin/pages/OtherManager";
+
+// console_restaurant
 import EditRestaurant from "../../console/restaurant/pages/EditRestaurant";
 import EditMenus from "../../console/restaurant/pages/EditMenus";
-// test
-import Dashboard from "../../auth/Pages/Dashboard";
 
 export const pageRouter: Pages = {
-    test: { dash_board: Dashboard },
     auth: {
         login: Login,
         register: Register,
@@ -51,6 +51,7 @@ export const consoleRouter: Pages = {
         main: AdminConsole,
         user_creator: UserCreator,
         restaurant_list: RestaurantList,
+        etc: OtherManager,
     },
     restaurant: {
         edit: EditRestaurant,

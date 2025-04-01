@@ -86,11 +86,7 @@ const ResponsiveMenu: React.FC<PROPS> = (props) => {
                     <hr />
                     <nav>
                         {props.menuLinks.map((link, index) => (
-                            <MenuLink
-                                key={index}
-                                link={link}
-                                onClick={props.onClose}
-                            /> //ドロワーのクローズ関数を渡してクリック時にドロワーをクローズ
+                            <MenuLink key={index} link={link} /> //ドロワーのクローズ関数を渡してクリック時にドロワーをクローズ
                         ))}
                     </nav>
                 </div>

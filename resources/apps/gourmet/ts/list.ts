@@ -34,14 +34,14 @@ const gourmetModalStyleTemplate = {
     hr: styles.hr,
 };
 const propsForAreaList = {
-    listData: data.areaList,
+    listData: data.areaList.filter((area) => area.id !== 0),
     keyName: "areas",
     style: modalStyleTemplate,
     ...propsTemplate,
 };
 
 const propsForGenreList = {
-    listData: data.genreList,
+    listData: data.genreList.filter((genre) => genre.id !== 0),
     keyName: "genres",
     style: modalStyleTemplate,
     ...propsTemplate,

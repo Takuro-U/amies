@@ -1,3 +1,4 @@
+//検索条件
 export interface StatusForSearch {
     area: number[] | null;
     genres: number[] | null;
@@ -5,6 +6,7 @@ export interface StatusForSearch {
     customers: number | null;
 }
 
+//飲食店_基本情報
 export interface BasicRestaurantData {
     id: number;
     name: string;
@@ -14,6 +16,29 @@ export interface BasicRestaurantData {
     capacity: number;
 }
 
+//飲食店_詳細情報
+export interface DetailRestaurantData {
+    id: number;
+    user_id: number;
+    public: number;
+    name: string;
+    tell: string;
+    address: string;
+    area_id: number;
+    latitude: number;
+    longitude: number;
+    price_max: number | null;
+    price_min: number | null;
+    capacity: number | null;
+    description: string;
+    reservation: string;
+    charter: string;
+    parking: string;
+    smoking: string;
+    images: number[];
+}
+
+//直近一週間の営業時間
 export interface WeeklyHours {
     day_id: number;
     date: string;
@@ -24,24 +49,7 @@ export interface WeeklyHours {
     is_open: number;
 }
 
-export interface DetailRestaurantData {
-    id: number;
-    name: string;
-    public: number;
-    address: string;
-    area_id: number;
-    tell: string;
-    price_max: number | null;
-    price_min: number | null;
-    capacity: number | null;
-    description: string;
-    reservation: string;
-    charter: string;
-    parking: string;
-    smoking: string;
-    images: number;
-}
-
+//詳細営業時間
 export type OpeningHour = {
     date: Date;
     day_id: number;
@@ -52,6 +60,7 @@ export type OpeningHour = {
     is_open: number;
 };
 
+//基本営業時間
 export type DefaultHour = {
     open: string;
     close: string;
@@ -60,6 +69,7 @@ export type DefaultHour = {
     is_open: number;
 };
 
+//メニュー
 export type Menu = {
     id: number;
     parent_id: number;

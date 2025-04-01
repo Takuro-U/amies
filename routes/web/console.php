@@ -25,6 +25,10 @@ Route::prefix('admin')->middleware(['auth', 'can:admin'])->group(function () {
     Route::patch('/restaurant-list', 
         [AdminController::class, 'updateRestaurants']
     )->name('/console/admin/restaurant-list');
+
+    Route::get('/etc', function () {
+        return InertiaHelper::renderPage('admin', 'etc');
+    })->name('/console/admin/etc');
 });
 
 Route::prefix('restaurant')->middleware(['auth', 'can:restaurant'])->group(function () {
