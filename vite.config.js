@@ -20,7 +20,7 @@ export default defineConfig({
     //
     server: {
         proxy: {
-            "/app": "http://localhost:8000",
+            "/app": process.env.APP_URL,
         },
         historyApiFallback: {
             index: "/index.php",
