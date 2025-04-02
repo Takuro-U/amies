@@ -17,7 +17,6 @@ use App\Models\Gourmet\ExceptionalHours;
 class GourmetController extends Controller {
 
     public function showRestaurantsMap() {
-        dd();
         $restaurants = Restaurant::where('public', 1)
             ->where('latitude', '>', 0)
             ->where('longitude', '>', 0)

@@ -24,14 +24,17 @@ Route::middleware([AddViewData::class])->group(function () {
 
     //トップ
     Route::get('/', function () {
-        dd();
         return InertiaHelper::renderPage('top', 'main');
     })->name('/');
 
+    Route::get('/gourmet',  
+        [GourmetController::class, 'showRestaurantsMap']
+    )->name('/gourmet');
+
     //グルメ
-    Route::prefix('gourmet')->group(function () {
-        require base_path('routes/web/gourmet.php');
-    });
+    // Route::prefix('gourmet')->group(function () {
+    //     require base_path('routes/web/gourmet.php');
+    // });
 
     
 
