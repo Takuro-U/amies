@@ -18,7 +18,7 @@ const SearchOptions: React.FC = () => {
     const fireBtnRef = useRef<HTMLDivElement>(null);
     const contentRef = useRef<HTMLDivElement>(null);
     const boxRef = useRef<HTMLDivElement>(null);
-    
+
     // 開閉コントロール
     const drawerCtrl = (mode: string) => {
         if (boxRef.current && contentRef.current) {
@@ -39,11 +39,15 @@ const SearchOptions: React.FC = () => {
     const drawerLogic = () => {
         //トランジション終了時に、再びボタンにイベントを登録するイベントを登録
         //isRegistedは二重登録を防ぐステート変数
-        if(boxRef.current && !isRegisted){
-            boxRef.current.addEventListener("transitionend", ()=>{
-                fireBtnEvRegister();
-                setIsRegisted(false);
-            }, {once: true});
+        if (boxRef.current && !isRegisted) {
+            boxRef.current.addEventListener(
+                "transitionend",
+                () => {
+                    fireBtnEvRegister();
+                    setIsRegisted(false);
+                },
+                { once: true }
+            );
             setIsRegisted(true);
         }
 
@@ -73,21 +77,27 @@ const SearchOptions: React.FC = () => {
     };
 
     //開閉ボタンにイベントを登録する関数
-    const fireBtnEvRegister =()=>{
-        if(fireBtnRef.current){
-            fireBtnRef.current.addEventListener("click", ()=>{
-                setIsOpen((prev)=>!prev);
-            }, {once: true});
+    const fireBtnEvRegister = () => {
+        if (fireBtnRef.current) {
+            fireBtnRef.current.addEventListener(
+                "click",
+                () => {
+                    setIsOpen((prev) => !prev);
+                },
+                { once: true }
+            );
         }
-    }
+    };
 
-    useEffect(()=>{ //初期化
+    useEffect(() => {
+        //初期化
         fireBtnEvRegister(); // イベントを登録
-    },[]);
+    }, []);
 
-    useEffect(()=>{ //isOpen変化時に発火
+    useEffect(() => {
+        //isOpen変化時に発火
         drawerLogic();
-    }, [isOpen])
+    }, [isOpen]);
 
     return (
         <div
@@ -100,12 +110,12 @@ const SearchOptions: React.FC = () => {
             )}
         >
             <div
-                ref={ fireBtnRef }
+                ref={fireBtnRef}
                 className={classNames(
                     "flex items-center justify-center",
                     "w-full h-[35px]",
                     "cursor-pointer",
-                    styles.searchOptionsToggleBtn,
+                    styles.searchOptionsToggleBtn
                 )}
             >
                 <p className="text-white">{isOpen ? "△" : "▼"} 詳細検索</p>

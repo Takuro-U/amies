@@ -16,9 +16,6 @@ import { Search as SearchIcon } from "@mui/icons-material";
 // Types
 import { Category } from "../../../../../../types/common";
 
-// JSON
-import publicData from "../../../../../../../public/data.json";
-
 // Modules
 import { Link } from "@inertiajs/react";
 import { route } from "ziggy-js";
@@ -37,40 +34,73 @@ interface CheckContentProps extends Category {
 }
 
 const FilterBox: React.FC = () => {
+    const [boxLists, setBoxLists] = useState<{
+        area: CheckContentProps[][];
+        genre: CheckContentProps[][];
+    }>({
+        area: [],
+        genre: [],
+    });
+
     const [maxWidth, setMaxWidth] = useState(0);
     const [checkLists, setCheckLists] = useState<{
         [key: string]: CheckContentProps[];
     }>({
-        area: publicData.areaList
-            .map((element) => ({
-                ...element,
-                isChecked: false,
-            }))
-            .filter((element) => element.id !== 0),
-        genre: publicData.genreList
-            .map((element) => ({
-                ...element,
-                isChecked: false,
-            }))
-            .filter((element) => element.id !== 0),
+        area: [],
+        genre: [],
     });
 
     //チェックボックスリストを複数段に分ける
     //今後拡張する場合は段数に応じて2次元配列の列数を増やす。
     //ようにしたけど３段以上になるとSwiperがエラー吐くので改修必須。頑張ってね
     const row = 2; //段数
-    let boxLists: { [key: string]: CheckContentProps[][] } = {
-        area: [],
-        genre: [],
-    };
-    Object.keys(checkLists).map((key) => {
-        const list: CheckContentProps[] = checkLists[key];
-        let temp: CheckContentProps[][] = [[], []];
-        list.map((el, i) => {
-            temp[i % row].push(el);
-        });
-        boxLists[key] = temp;
-    });
+
+    //jsonのデータフェッチの関係でstateとuseEffectで状態管理するようにしましたby打田
+    useEffect(() => {
+        fetch("/data.json")
+            .then((res) => res.json())
+            .then((data) => {
+                const updatedCheckLists = {
+                    area: data.areaList
+                        .map((element: { id: number; name: string }) => ({
+                            ...element,
+                            isChecked: false,
+                        }))
+                        .filter((element: { id: number }) => element.id !== 0),
+                    genre: data.genreList
+                        .map((element: { id: number; name: string }) => ({
+                            ...element,
+                            isChecked: false,
+                        }))
+                        .filter((element: { id: number }) => element.id !== 0),
+                };
+
+                setCheckLists(updatedCheckLists);
+
+                // checkListsの更新後にboxListsを設定
+                let newBoxLists: {
+                    area: CheckContentProps[][];
+                    genre: CheckContentProps[][];
+                } = {
+                    area: [[], []],
+                    genre: [[], []],
+                };
+
+                Object.keys(updatedCheckLists).forEach((key) => {
+                    const list: CheckContentProps[] =
+                        updatedCheckLists[
+                            key as keyof typeof updatedCheckLists
+                        ];
+                    let temp: CheckContentProps[][] = [[], []];
+                    list.forEach((el, i) => {
+                        temp[i % row].push(el);
+                    });
+                    newBoxLists[key as "area" | "genre"] = temp;
+                });
+
+                setBoxLists(newBoxLists);
+            });
+    }, []);
 
     //チェックボックスリストの端を整える
     const lastElemRefs = useRef<{ [key: string]: RefObject<HTMLDivElement>[] }>(
@@ -104,6 +134,7 @@ const FilterBox: React.FC = () => {
             });
         });
     };
+
     useEffect(setMargin, []);
 
     //指定条件を表示
@@ -152,7 +183,7 @@ const FilterBox: React.FC = () => {
                 });
             });
         }
-    }, []);
+    }, [boxLists]); // boxListsが更新された後にControllerを設定する
 
     const [priceRange, setPriceRange] = useState<{
         max: number | null;

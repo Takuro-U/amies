@@ -1,13 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import InputError from "../../../auth/Components/InputError";
 import InputLabel from "../../../auth/Components/InputLabel";
 import PrimaryButton from "../../../auth/Components/PrimaryButton";
 import { Transition } from "@headlessui/react";
 import { useForm } from "@inertiajs/react";
 import { FormEventHandler } from "react";
-import { DetailRestaurantData } from "../../../types/gourmet";
+import { DetailRestaurantData, PublicData } from "../../../types/gourmet";
 import classNames from "classnames";
-import publicData from "../../../../public/data.json";
 
 const InputTemplate: React.FC<{
     property: keyof DetailRestaurantData;
@@ -74,6 +73,17 @@ const EditRestaurant: React.FC<{
     restaurant: DetailRestaurantData;
     genres: number[];
 }> = ({ restaurant, genres }) => {
+    const [publicData, setPublicData] = useState<PublicData>({
+        areaList: [],
+        genreList: [],
+    });
+
+    useEffect(() => {
+        fetch("/data.json")
+            .then((res) => res.json())
+            .then((data) => setPublicData(data));
+    }, []);
+
     const { data, setData, patch, errors, processing, recentlySuccessful } =
         useForm({
             public: restaurant.public,
@@ -118,12 +128,11 @@ const EditRestaurant: React.FC<{
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-        console.log(data);
         patch(route("/console/restaurant/edit"));
     };
 
     return (
-        <section className="bg-gray-200 min-h-screen py-8 px-6 sm:px-6 md:px-8 lg:px-12">
+        <section className="bg-gray-100 min-h-screen py-8 px-6 sm:px-6 md:px-8 lg:px-12">
             <form onSubmit={submit} className="max-w-4xl mx-auto">
                 <div className="mb-6">
                     <h2 className="text-2xl font-semibold text-gray-800 mb-4">

@@ -75,7 +75,6 @@ const EditMenus: React.FC<{ menus: { [key: number]: Menu[] } }> = ({
                                 let response = await fetch(
                                     imgPath + extensionList[menu.extension]
                                 );
-                                console.log(response);
                                 const blob = await response.blob();
                                 imgData = new File([blob], "image.jpg", {
                                     type: blob.type,

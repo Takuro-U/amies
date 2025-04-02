@@ -31,7 +31,7 @@ const Description: React.FC<Menu> = (menu) => {
                               }/${menu.category_id}/${menu.index}${
                                   extensions[menu.extension]
                               }`
-                            : "/images/common/no_image.png"
+                            : "/images/common/no_image.jpg"
                     }
                     className="w-[50%] z-20"
                 />

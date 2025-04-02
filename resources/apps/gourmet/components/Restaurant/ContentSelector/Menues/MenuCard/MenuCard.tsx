@@ -15,8 +15,6 @@ const MenuCard: React.FC<Menu> = (menu) => {
 
     const extensions = ["", ".jpg", ".png"];
 
-    console.log(menu);
-
     return (
         <div
             className={classNames(
@@ -34,9 +32,9 @@ const MenuCard: React.FC<Menu> = (menu) => {
                         ? `/uploaded_images/gourmet/menus/${menu.parent_id}/${
                               menu.category_id
                           }/${menu.index}${extensions[menu.extension]}`
-                        : "/images/common/no_image.png"
+                        : "/images/common/no_image.jpg"
                 }
-                className="h-full aspect-1"
+                className="h-full aspect-1 object-cover"
             />
             <div
                 className="flex flex-col h-full px-2"

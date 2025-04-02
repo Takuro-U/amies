@@ -27,11 +27,6 @@ const Search: React.FC<PROPS> = (props) => {
         return genres;
     };
 
-    useEffect(() => {
-        console.log(props.restaurants);
-        console.log(props.hours);
-    }, []);
-
     return (
         <div className={styles.page}>
             <Pagenations

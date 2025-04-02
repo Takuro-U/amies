@@ -2,9 +2,10 @@ import React, { LegacyRef, useEffect, useRef, useState } from "react";
 import styles from "../../styles/Restaurant.module.scss";
 import { DetailRestaurantData } from "../../../../types/gourmet";
 
-import data from "../../../../../storage/app/data.json";
 import { DefaultHour, OpeningHour } from "../../../../types/gourmet";
 import classNames from "classnames";
+
+import { PublicData } from "../../../../types/gourmet";
 
 type PROPS = {
     restaurant: DetailRestaurantData;
@@ -63,6 +64,10 @@ const HourInfo: React.FC<{
 };
 
 const Details: React.FC<PROPS> = (props) => {
+    const [publicData, setPublicData] = useState<PublicData>({
+        areaList: [],
+        genreList: [],
+    });
     const [isOpen, setIsOpen] = useState(false);
     const [isOverflowing, setIsOverflowing] = useState(false);
 
@@ -102,7 +107,6 @@ const Details: React.FC<PROPS> = (props) => {
         const week = props.hours.defaultWeek;
         for (let i = 0; i < week.length; i++) {
             if (week[i].is_open && !week[i].open && !week[i].close) {
-                console.log("exist");
                 return true;
             }
         }
@@ -113,6 +117,10 @@ const Details: React.FC<PROPS> = (props) => {
         checkOverFlowing();
         alignWidth(timeStringRef.open);
         alignWidth(timeStringRef.close);
+
+        fetch("/data.json")
+            .then((res) => res.json())
+            .then((data) => setPublicData(data));
     }, [isOpen]);
 
     return (
@@ -131,13 +139,21 @@ const Details: React.FC<PROPS> = (props) => {
                 <RowLayout title="ジャンル">
                     <p className="text-[15px]">
                         {selectedGenres(props.restaurant.id)
-                            .map((id) => data.genreList[id].name)
+                            .map((id) =>
+                                publicData.genreList
+                                    .filter((genre) => genre.id === id)
+                                    .map((genre) => genre.name)
+                            )
                             .join("/")}
                     </p>
                 </RowLayout>
                 <RowLayout title="エリア">
                     <p className="text-[15px]">
-                        {data.areaList[props.restaurant.area_id].name}
+                        {
+                            publicData.areaList.filter(
+                                (area) => area.id === props.restaurant.area_id
+                            )[0]?.name
+                        }
                     </p>
                 </RowLayout>
                 <RowLayout title="予算">

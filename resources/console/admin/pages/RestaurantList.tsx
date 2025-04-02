@@ -1,9 +1,11 @@
-import React, { useState, FormEventHandler } from "react";
+import React, { useState, FormEventHandler, useEffect } from "react";
 import { useForm } from "@inertiajs/react";
 
 import { FirstPage, LastPage } from "@mui/icons-material";
-import publicData from "../../../../storage/app/data.json";
+
 import classNames from "classnames";
+
+import { PublicData } from "../../../types/gourmet";
 
 type keys =
     | "id"
@@ -25,6 +27,11 @@ type PROPS = {
 };
 
 const RestaurantList: React.FC<PROPS> = (props) => {
+    const [publicData, setPublicData] = useState<PublicData>({
+        areaList: [],
+        genreList: [],
+    });
+
     const [pageNumber, setPageNumber] = useState(1);
 
     const { data, setData, patch, errors, processing, recentlySuccessful } =
@@ -70,6 +77,12 @@ const RestaurantList: React.FC<PROPS> = (props) => {
         e.preventDefault();
         patch(route("/console/admin/restaurant-list"));
     };
+
+    useEffect(() => {
+        fetch("/data.json")
+            .then((res) => res.json())
+            .then((data) => setPublicData(data));
+    }, []);
 
     return (
         <div className="flex flex-col items-center min-h-[65vh]">

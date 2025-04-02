@@ -1,3 +1,8 @@
+export interface PublicData {
+    areaList: { id: number; name: string }[];
+    genreList: { id: number; name: string }[];
+}
+
 //検索条件
 export interface StatusForSearch {
     area: number[] | null;

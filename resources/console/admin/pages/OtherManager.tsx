@@ -1,11 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "@inertiajs/react";
 //
 import DataColumn from "../components/DataColumun";
-//
-import classNames from "classnames";
-//
-import publicData from "../../../../public/data.json";
 
 const OtherManager: React.FC = () => {
     const [dataLists, setDataLists] = useState<{
@@ -15,14 +11,8 @@ const OtherManager: React.FC = () => {
             new: boolean;
         }[];
     }>({
-        areaList: publicData.areaList.map((area) => ({
-            ...area,
-            new: false,
-        })),
-        genreList: publicData.genreList.map((genre) => ({
-            ...genre,
-            new: false,
-        })),
+        areaList: [],
+        genreList: [],
     });
 
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -65,6 +55,27 @@ const OtherManager: React.FC = () => {
             ),
         }));
     };
+
+    useEffect(() => {
+        fetch("/data.json")
+            .then((res) => res.json())
+            .then((data) =>
+                setDataLists({
+                    areaList: data.areaList.map(
+                        (area: { id: number; name: string }) => ({
+                            ...area,
+                            new: false,
+                        })
+                    ),
+                    genreList: data.genreList.map(
+                        (genre: { id: number; name: string }) => ({
+                            ...genre,
+                            new: false,
+                        })
+                    ),
+                })
+            );
+    }, []);
 
     return (
         <div className="flex flex-col items-center w-full bg-slate-100 pt-5">

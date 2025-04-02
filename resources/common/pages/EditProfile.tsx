@@ -9,18 +9,18 @@ const EditProfile: React.FC<{ mustVerifyEmail: boolean; status?: string }> = ({
 }) => {
     return (
         <div>
-            <div className="py-12">
-                <div className="mx-auto max-w-7xl space-y-6 sm:px-6 lg:px-8">
-                    <div className="bg-white p-4 shadow sm:rounded-lg sm:p-8">
+            <div className="py-12 bg-gray-100">
+                <div className="flex flex-col items-center">
+                    <div className="bg-white max-w-3xl w-full p-5 mb-4 shadow rounded-md">
                         <UpdateProfileInformationForm
                             mustVerifyEmail={mustVerifyEmail}
                             status={status}
-                            className="max-w-xl"
+                            className="w-full"
                         />
                     </div>
 
-                    <div className="bg-white p-4 shadow sm:rounded-lg sm:p-8">
-                        <UpdatePasswordForm className="max-w-xl" />
+                    <div className="bg-white max-w-3xl w-full p-5 shadow rounded-md">
+                        <UpdatePasswordForm className="w-full" />
                     </div>
                 </div>
             </div>

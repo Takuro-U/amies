@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import styles from "../../../../styles/Search.module.scss";
 
-import { BasicRestaurantData } from "../../../../../../types/gourmet";
+import {
+    BasicRestaurantData,
+    PublicData,
+} from "../../../../../../types/gourmet";
 
-import data from "../../../../../../../storage/app/data.json";
 import classNames from "classnames";
 
 import { route } from "ziggy-js";
@@ -17,6 +19,17 @@ type PROPS = {
 };
 
 const BasicInfo: React.FC<PROPS> = (props) => {
+    const [publicData, setPublicData] = useState<PublicData>({
+        areaList: [],
+        genreList: [],
+    });
+
+    useEffect(() => {
+        fetch("/data.json")
+            .then((res) => res.json())
+            .then((data) => setPublicData(data));
+    }, []);
+
     return (
         <div className=" w-[65%] pl-[2%]">
             <Link
@@ -39,12 +52,16 @@ const BasicInfo: React.FC<PROPS> = (props) => {
             </Link>
 
             <p className={styles.genreOrAreaName}>
-                {props.genres.map((id) => data.genreList[id].name).join("/")}
+                {props.genres
+                    .map((id) => publicData.genreList[id].name)
+                    .join("/")}
             </p>
             <p className={styles.genreOrAreaName}>
-                {props.restaurant.area_id
-                    ? data.areaList[props.restaurant.area_id].name
-                    : "エリア未設定"}
+                {
+                    publicData.areaList.filter(
+                        (element) => element.id === props.restaurant.area_id
+                    )[0]?.name
+                }
             </p>
             <div className="flex">
                 <p className={styles.price}>

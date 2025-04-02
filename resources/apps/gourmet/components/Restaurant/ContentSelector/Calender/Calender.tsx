@@ -83,7 +83,6 @@ const Calender: React.FC = () => {
                 currentWeek++;
             }
         });
-        console.log(result);
         return result;
     };
 
