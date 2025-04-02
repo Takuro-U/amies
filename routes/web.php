@@ -27,16 +27,10 @@ Route::middleware([AddViewData::class])->group(function () {
         return InertiaHelper::renderPage('top', 'main');
     })->name('/');
 
-    Route::get('/gourmet',  
-        function () {
-            return InertiaHelper::renderPage('gourmet', 'main');
-        }
-    )->name('/gourmet');
-
     //グルメ
-    // Route::prefix('gourmet')->group(function () {
-    //     require base_path('routes/web/gourmet.php');
-    // });
+    Route::prefix('gourmet')->group(function () {
+        require base_path('routes/web/gourmet.php');
+    });
 
     
 
