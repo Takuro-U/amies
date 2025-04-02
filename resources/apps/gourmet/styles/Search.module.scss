@@ -3,7 +3,7 @@
 
 $breakpoint: v.$breakpoint;
 
-$distinctive_breakpoint: calc(map-get($breakpoint, tablet) - 100px);
+$distinctive_breakpoint: calc(map.get($breakpoint, tablet) - 100px);
 
 .page {
     background-image: url("/images/gourmet/background.jpg");
