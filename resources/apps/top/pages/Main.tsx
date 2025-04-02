@@ -35,7 +35,7 @@ const Main: React.FC = () => {
                         />
                         <ArticleList
                             label="Gourmet"
-                            link={route("/")}
+                            link={route("/gourmet")}
                             icon={<GourmetIcon />}
                         />
                     </div>

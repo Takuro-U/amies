@@ -6,7 +6,7 @@
     },
     "scripts": {
         "dev": "vite",
-        "build": "vite build",
+        "build": "vite build && copy public\\index.php public\\200.html",
         "build-css": "node-sass input.scss output.css --no-source-map"
     },
     "devDependencies": {

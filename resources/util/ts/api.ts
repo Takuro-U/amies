@@ -2,6 +2,8 @@ import axios from "axios";
 
 import { Category } from "../../types/common";
 
-const domain = "http://localhost:8000";
+// 絶対URLの代わりに相対パスを使用
+// const domain = "http://localhost:8000";
+const domain = "";
 
 export const apiOfGourmet = {};

@@ -17,15 +17,28 @@ export default defineConfig({
             },
         },
     },
-    resolve: {
-        alias: {
-            "@": "/resources",
-        },
-    },
     //
     server: {
         proxy: {
             "/app": "http://localhost:8000",
+        },
+        historyApiFallback: {
+            index: "/index.php",
+            disableDotRule: true,
+        },
+    },
+    build: {
+        rollupOptions: {
+            output: {
+                manualChunks: {
+                    vendor: [
+                        "react",
+                        "react-dom",
+                        "@inertiajs/react",
+                        "@inertiajs/inertia",
+                    ],
+                },
+            },
         },
     },
 });

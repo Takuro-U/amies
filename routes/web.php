@@ -38,6 +38,11 @@ Route::middleware([AddViewData::class])->group(function () {
     Route::get('/dashboard', function () {
         return InertiaHelper::renderPage('test', 'dash_board');
     })->name('dashboard');
+    
+    // SPAフォールバックルート - 他のルートにマッチしなかった場合にトップページにリダイレクト
+    Route::fallback(function () {
+        return InertiaHelper::renderPage('top', 'main');
+    });
 });
 
 
