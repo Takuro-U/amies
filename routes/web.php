@@ -24,6 +24,7 @@ Route::middleware([AddViewData::class])->group(function () {
 
     //トップ
     Route::get('/', function () {
+        dd();
         return InertiaHelper::renderPage('top', 'main');
     })->name('/');
 
