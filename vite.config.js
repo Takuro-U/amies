@@ -17,6 +17,11 @@ export default defineConfig({
             },
         },
     },
+    resolve: {
+        alias: {
+            "@": "/resources",
+        },
+    },
     //
     server: {
         proxy: {

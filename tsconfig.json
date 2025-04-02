@@ -8,6 +8,10 @@
         "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,
         "skipLibCheck": true,
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["resources/*"]
+        },
 
         //jsonの読み込み設定
         "resolveJsonModule": true
