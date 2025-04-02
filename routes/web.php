@@ -28,7 +28,9 @@ Route::middleware([AddViewData::class])->group(function () {
     })->name('/');
 
     Route::get('/gourmet',  
-        [GourmetController::class, 'showRestaurantsMap']
+        function () {
+            return InertiaHelper::renderPage('gourmet', 'main');
+        }
     )->name('/gourmet');
 
     //グルメ
