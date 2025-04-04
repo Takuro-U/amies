@@ -145,7 +145,7 @@ function getSearchLinkList() {
 export const searchLinkList = new Proxy([], {
     get(target, prop) {
         const linkList = getSearchLinkList();
-        return linkList[prop as keyof typeof linkList];
+        return linkList[prop as any];
     },
     getOwnPropertyDescriptor(target, prop) {
         const linkList = getSearchLinkList();
@@ -154,5 +154,9 @@ export const searchLinkList = new Proxy([], {
     ownKeys() {
         const linkList = getSearchLinkList();
         return Reflect.ownKeys(linkList);
+    },
+    has(target, prop) {
+        const linkList = getSearchLinkList();
+        return prop in linkList;
     },
 });
