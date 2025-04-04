@@ -10,10 +10,31 @@ import { useModalContext } from "../../../../hooks/ModalProvider";
 import classNamesJoin from "classnames"; //競合によりJoinを追加
 
 // Utilities.
-import { searchLinkList } from "../../ts/list";
+import { searchLinkList, SearchLinkItem } from "../../ts/list";
 
 const SearchLinks: React.FC = () => {
     const { openModal } = useModalContext();
+
+    const handleOpenModal = async (link: SearchLinkItem) => {
+        let componentProps = link.componentProps;
+
+        if (link.getData && typeof link.getData === "function") {
+            try {
+                componentProps = await link.getData();
+            } catch (error) {
+                console.error("Error fetching data for modal:", error);
+            }
+        }
+
+        openModal({
+            title: link.title,
+            classNames: link.classNames,
+            coreFunction: () => {},
+            Component: link.Component,
+            componentProps: componentProps,
+        });
+    };
+
     return (
         <div className={styles.searchLinks}>
             <div
@@ -22,7 +43,7 @@ const SearchLinks: React.FC = () => {
                     "w-full"
                 )}
             >
-                {searchLinkList.map((link, index) => (
+                {(searchLinkList as SearchLinkItem[]).map((link, index) => (
                     <div
                         className={classNamesJoin(
                             "w-[70%] h-[60px]",
@@ -33,15 +54,7 @@ const SearchLinks: React.FC = () => {
                             "hover:scale-105 transition-transform"
                         )}
                         key={index}
-                        onClick={() =>
-                            openModal({
-                                title: link.title,
-                                classNames: link.classNames,
-                                coreFunction: () => {},
-                                Component: link.Component,
-                                componentProps: link.componentProps,
-                            })
-                        }
+                        onClick={() => handleOpenModal(link)}
                     >
                         <img
                             src={link.imgPath}

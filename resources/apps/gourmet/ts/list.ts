@@ -9,30 +9,55 @@ import scrollbarStyles from "../styles/scrollbar.module.scss";
 // types
 import { PublicData } from "../../../types/gourmet";
 
+// 検索リンク項目の型定義
+export interface SearchLinkItem {
+    title: string;
+    imgPath: string;
+    classNames: any;
+    Component: React.ComponentType<any>;
+    componentProps: any;
+    getData?: () => Promise<any>;
+}
+
 class DataStore {
     private data: PublicData = {
         areaList: [],
         genreList: [],
     };
     private listeners: Array<() => void> = [];
+    private dataFetched: boolean = false;
+    private fetchPromise: Promise<PublicData> | null = null;
 
     async fetchData() {
-        try {
-            const response = await fetch("/data.json");
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            this.data = await response.json();
-            this.notifyListeners();
-            return this.data;
-        } catch (error) {
-            console.error("Error fetching JSON:", error);
-            return this.data;
+        if (this.fetchPromise) {
+            return this.fetchPromise;
         }
+
+        this.fetchPromise = new Promise(async (resolve) => {
+            try {
+                const response = await fetch("/data.json");
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                this.data = await response.json();
+                this.dataFetched = true;
+                this.notifyListeners();
+                resolve(this.data);
+            } catch (error) {
+                console.error("Error fetching JSON:", error);
+                resolve(this.data);
+            }
+        });
+
+        return this.fetchPromise;
     }
 
     getData(): PublicData {
         return this.data;
+    }
+
+    isDataFetched(): boolean {
+        return this.dataFetched;
     }
 
     subscribe(listener: () => void) {
@@ -49,6 +74,7 @@ class DataStore {
 
 export const dataStore = new DataStore();
 
+// すぐにデータを取得開始する
 dataStore.fetchData();
 
 export const propsTemplate = {
@@ -75,7 +101,15 @@ const gourmetModalStyleTemplate = {
     hr: styles.hr,
 };
 
-function getSearchLinkList() {
+// データが取得済みか確認し、まだなら取得を待つ関数
+async function ensureDataLoaded() {
+    if (!dataStore.isDataFetched()) {
+        await dataStore.fetchData();
+    }
+    return true;
+}
+
+function getSearchLinkList(): SearchLinkItem[] {
     const publicData = dataStore.getData();
 
     const propsForAreaList = {
@@ -117,6 +151,15 @@ function getSearchLinkList() {
             classNames: gourmetModalStyleTemplate,
             Component: ListInModal,
             componentProps: propsForAreaList,
+            getData: async () => {
+                await ensureDataLoaded();
+                return {
+                    ...propsForAreaList,
+                    listData: dataStore
+                        .getData()
+                        .areaList.filter((area) => area.id !== 0),
+                };
+            },
         },
         {
             title: "ジャンルで探す",
@@ -124,6 +167,15 @@ function getSearchLinkList() {
             classNames: gourmetModalStyleTemplate,
             Component: ListInModal,
             componentProps: propsForGenreList,
+            getData: async () => {
+                await ensureDataLoaded();
+                return {
+                    ...propsForGenreList,
+                    listData: dataStore
+                        .getData()
+                        .genreList.filter((genre) => genre.id !== 0),
+                };
+            },
         },
         {
             title: "価格で探す",
@@ -142,7 +194,7 @@ function getSearchLinkList() {
     ];
 }
 
-export const searchLinkList = new Proxy([], {
+export const searchLinkList = new Proxy([] as SearchLinkItem[], {
     get(target, prop) {
         const linkList = getSearchLinkList();
         return linkList[prop as any];
