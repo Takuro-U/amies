@@ -32,8 +32,6 @@ Route::middleware([AddViewData::class])->group(function () {
         require base_path('routes/web/gourmet.php');
     });
 
-    
-
     //本番では要らないやつ
     Route::get('/dashboard', function () {
         return InertiaHelper::renderPage('test', 'dash_board');
