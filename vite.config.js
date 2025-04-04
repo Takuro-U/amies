@@ -17,4 +17,14 @@ export default defineConfig({
             },
         },
     },
+    //
+    server: {
+        proxy: {
+            "/app": "http://localhost:8000",
+        },
+        host: '0.0.0.0',
+        hmr: {
+            host: 'localhost'
+        }
+    },
 });
